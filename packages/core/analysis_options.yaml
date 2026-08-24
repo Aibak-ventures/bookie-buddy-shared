@@ -1,0 +1,12 @@
+include: package:lints/recommended.yaml
+
+# This package is pure Dart by design (see pubspec.yaml) — no Flutter
+# dependency is declared here on purpose. If a Flutter import ever shows up
+# in lib/, `dart pub get` fails before analysis even runs, which is the
+# actual enforcement mechanism; this file just keeps the rest of the code
+# tidy on top of that.
+linter:
+  rules:
+    - prefer_single_quotes
+    - always_declare_return_types
+    - avoid_returning_null_for_void
