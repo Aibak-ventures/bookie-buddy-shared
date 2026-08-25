@@ -30,6 +30,7 @@ export 'core/common/entities/document_details_entity/document_details_entity.dar
 export 'core/common/entities/tax_configuration_entity/tax_configuration_entity.dart';
 export 'core/common/entities/tax_summary_entity/tax_summary_entity.dart';
 export 'core/common/entities/user_shop_entity/user_shop_entity.dart';
+export 'core/constants/enums/backend_keyed_enum.dart';
 export 'core/constants/enums/booking_rental_unit_enum.dart';
 export 'core/constants/enums/booking_status_enums.dart';
 export 'core/constants/enums/cooling_period_mode_enum.dart';

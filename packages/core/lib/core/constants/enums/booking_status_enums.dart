@@ -1,3 +1,4 @@
+import 'package:bookie_buddy_core/core/constants/enums/backend_keyed_enum.dart';
 import 'package:bookie_buddy_core/core/constants/enums/main_service_type_enums.dart';
 
 // Split from the mobile app's booking_status_enums.dart: this file keeps
@@ -5,8 +6,13 @@ import 'package:bookie_buddy_core/core/constants/enums/main_service_type_enums.d
 // DeliveryStatus/ProductDeliveryStatus's `color` fields live instead as
 // extensions in bookie_buddy_ui (Color is a Flutter type, doesn't belong
 // in this pure-Dart package). See docs/PENDING.md in the shared repo.
+//
+// All three enums here now implement BackendKeyedEnum and delegate
+// fromJson/toJson to EnumJsonCodec instead of hand-rolling the same
+// lookup three times — `label` just redirects to the existing `name`
+// field so no call site using `.name` needed to change.
 
-enum DeliveryStatus {
+enum DeliveryStatus implements BackendKeyedEnum {
   booked('booked', 'Booked'),
   readyToDeliver('ready to deliver', 'Ready to deliver'),
   delivered('delivered', 'Delivered'),
@@ -15,8 +21,12 @@ enum DeliveryStatus {
 
   const DeliveryStatus(this.value, this.name);
 
+  @override
   final String value;
   final String name;
+
+  @override
+  String get label => name;
 
   String getServiceSpecificName(MainServiceType? serviceType) {
     if (serviceType == null) return name;
@@ -43,17 +53,11 @@ enum DeliveryStatus {
     return values;
   }
 
-  static DeliveryStatus fromJson(String? value) {
-    if (value == null) {
-      return DeliveryStatus.booked;
-    }
-    return DeliveryStatus.values.firstWhere(
-      (e) => e.value == value,
-      orElse: () => DeliveryStatus.booked,
-    );
-  }
+  static DeliveryStatus fromJson(String? value) =>
+      EnumJsonCodec.fromJson(value, values, fallback: DeliveryStatus.booked);
 
-  static String? toJson(DeliveryStatus? status) => status?.value;
+  static String? toJson(DeliveryStatus? status) =>
+      EnumJsonCodec.tryToJson(status);
 }
 
 /// Extension methods for nullable DeliveryStatus enum
@@ -66,26 +70,24 @@ extension DeliveryStatusX on DeliveryStatus? {
 }
 
 /// Enum to represent the status of a booking such as upcoming or completed
-enum BookingStatus {
+enum BookingStatus implements BackendKeyedEnum {
   upcoming('upcoming', 'Upcoming'),
   completed('completed', 'Completed');
 
   const BookingStatus(this.value, this.name);
 
+  @override
   final String value;
   final String name;
 
-  static BookingStatus fromJson(String? value) {
-    if (value == null) {
-      return BookingStatus.upcoming;
-    }
-    return BookingStatus.values.firstWhere(
-      (e) => e.value == value,
-      orElse: () => BookingStatus.upcoming,
-    );
-  }
+  @override
+  String get label => name;
 
-  static String? toJson(BookingStatus? status) => status?.value;
+  static BookingStatus fromJson(String? value) =>
+      EnumJsonCodec.fromJson(value, values, fallback: BookingStatus.upcoming);
+
+  static String? toJson(BookingStatus? status) =>
+      EnumJsonCodec.tryToJson(status);
 }
 
 /// Extension methods for nullable BookingStatus enum
@@ -95,36 +97,30 @@ extension BookingStatusX on BookingStatus? {
 }
 
 /// Enum to represent the delivery status of individual products within a booking
-enum ProductDeliveryStatus {
+enum ProductDeliveryStatus implements BackendKeyedEnum {
   notReturned('not_returned', 'Not Returned'),
   returned('returned', 'Returned');
 
+  @override
   final String value;
   final String name;
 
   const ProductDeliveryStatus(this.value, this.name);
 
-  static ProductDeliveryStatus fromJson(String? value) {
-    if (value == null) {
-      return ProductDeliveryStatus.notReturned;
-    }
-    return ProductDeliveryStatus.values.firstWhere(
-      (e) => e.value == value,
-      orElse: () => ProductDeliveryStatus.notReturned,
-    );
-  }
+  @override
+  String get label => name;
 
-  static ProductDeliveryStatus? tryFromJson(String? value) {
-    if (value == null) {
-      return null;
-    }
-    for (final e in ProductDeliveryStatus.values) {
-      if (e.value == value) return e;
-    }
-    return null;
-  }
+  static ProductDeliveryStatus fromJson(String? value) => EnumJsonCodec.fromJson(
+    value,
+    values,
+    fallback: ProductDeliveryStatus.notReturned,
+  );
 
-  static String? toJson(ProductDeliveryStatus? status) => status?.value;
+  static ProductDeliveryStatus? tryFromJson(String? value) =>
+      EnumJsonCodec.tryFromJson(value, values);
+
+  static String? toJson(ProductDeliveryStatus? status) =>
+      EnumJsonCodec.tryToJson(status);
 
   bool get isReturned => this == ProductDeliveryStatus.returned;
   bool get isNotReturned => this == ProductDeliveryStatus.notReturned;

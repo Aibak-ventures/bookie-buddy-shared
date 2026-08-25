@@ -1,3 +1,5 @@
+import 'package:bookie_buddy_core/core/constants/enums/backend_keyed_enum.dart';
+
 // Extracted from the mobile app's core/constants/enums/enums.dart barrel —
 // that file bundles several unrelated enums together, one of which
 // (ProductModelFieldType) needs Flutter (TextInputType) and so can't be
@@ -5,7 +7,7 @@
 // has no such dependency, so it gets its own file here instead of pulling
 // the whole barrel in. See docs/PENDING.md in the shared repo.
 
-enum BookingRentalUnit {
+enum BookingRentalUnit implements BackendKeyedEnum {
   hourly('Hourly', 'hourly'),
   daily('Daily', 'daily');
 
@@ -13,22 +15,22 @@ enum BookingRentalUnit {
   final String name;
 
   /// The value used for JSON serialization, e.g. "hourly", "daily"
+  @override
   final String value;
 
   const BookingRentalUnit(this.name, this.value);
 
+  @override
+  String get label => name;
+
   /// Used for JSON deserialization
-  static BookingRentalUnit fromJson(String? json) {
-    if (json == null) return BookingRentalUnit.daily; // default value
-    return BookingRentalUnit.values.firstWhere(
-      (e) => e.value == json,
-      orElse: () => BookingRentalUnit.daily, // default if no match
-    );
-  }
+  static BookingRentalUnit fromJson(String? json) =>
+      EnumJsonCodec.fromJson(json, values, fallback: BookingRentalUnit.daily);
 
   /// Used for JSON serialization
-  static String toJson(BookingRentalUnit unit) => unit.value;
+  static String toJson(BookingRentalUnit unit) => EnumJsonCodec.toJson(unit);
 
   /// Safe version that returns null if the unit is null
-  static String? tryToJson(BookingRentalUnit? unit) => unit?.value;
+  static String? tryToJson(BookingRentalUnit? unit) =>
+      EnumJsonCodec.tryToJson(unit);
 }
