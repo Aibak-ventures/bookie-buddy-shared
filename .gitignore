@@ -2,6 +2,7 @@
 .packages
 build/
 pubspec.lock
-*.g.dart
-*.freezed.dart
 .DS_Store
+
+# FVM Version Cache
+.fvm/

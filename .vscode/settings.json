@@ -1,13 +1,15 @@
 {
-    "cSpell.words": [
-        "desyncs",
-        "finalising",
-        "GSTIN",
-        "jank",
-        "jewellery",
-        "pincode",
-        "rasterizes",
-        "thresholded",
-        "usecase"
-    ]
+  "cSpell.words": [
+    "desyncs",
+    "finalising",
+    "gpay",
+    "GSTIN",
+    "jank",
+    "jewellery",
+    "pincode",
+    "rasterizes",
+    "thresholded",
+    "usecase"
+  ],
+  "dart.flutterSdkPath": ".fvm/versions/3.41.9"
 }

@@ -2,5 +2,7 @@
 .packages
 build/
 pubspec.lock
-*.g.dart
-*.freezed.dart
+
+# NOT *.g.dart / *.freezed.dart — see packages/core/.gitignore for why:
+# this package is consumed by other apps as a git dependency, so generated
+# files have to be committed here rather than left for consumers to build.
