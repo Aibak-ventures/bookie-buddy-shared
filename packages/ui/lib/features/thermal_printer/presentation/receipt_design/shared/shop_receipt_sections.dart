@@ -1,9 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
-import 'package:bookie_buddy_core/core/common/entities/user_shop_entity/user_shop_entity.dart';
-// PENDING (see docs/PENDING.md): still points at the mobile app.
-import 'package:booking_application/utils/extensions/string_extensions.dart';
+import 'package:bookie_buddy_core/bookie_buddy_core.dart';
 
 import 'receipt_canvas.dart';
 

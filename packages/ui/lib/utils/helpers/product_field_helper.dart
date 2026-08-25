@@ -1,159 +1,31 @@
-import 'package:bookie_buddy_ui/core/constants/enums/main_service_type_enums.dart';
-// PENDING (see docs/PENDING.md): still points at the mobile app.
-import 'package:booking_application/features/product/domain/entities/product_entity/product_entity.dart';
-import 'package:booking_application/utils/extensions/string_extensions.dart';
+import 'package:bookie_buddy_core/bookie_buddy_core.dart';
 
-/// Helper class for product-related field logic and display formatting.
-///
-/// Centralizes scattered service type-dependent logic from multiple files.
-/// Use this instead of duplicating if-else chains across UI components.
+// Trimmed from the mobile app's utils/helpers/product_field_helper.dart —
+// that class also has ProductEntity-dependent methods
+// (getProductSpecification, getSecondaryAttributeDisplayText,
+// buildProductDetailsRows) used by product-form UI, unrelated to receipts.
+// This package only needs getSubtitleLines, so that's the only method
+// ported. See docs/PENDING.md in this repo.
+
+/// Helper for product-related field logic and display formatting, scoped to
+/// what the receipt-rendering pipeline needs.
 class ProductFieldHelper {
   const ProductFieldHelper._();
 
-  /// Get product specification details based on service type.
-  ///
-  /// Returns a record with type label and value for display in cards/tiles.
-  ///
-  /// Examples:
-  ///   - Dress: ("Color", "Red")
-  ///   - Vehicle: ("Reg. No", "ABC-123")
-  ///   - Material: ("Category", "Cotton")
-  static ({String type, String title}) getProductSpecification(
-    MainServiceType? serviceType,
-    ProductEntity product,
-  ) {
-    // Multi-variant products: Show color
-    if (serviceType.isDressType) {
-      return (type: serviceType.colorFieldLabel, title: product.color ?? '-');
-    }
-
-    // Vehicle
-    if (serviceType.isVehicle) {
-      return (
-        type: 'Reg. No',
-        title: product.attributes.registrationNumber ?? '',
-      );
-    }
-
-    // default
-    return (
-      type: serviceType.categoryFieldLabel,
-      title: product.category ?? '-',
-    );
-  }
-
-  // ==================== Variant Display Formatting ====================
-
-  /// Format variant attribute for display with appropriate label.
-  ///
-  /// Examples:
-  /// - Dress: "Size: M"
-  /// - Material: "Variant: Standard"
-  static String getVariantDisplayText(
-    MainServiceType? serviceType,
-    String? variantValue,
-  ) {
-    if (variantValue == null || variantValue.isEmpty) return '-';
-    return '${serviceType.variantAttributeLabel}: $variantValue';
-  }
-
-  /// Format secondary attribute (color/model) for display.
-  ///
-  /// Returns null if the service type doesn't use a secondary attribute.
-  ///
-  /// Examples:
-  /// - Dress: "Color: Red"
-  /// - Vehicle: "Model: Civic"
-  static String? getSecondaryAttributeDisplayText(
-    MainServiceType? serviceType,
-    ProductEntity product,
-  ) {
-    final label = serviceType.secondaryAttributeLabel;
-    if (label == null) return null;
-
-    String? value;
-    if (label == 'Color') {
-      value = product.color;
-    } else if (label == 'Model') {
-      value = product.model;
-    }
-
-    if (value == null || value.isEmpty) return null;
-    return '$label: $value';
-  }
-
-  /// Get the title text for the product selection dialog based on service type and selection context.
-  static String getProductSelectDialogTitleText(
-    MainServiceType? serviceType, {
-    bool? isCustomWork,
-  }) {
-    if (serviceType.isRoom) return 'Room Price';
-    if (isCustomWork == true) return 'Length & Price';
-    if (serviceType.isSingleVariantProductType) return 'Quantity & Price';
-    return 'Size & Amount';
-  }
-
-  // ==================== Product Details Rows ====================
-
-  /// Build a list of detail strings for PDF/UI display.
-  ///
-  /// Automatically includes relevant fields based on service type:
-  /// - Multi-variant: Color
-  /// - Vehicle: Model + Brand
-  /// - Material: Fabric Type
-  /// - Others: Category
-  ///
-  /// Returns only non-null, non-empty values.
-  ///
-  /// Note: For variant-specific details (Size/Serial Number), pass the variant's
-  /// attribute value separately using getVariantDisplayText().
-  static List<String> buildProductDetailsRows(
-    MainServiceType? serviceType,
-    ProductEntity product,
-  ) {
-    final details = <String>[];
-
-    // Secondary attribute (Color/Model)
-    final secondary = getSecondaryAttributeDisplayText(serviceType, product);
-    if (secondary != null) {
-      details.add(secondary);
-    }
-
-    // Category (Brand/Fabric Type/Category)
-    if ((serviceType.isVehicle ||
-            serviceType.isOthers ||
-            serviceType.isEquipment ||
-            serviceType.isMaterial ||
-            serviceType.isJewellery) &&
-        product.category?.isNotEmpty == true) {
-      details.add('${serviceType.categoryFieldLabel}: ${product.category}');
-    }
-
-    return details;
-  }
-
-  // ==================== Subtitle Line Selection ====================
-
   /// Ordered "Label: value" subtitle lines actually relevant for
   /// [serviceType] — the single source of truth for "what's worth showing
-  /// for this product type" that [ProductSimpleDetailsTile] (a booking's
-  /// product list tile) and the printed booking receipt both need. Kept
-  /// here rather than duplicated per call site so the two can't quietly
-  /// drift out of sync on which fields matter for which service type.
+  /// for this product type" that a booking's product list tile and the
+  /// printed receipt both need. Kept here rather than duplicated per call
+  /// site so the two can't quietly drift out of sync on which fields
+  /// matter for which service type.
   ///
-  /// Every parameter mirrors a `ProductSimpleDetailsTile` constructor
-  /// param 1:1 — see that widget's (now-removed) per-row getters' history
-  /// for the rationale behind each service type's specific field set and
-  /// order, if it's ever unclear why one type shows different fields than
-  /// another. Two additions beyond the tile's own params:
   /// - [includeQuantity]: pass `false` when the caller already shows
   ///   quantity/length in its own dedicated column (e.g. a receipt's item
   ///   table) and would otherwise duplicate it here too.
-  /// - [includeLabels]: `true` (default) returns `"Label: value"` as the
-  ///   tile needs; `false` returns just the bare value — for a tight
-  ///   space like a receipt line where "Size: M · Color: Red" reads as
-  ///   noisier than "M · Red" once the values alone are self-explanatory
-  ///   in context.
+  /// - [includeLabels]: `true` (default) returns `"Label: value"`;
+  ///   `false` returns just the bare value — for a tight space like a
+  ///   receipt line where "Size: M · Color: Red" reads as noisier than
+  ///   "M · Red" once the values alone are self-explanatory in context.
   static List<String> getSubtitleLines({
     required MainServiceType? serviceType,
     String? type,
@@ -248,42 +120,5 @@ class ProductFieldHelper {
     };
 
     return rows.nonNulls.toList();
-  }
-
-  // ==================== Stock/Measurement Display ====================
-
-  /// Format stock or measurement value for display.
-  ///
-  /// Examples:
-  /// - Material: "5.5m" (fabric length)
-  /// - Dress: "10 units" (stock count)
-  /// - Vehicle: "2 units"
-  static String formatStockDisplay(
-    MainServiceType? serviceType,
-    int? stock,
-    double? fabricLength,
-  ) {
-    if (serviceType.isMaterial) {
-      final length = fabricLength ?? 0;
-      return length > 0 ? '${length} m' : '0 m';
-    }
-
-    final stockValue = stock ?? 0;
-    return '$stockValue ${stockValue == 1 ? 'unit' : 'units'}';
-  }
-
-  /// Check if product is out of stock based on service type.
-  ///
-  /// For material: checks if fabricLength == 0
-  /// For others: checks if stock == 0
-  static bool isOutOfStock(
-    MainServiceType? serviceType,
-    int? stock,
-    double? fabricLength,
-  ) {
-    if (serviceType.isMaterial) {
-      return (fabricLength ?? 0) <= 0;
-    }
-    return (stock ?? 0) <= 0;
   }
 }

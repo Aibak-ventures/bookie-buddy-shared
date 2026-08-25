@@ -2,22 +2,10 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
-import 'package:bookie_buddy_core/core/common/entities/applied_tax_entity/applied_tax_entity.dart';
-import 'package:bookie_buddy_core/core/common/entities/user_shop_entity/user_shop_entity.dart';
-import 'package:bookie_buddy_core/features/thermal_printer/domain/entities/print_ticket_entity/print_ticket_entity.dart';
-// PENDING (see docs/PENDING.md): everything below still points at the
-// mobile app — this file needs BookingDetailsEntity/ProductInfoEntity,
-// which aren't extracted yet and (per known divergence) don't have
-// identical shapes between mobile and web. Not wired into the package's
-// public API (bookie_buddy_ui.dart) until this is resolved.
-import 'package:booking_application/core/constants/enums/booking_status_enums.dart';
-import 'package:booking_application/core/constants/enums/main_service_type_enums.dart';
-import 'package:booking_application/features/booking/domain/entities/booking_details_entity/booking_details_entity.dart';
-import 'package:booking_application/features/booking/presentation/common/utils/booking_time_resolver.dart';
-import 'package:booking_application/features/product/domain/entities/product_info_entity/product_info_entity.dart';
-import 'package:booking_application/utils/extensions/list_extensions.dart';
-import 'package:booking_application/utils/extensions/number_extensions.dart';
+import 'package:bookie_buddy_core/bookie_buddy_core.dart';
 
+import '../../../../../utils/extensions/receipt_format_extensions.dart';
+import '../shared/booking_time_resolver.dart';
 import '../shared/receipt_canvas.dart';
 import '../shared/receipt_date_formatter.dart';
 import '../shared/receipt_shared_sections.dart';

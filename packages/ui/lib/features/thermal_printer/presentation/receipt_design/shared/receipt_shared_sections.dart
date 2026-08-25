@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'package:bookie_buddy_core/core/common/entities/applied_tax_entity/applied_tax_entity.dart';
-// PENDING (see docs/PENDING.md): still points at the mobile app. Unblocked
-// once main_service_type_enums/product_field_helper's own transitive deps
-// (service_entity, product_entity, number_extensions) are resolved.
-import 'package:booking_application/utils/extensions/number_extensions.dart';
+import 'package:bookie_buddy_core/bookie_buddy_core.dart';
 
-import '../../../../../core/constants/enums/main_service_type_enums.dart';
+import '../../../../../utils/extensions/receipt_format_extensions.dart';
 import '../../../../../utils/helpers/product_field_helper.dart';
 import 'receipt_canvas.dart';
 

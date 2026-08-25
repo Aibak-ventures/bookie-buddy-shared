@@ -2,15 +2,9 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
-import 'package:bookie_buddy_core/core/common/entities/applied_tax_entity/applied_tax_entity.dart';
-import 'package:bookie_buddy_core/core/common/entities/user_shop_entity/user_shop_entity.dart';
-import 'package:bookie_buddy_core/features/thermal_printer/domain/entities/print_ticket_entity/print_ticket_entity.dart';
-// PENDING (see docs/PENDING.md): same as booking_receipt_canvas_builder —
-// needs SaleDetailsEntity, not extracted yet.
-import 'package:booking_application/features/sales/domain/entities/sale_details_entity/sale_details_entity.dart';
-import 'package:booking_application/utils/extensions/number_extensions.dart';
-import 'package:booking_application/utils/extensions/string_extensions.dart';
+import 'package:bookie_buddy_core/bookie_buddy_core.dart';
 
+import '../../../../../utils/extensions/receipt_format_extensions.dart';
 import '../shared/receipt_canvas.dart';
 import '../shared/receipt_date_formatter.dart';
 import '../shared/receipt_shared_sections.dart';

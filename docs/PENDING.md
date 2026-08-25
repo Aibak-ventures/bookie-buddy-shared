@@ -1,78 +1,100 @@
-# Pending — thermal-printer extraction (in progress)
+# Pending — thermal-printer extraction
 
 First extraction into these packages: the receipt-rendering pipeline from
 mobile's `thermal_printer` feature, chosen because it was already
 file-for-file duplicated (in places byte-identical) between mobile and web.
 Full rationale in the mobile repo's `docs/shared-packages-plan.md`.
 
-Status: **copied for review, not yet wired into either app.** Nothing in
-either `booking_application` or `bookie_buddy_web` points at these packages
-yet — that's a deliberate separate step after this is examined.
+## Status: booking + sales receipt builders now working end-to-end
 
-## Analyzing clean today
+Both `flutter analyze` (ui) and `dart analyze` (core) are clean (one
+pre-existing style info left as-is, see below). **Still not wired into
+either app** — that's the deliberate next step, not done here.
 
-**`packages/core`** — fully clean (`dart analyze`: no issues):
-- `features/thermal_printer/domain/entities/print_ticket_entity/`
-- `features/thermal_printer/domain/print_ticket_builder.dart`
-- `core/common/entities/{applied_tax_entity,user_shop_entity,tax_summary_entity,tax_configuration_entity}/`
-- `core/common/utils/{tax_calculator,tax_label_formatter}.dart`
-- `core/constants/enums/{tax_calculation_type_enum,taxable_component_enum,shop_based_enums}.dart`
+### What changed to get there
 
-**`packages/ui`** — clean (`flutter analyze`: 1 pre-existing style lint,
-`avoid_single_cascade_in_expression_statements` in `offscreen_render.dart`,
-copied as-is from mobile):
-- `features/thermal_printer/presentation/receipt_design/shared/{receipt_canvas,monochrome,offscreen_render}.dart`
+Went with the "full entity extraction" option from this file's earlier
+draft (not the narrow-adapter alternative): `BookingDetailsEntity` and
+`SaleDetailsEntity`, plus their whole transitive entity/enum graph, are now
+in `bookie_buddy_core`. Traversal was BFS'd from the three entry-point
+entities, restricted to `domain/entities`, `core/common/entities`,
+`core/constants/enums`, `core/common/utils` — 33 files. (An unrestricted
+traversal — following every import, including generic util files — blew up
+to 1208 files, because a couple of utils import things like `app_router.dart`.
+That's the concrete shape of the "narrow the util imports" problem flagged
+below.)
 
-These four are exported from `bookie_buddy_ui.dart`'s public API already.
+Three files in that graph had a Flutter dependency and got split — pure
+values/business logic into `core`, the Flutter-typed half into
+`bookie_buddy_ui` as an extension (same pattern as planned earlier for
+`DeliveryStatus.color`):
 
-## Copied but not analyzing clean — needs reconciliation before use
+- `booking_status_enums.dart` — `DeliveryStatus`/`ProductDeliveryStatus`'s
+  `color` fields → `ui`'s `theme/status_ui_extensions.dart`.
+- `main_service_type_enums.dart` — `categoryFieldIcon`/`colorFieldIcon`/
+  `modelFieldIcon` (IconData) → same file. `colorFieldType`/`modelFieldType`
+  getters dropped entirely (return types from the mobile app's `enums.dart`
+  barrel, not needed by anything extracted so far, not worth pulling in).
+- `enums.dart` (barrel) — only `BookingRentalUnit` was actually needed;
+  given its own file (`booking_rental_unit_enum.dart`) rather than copying
+  the barrel (which also holds `ProductModelFieldType.keyboardType`, a
+  `TextInputType` — the reason it couldn't be copied wholesale into `core`).
 
-Still in `packages/ui`, still importing `package:booking_application/...`
-directly (marked `// PENDING` inline at each import) — **not** exported from
-`bookie_buddy_ui.dart` yet:
+Large multi-purpose util files (`number_extensions.dart`,
+`string_extensions.dart`, `list_extensions.dart`, `date_time_extensions.dart`)
+were **not** copied wholesale — exactly the concern flagged in this file's
+first draft. Only the specific members actually used were ported, verbatim,
+into narrow files:
+- `core/lib/utils/extensions/string_extensions.dart` — `isNullOrEmpty`,
+  `isNotNullOrEmpty`, `capitalizeFirstLetter` (needed by entities
+  themselves, e.g. `booking_other_details_entity.dart`, so these had to
+  live in `core`, not `ui`).
+- `ui/lib/utils/extensions/receipt_format_extensions.dart` — `toCurrency`,
+  `sum`, `parseToDateTime`, `tryParseToDateTime`, `formatToUiTime`.
+- `ui/lib/features/thermal_printer/presentation/receipt_design/shared/booking_time_resolver.dart`
+  — ported from mobile's presentation-layer file of the same purpose
+  (needs `TimeOfDay`, so lives in `ui`); its own two one-line `DateTime`/
+  `TimeOfDay` helpers inlined privately rather than pulling in
+  `date_time_extensions.dart` for them.
+- `ui/lib/utils/helpers/product_field_helper.dart` — trimmed to just
+  `getSubtitleLines` (the only method receipts call); the `ProductEntity`-
+  dependent methods on the mobile original (`getProductSpecification`,
+  `getSecondaryAttributeDisplayText`, `buildProductDetailsRows`) were
+  dropped rather than pulling in `ProductEntity` for them.
 
-| File | Blocked on |
-|---|---|
-| `receipt_design/shared/receipt_date_formatter.dart` | `utils/extensions/string_extensions.dart` (`parseToDateTime`, `formatToUiTime`) |
-| `receipt_design/shared/receipt_shared_sections.dart` | `utils/extensions/number_extensions.dart` (`toCurrency`); `core/constants/enums/main_service_type_enums.dart` (below) |
-| `receipt_design/shared/shop_receipt_sections.dart` | `utils/extensions/string_extensions.dart` (`isNotNullOrEmpty`) |
-| `core/constants/enums/main_service_type_enums.dart` | `core/constants/enums/enums.dart` (barrel); `features/service/domain/entities/service_entity/` (a whole other feature); `utils/extensions/number_extensions.dart` |
-| `utils/helpers/product_field_helper.dart` | `features/product/domain/entities/product_entity/` (a whole other feature); `utils/extensions/string_extensions.dart` |
-| `receipt_design/builders/booking_receipt_canvas_builder.dart` | `BookingDetailsEntity`, `ProductInfoEntity` — **known to have different fields between mobile and web**, see decision below; plus `booking_time_resolver.dart`, `list_extensions.dart`, and the above |
-| `receipt_design/builders/sales_receipt_canvas_builder.dart` | `SaleDetailsEntity`, `ProductSaleInfoEntity` — same concern as booking; plus `string_extensions.dart`, `number_extensions.dart` |
+Both `MainServiceType`/`DeliveryStatus`/etc. are needed as **field types**
+on `BookingDetailsEntity`/`ProductInfoEntity`, which live in `core` — so
+these enums had to be splittable to fully-pure or not-shared at all; there
+was no version of "defer the split" that still let the builders compile.
+That's the concrete reason this extraction settled the enum-splitting
+question that earlier planning conversation had left open.
 
-**Why `number_extensions.dart`/`string_extensions.dart` are flagged as their
-own problem, not just "the entity mismatch":** these are large, general-
-purpose grab-bag files in the mobile app (phone number formatting, color
-picker helpers, screen-size utils, `toCurrency()`, date parsing, ~10+
-Flutter-ecosystem dependencies) — pulling either wholesale into a shared
-package would drag in far more than these receipt files actually use.
-Likely fix later: extract just the handful of members each receipt file
-needs (`toCurrency`, `parseToDateTime`, `formatToUiTime`,
-`isNotNullOrEmpty`) into a small, focused extension inside `bookie_buddy_core`
-or `bookie_buddy_ui`, rather than importing the whole file.
+### Scope not touched (per the "focus on receipt feature" decision)
 
-## The `BookingDetailsEntity`/`SaleDetailsEntity` field-mismatch concern
+Only entities. **Not ported:** either app's data layer, repository
+interfaces/implementations, usecases, or DI. `BookingDetailsEntity`/
+`SaleDetailsEntity` in `core` today are read-only shapes for rendering a
+receipt — nothing yet constructs, fetches, or persists them there. Wiring
+mobile/web's actual booking and sales features onto shared entities (if
+ever done) is separate, larger, later work.
 
-Flagged during planning: mobile and web's booking/sale entities don't have
-identical shapes today, so the two builders can't just start importing a
-shared entity type unmodified even once one exists.
+### `BookingSecuritySummaryEntity` naming note
 
-**Decision: deferred until after this extraction is reviewed and wired up
-for the parts that already work.** Options to evaluate then, not now:
-1. Extract `BookingDetailsEntity`/`SaleDetailsEntity` into `bookie_buddy_core`
-   outright and reconcile the field differences as part of that (bigger,
-   touches both apps' whole booking/sales domain).
-2. Give the receipt builders their own narrow, print-specific input shape
-   (e.g. `BookingReceiptData`) inside `bookie_buddy_ui` — each app maps its
-   own `BookingDetailsEntity` down to it. Smaller, avoids ever needing the
-   two full entities to match, only the fields a receipt actually prints.
+Lives inside `booking_payment_history_entity.dart`, not a separate file —
+matches mobile's actual layout (found while tracing the closure), despite
+the class name suggesting otherwise.
 
-Leaning toward (2) but not deciding until the rest of this extraction has
-been examined.
+### Left as-is (pre-existing, copied verbatim from mobile)
 
-## Known cross-app cleanup needed regardless
+- `offscreen_render.dart:47` — `avoid_single_cascade_in_expression_statements` info lint.
+- `sale_details_entity.dart:50` — `unnecessary_const` info lint.
+
+Both are exactly as they are in the mobile source; not worth diverging from
+the source to silence a style info-lint on copied code.
+
+### Known cross-app cleanup still needed regardless
 
 - Web's `receipt_shared_sections.dart` imports `service_type_enums.dart`,
   mobile's is `main_service_type_enums.dart` — same enum, different file
-  name. Pick mobile's name (source of truth) when this is wired up.
+  name. Pick mobile's name (source of truth) whenever this is wired up on
+  the web side.

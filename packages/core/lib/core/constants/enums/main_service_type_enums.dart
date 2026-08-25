@@ -1,11 +1,12 @@
-// PENDING (see docs/PENDING.md): all three still point at the mobile app —
-// `enums.dart` is a big cross-feature barrel, `service_entity` is a whole
-// other feature's domain, and `number_extensions` is the same large
-// multi-purpose utils file flagged elsewhere in this package.
-import 'package:booking_application/core/constants/enums/enums.dart';
-import 'package:booking_application/features/service/domain/entities/service_entity/service_entity.dart';
-import 'package:booking_application/utils/extensions/number_extensions.dart';
-import 'package:flutter/material.dart';
+import 'package:bookie_buddy_core/features/service/domain/entities/service_entity/service_entity.dart';
+
+// Split from the mobile app's main_service_type_enums.dart: dropped
+// `categoryFieldIcon`/`colorFieldIcon`/`modelFieldIcon` (need
+// Flutter's IconData — moved to an extension in bookie_buddy_ui) and
+// `colorFieldType`/`modelFieldType` (return ProductColorFieldType/
+// ProductModelFieldType, from the mobile app's enums.dart barrel — not
+// needed by anything that's been extracted so far). Everything else here
+// is pure Dart and unchanged. See docs/PENDING.md in the shared repo.
 
 enum MainServiceType {
   dress('dress'),
@@ -154,36 +155,6 @@ extension MainServiceTypeLabels on MainServiceType? {
     _ => 'Model',
   };
 
-  IconData get categoryFieldIcon => switch (this) {
-    .room => Icons.meeting_room_outlined,
-    _ => Icons.category_outlined,
-  };
-
-  IconData get colorFieldIcon => switch (this) {
-    .gadget => Icons.shutter_speed_rounded,
-    .room => Icons.bed_outlined,
-    _ => Icons.palette_outlined,
-  };
-
-  IconData get modelFieldIcon => switch (this) {
-    .gadget => Icons.date_range_rounded,
-    .room => Icons.people_outlined,
-    _ => Icons.style_outlined,
-  };
-
-  /// number input for gadgets (shutter count), color picker for others
-  ProductColorFieldType get colorFieldType => switch (this) {
-    .gadget => ProductColorFieldType.number,
-    _ => ProductColorFieldType.color,
-  };
-
-  /// date input for gadgets, text for others
-  ProductModelFieldType get modelFieldType => switch (this) {
-    .gadget => ProductModelFieldType.date,
-    .room => ProductModelFieldType.number,
-    _ => ProductModelFieldType.model,
-  };
-
   /// Product name label for display in booking details, product list, etc.
   String get productNameLabel => switch (this) {
     .vehicle => 'Vehicle',
@@ -268,8 +239,6 @@ extension MainServiceTypeDisplayRules on MainServiceType? {
   /// Show the purchase price field on the product form.
   bool get showProductPurchasePriceField => !isRoom;
 
-  // bool get showProductHourlyRentPriceField => !isRoom;
-
   /// Default quantity to 1 when adding a product (rooms always have 1 unit).
   bool get setDefaultProductQuantityOnAdd => isRoom;
 
@@ -284,7 +253,6 @@ extension MainServiceTypeDisplayRules on MainServiceType? {
   /// Default stock for a new variant.
   int get defaultVariantStock => hasUniqueVariantIdentifier ? 1 : 0;
 
-  //
   bool get showTransferProduct => !isRoom;
 }
 
@@ -296,10 +264,5 @@ extension MainServiceTypePricing on MainServiceType? {
   String getPriceSuffix([int? price]) {
     if (price == null || price == 0) return '';
     return isMaterial ? '/m' : '';
-  }
-
-  String formatPrice(int? price) {
-    if (price == null || price == 0) return '';
-    return '${price.toCurrency()}${getPriceSuffix(price)}';
   }
 }
