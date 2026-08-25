@@ -44,7 +44,7 @@ Future<ui.Image> renderWidgetOffscreen({
     ),
   );
 
-  Overlay.of(context, rootOverlay: true)..insert(entry);
+  Overlay.of(context, rootOverlay: true).insert(entry);
 
   try {
     // Two frames: the first lays out/paints; the second gives any async
