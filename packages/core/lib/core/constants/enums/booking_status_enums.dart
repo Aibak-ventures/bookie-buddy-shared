@@ -72,7 +72,13 @@ extension DeliveryStatusX on DeliveryStatus? {
 /// Enum to represent the status of a booking such as upcoming or completed
 enum BookingStatus implements BackendKeyedEnum {
   upcoming('upcoming', 'Upcoming'),
-  completed('completed', 'Completed');
+  completed('completed', 'Completed'),
+  // Web-only value — real, checked against usage before adding (web's
+  // booking list/detail flows distinguish a cancelled booking status,
+  // separate from DeliveryStatus.cancelled). Mobile's own switches over
+  // this enum all have a `_`/default fallback already, so this doesn't
+  // break mobile's exhaustiveness.
+  cancelled('cancelled', 'Cancelled');
 
   const BookingStatus(this.value, this.name);
 
@@ -94,6 +100,56 @@ enum BookingStatus implements BackendKeyedEnum {
 extension BookingStatusX on BookingStatus? {
   bool get isUpcoming => this == BookingStatus.upcoming;
   bool get isCompleted => this == BookingStatus.completed;
+}
+
+/// Which bookings to load — a query parameter, not a status stored on a
+/// booking itself. Web has real usage (repository/datasource/usecase
+/// layer); mobile's `measurements` value has no web equivalent yet, kept
+/// since mobile still uses it.
+enum LoadBookingType {
+  all('all'),
+  upcoming('upcoming'),
+  completed('completed'),
+  past('past'),
+  future('future'),
+  measurements('measurements');
+
+  const LoadBookingType(this.value);
+
+  final String value;
+
+  /// Convert from string to LoadBookingType enum
+  static LoadBookingType fromString(String? type) {
+    if (type == null) {
+      return LoadBookingType.all;
+    }
+    return LoadBookingType.values.firstWhere(
+      (e) => e.value == type.toLowerCase(),
+      orElse: () => LoadBookingType.all,
+    );
+  }
+
+  static LoadBookingType fromJson(String? value) {
+    if (value == null) {
+      return LoadBookingType.all;
+    }
+    return LoadBookingType.values.firstWhere(
+      (e) => e.value == value,
+      orElse: () => LoadBookingType.all,
+    );
+  }
+
+  static String? toJson(LoadBookingType? type) => type?.value;
+}
+
+/// Extension methods for nullable LoadBookingType enum
+extension LoadBookingTypeX on LoadBookingType? {
+  bool get isAll => this == LoadBookingType.all;
+  bool get isUpcoming => this == LoadBookingType.upcoming;
+  bool get isCompleted => this == LoadBookingType.completed;
+  bool get isPast => this == LoadBookingType.past;
+  bool get isFuture => this == LoadBookingType.future;
+  bool get isMeasurements => this == LoadBookingType.measurements;
 }
 
 /// Enum to represent the delivery status of individual products within a booking

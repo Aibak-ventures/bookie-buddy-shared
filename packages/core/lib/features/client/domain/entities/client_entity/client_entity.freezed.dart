@@ -14,7 +14,13 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$ClientEntity {
 
- int? get id; String get name; String get phone1; String? get phone2;
+ int? get id; String get name;// Always E.164-formatted (e.g. "+919876543210") — mobile only ever
+// stores/uses the phone number in this one form. Web additionally
+// keeps a raw-digits-without-country-code form for its own internal
+// use (phone input widgets, a numeric presence check before display),
+// but that's a web-local/data-layer concern, not a shared one — its
+// model maps straight into this field, no separate field needed here.
+ String get phone1; String? get phone2;
 /// Create a copy of ClientEntity
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -214,6 +220,12 @@ class _ClientEntity implements ClientEntity {
 
 @override final  int? id;
 @override final  String name;
+// Always E.164-formatted (e.g. "+919876543210") — mobile only ever
+// stores/uses the phone number in this one form. Web additionally
+// keeps a raw-digits-without-country-code form for its own internal
+// use (phone input widgets, a numeric presence check before display),
+// but that's a web-local/data-layer concern, not a shared one — its
+// model maps straight into this field, no separate field needed here.
 @override final  String phone1;
 @override final  String? phone2;
 

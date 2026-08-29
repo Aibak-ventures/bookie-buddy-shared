@@ -47,8 +47,7 @@ abstract class ProductSaleInfoEntity with _$ProductSaleInfoEntity {
     String? category,
     String? model,
     MainServiceType? mainServiceType,
-    @Default(const ProductAttributesEntity())
-    ProductAttributesEntity attributes,
+    @Default(ProductAttributesEntity()) ProductAttributesEntity attributes,
   }) = _ProductSaleInfoEntity;
 }
 

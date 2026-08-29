@@ -25,10 +25,21 @@ abstract class ProductInfoEntity with _$ProductInfoEntity {
     required double fabricLength,
     required int amount,
     @Default([]) List<MeasurementValueEntity> measurements,
+    // Mobile-only: a rental's return lifecycle. Rented items don't need
+    // live stock counts — they still "exist", they just need to come
+    // back — so mobile tracks this instead of stock/remainingStock.
     int? hourlyRentPrice,
     @Default(ProductDeliveryStatus.notReturned)
     ProductDeliveryStatus deliveryStatus,
     String? returnedAt,
+    // Web-only: direct-sale stock tracking, real usage across booking,
+    // sales, and product-management screens. No mobile equivalent because
+    // mobile doesn't track live stock at this level — see hourlyRentPrice/
+    // deliveryStatus/returnedAt above for what it tracks instead. Not the
+    // same concept as mobile's catalog-level ProductVariantEntity.stock;
+    // this is the line-item snapshot's own value.
+    int? stock,
+    int? remainingStock,
     @Default(ProductAttributesEntity()) ProductAttributesEntity attributes,
   }) = _ProductInfoEntity;
 }

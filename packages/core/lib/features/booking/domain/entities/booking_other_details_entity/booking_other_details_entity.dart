@@ -14,6 +14,19 @@ abstract class BookingOtherDetailsEntity with _$BookingOtherDetailsEntity {
     int? totalProductCount,
     RoomGuestsEntity? roomGuests,
     List<RoomMealType>? roomMeals,
+    // Web-only: vehicle odometer reading. No mobile equivalent. Named
+    // `runningKilometers` here — web's own model/JSON key is just `end`, an
+    // unclear legacy name kept as-is in the data layer since renaming a
+    // JSON key is a bigger, separate change.
+    //
+    // Read/display only — this value is never submitted back through this
+    // entity. Its one consumer prefills an edit-screen text field; the
+    // value the user actually types is submitted per-product instead
+    // (ProductSelectedEntity.runningKilometers on web), not via
+    // BookingOtherDetails at all, on either the new-booking or edit path.
+    // Don't add a write-side counterpart for this field — there's no write
+    // path here to model.
+    String? runningKilometers,
   }) = _BookingOtherDetailsEntity;
 }
 

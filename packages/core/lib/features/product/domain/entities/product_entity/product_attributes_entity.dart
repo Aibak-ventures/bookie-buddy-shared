@@ -11,4 +11,6 @@ abstract class ProductAttributesEntity with _$ProductAttributesEntity {
     String? permitDate,
     String? registrationNumber,
   }) = _ProductAttributesEntity;
+
+  static const empty = ProductAttributesEntity();
 }

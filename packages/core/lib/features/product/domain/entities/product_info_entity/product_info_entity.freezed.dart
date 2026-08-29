@@ -14,7 +14,16 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$ProductInfoEntity {
 
- int get id; int? get productId; int? get variantId; int? get serviceId; String get name; String? get thumbnailImage; String? get productImage; MainServiceType? get mainServiceType; String? get variantAttribute; String? get color; String? get category; String? get model; int get quantity; double get fabricLength; int get amount; List<MeasurementValueEntity> get measurements; int? get hourlyRentPrice; ProductDeliveryStatus get deliveryStatus; String? get returnedAt; ProductAttributesEntity get attributes;
+ int get id; int? get productId; int? get variantId; int? get serviceId; String get name; String? get thumbnailImage; String? get productImage; MainServiceType? get mainServiceType; String? get variantAttribute; String? get color; String? get category; String? get model; int get quantity; double get fabricLength; int get amount; List<MeasurementValueEntity> get measurements;// Mobile-only: a rental's return lifecycle. Rented items don't need
+// live stock counts — they still "exist", they just need to come
+// back — so mobile tracks this instead of stock/remainingStock.
+ int? get hourlyRentPrice; ProductDeliveryStatus get deliveryStatus; String? get returnedAt;// Web-only: direct-sale stock tracking, real usage across booking,
+// sales, and product-management screens. No mobile equivalent because
+// mobile doesn't track live stock at this level — see hourlyRentPrice/
+// deliveryStatus/returnedAt above for what it tracks instead. Not the
+// same concept as mobile's catalog-level ProductVariantEntity.stock;
+// this is the line-item snapshot's own value.
+ int? get stock; int? get remainingStock; ProductAttributesEntity get attributes;
 /// Create a copy of ProductInfoEntity
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +34,16 @@ $ProductInfoEntityCopyWith<ProductInfoEntity> get copyWith => _$ProductInfoEntit
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ProductInfoEntity&&(identical(other.id, id) || other.id == id)&&(identical(other.productId, productId) || other.productId == productId)&&(identical(other.variantId, variantId) || other.variantId == variantId)&&(identical(other.serviceId, serviceId) || other.serviceId == serviceId)&&(identical(other.name, name) || other.name == name)&&(identical(other.thumbnailImage, thumbnailImage) || other.thumbnailImage == thumbnailImage)&&(identical(other.productImage, productImage) || other.productImage == productImage)&&(identical(other.mainServiceType, mainServiceType) || other.mainServiceType == mainServiceType)&&(identical(other.variantAttribute, variantAttribute) || other.variantAttribute == variantAttribute)&&(identical(other.color, color) || other.color == color)&&(identical(other.category, category) || other.category == category)&&(identical(other.model, model) || other.model == model)&&(identical(other.quantity, quantity) || other.quantity == quantity)&&(identical(other.fabricLength, fabricLength) || other.fabricLength == fabricLength)&&(identical(other.amount, amount) || other.amount == amount)&&const DeepCollectionEquality().equals(other.measurements, measurements)&&(identical(other.hourlyRentPrice, hourlyRentPrice) || other.hourlyRentPrice == hourlyRentPrice)&&(identical(other.deliveryStatus, deliveryStatus) || other.deliveryStatus == deliveryStatus)&&(identical(other.returnedAt, returnedAt) || other.returnedAt == returnedAt)&&(identical(other.attributes, attributes) || other.attributes == attributes));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ProductInfoEntity&&(identical(other.id, id) || other.id == id)&&(identical(other.productId, productId) || other.productId == productId)&&(identical(other.variantId, variantId) || other.variantId == variantId)&&(identical(other.serviceId, serviceId) || other.serviceId == serviceId)&&(identical(other.name, name) || other.name == name)&&(identical(other.thumbnailImage, thumbnailImage) || other.thumbnailImage == thumbnailImage)&&(identical(other.productImage, productImage) || other.productImage == productImage)&&(identical(other.mainServiceType, mainServiceType) || other.mainServiceType == mainServiceType)&&(identical(other.variantAttribute, variantAttribute) || other.variantAttribute == variantAttribute)&&(identical(other.color, color) || other.color == color)&&(identical(other.category, category) || other.category == category)&&(identical(other.model, model) || other.model == model)&&(identical(other.quantity, quantity) || other.quantity == quantity)&&(identical(other.fabricLength, fabricLength) || other.fabricLength == fabricLength)&&(identical(other.amount, amount) || other.amount == amount)&&const DeepCollectionEquality().equals(other.measurements, measurements)&&(identical(other.hourlyRentPrice, hourlyRentPrice) || other.hourlyRentPrice == hourlyRentPrice)&&(identical(other.deliveryStatus, deliveryStatus) || other.deliveryStatus == deliveryStatus)&&(identical(other.returnedAt, returnedAt) || other.returnedAt == returnedAt)&&(identical(other.stock, stock) || other.stock == stock)&&(identical(other.remainingStock, remainingStock) || other.remainingStock == remainingStock)&&(identical(other.attributes, attributes) || other.attributes == attributes));
 }
 
 
 @override
-int get hashCode => Object.hashAll([runtimeType,id,productId,variantId,serviceId,name,thumbnailImage,productImage,mainServiceType,variantAttribute,color,category,model,quantity,fabricLength,amount,const DeepCollectionEquality().hash(measurements),hourlyRentPrice,deliveryStatus,returnedAt,attributes]);
+int get hashCode => Object.hashAll([runtimeType,id,productId,variantId,serviceId,name,thumbnailImage,productImage,mainServiceType,variantAttribute,color,category,model,quantity,fabricLength,amount,const DeepCollectionEquality().hash(measurements),hourlyRentPrice,deliveryStatus,returnedAt,stock,remainingStock,attributes]);
 
 @override
 String toString() {
-  return 'ProductInfoEntity(id: $id, productId: $productId, variantId: $variantId, serviceId: $serviceId, name: $name, thumbnailImage: $thumbnailImage, productImage: $productImage, mainServiceType: $mainServiceType, variantAttribute: $variantAttribute, color: $color, category: $category, model: $model, quantity: $quantity, fabricLength: $fabricLength, amount: $amount, measurements: $measurements, hourlyRentPrice: $hourlyRentPrice, deliveryStatus: $deliveryStatus, returnedAt: $returnedAt, attributes: $attributes)';
+  return 'ProductInfoEntity(id: $id, productId: $productId, variantId: $variantId, serviceId: $serviceId, name: $name, thumbnailImage: $thumbnailImage, productImage: $productImage, mainServiceType: $mainServiceType, variantAttribute: $variantAttribute, color: $color, category: $category, model: $model, quantity: $quantity, fabricLength: $fabricLength, amount: $amount, measurements: $measurements, hourlyRentPrice: $hourlyRentPrice, deliveryStatus: $deliveryStatus, returnedAt: $returnedAt, stock: $stock, remainingStock: $remainingStock, attributes: $attributes)';
 }
 
 
@@ -45,7 +54,7 @@ abstract mixin class $ProductInfoEntityCopyWith<$Res>  {
   factory $ProductInfoEntityCopyWith(ProductInfoEntity value, $Res Function(ProductInfoEntity) _then) = _$ProductInfoEntityCopyWithImpl;
 @useResult
 $Res call({
- int id, int? productId, int? variantId, int? serviceId, String name, String? thumbnailImage, String? productImage, MainServiceType? mainServiceType, String? variantAttribute, String? color, String? category, String? model, int quantity, double fabricLength, int amount, List<MeasurementValueEntity> measurements, int? hourlyRentPrice, ProductDeliveryStatus deliveryStatus, String? returnedAt, ProductAttributesEntity attributes
+ int id, int? productId, int? variantId, int? serviceId, String name, String? thumbnailImage, String? productImage, MainServiceType? mainServiceType, String? variantAttribute, String? color, String? category, String? model, int quantity, double fabricLength, int amount, List<MeasurementValueEntity> measurements, int? hourlyRentPrice, ProductDeliveryStatus deliveryStatus, String? returnedAt, int? stock, int? remainingStock, ProductAttributesEntity attributes
 });
 
 
@@ -62,7 +71,7 @@ class _$ProductInfoEntityCopyWithImpl<$Res>
 
 /// Create a copy of ProductInfoEntity
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? productId = freezed,Object? variantId = freezed,Object? serviceId = freezed,Object? name = null,Object? thumbnailImage = freezed,Object? productImage = freezed,Object? mainServiceType = freezed,Object? variantAttribute = freezed,Object? color = freezed,Object? category = freezed,Object? model = freezed,Object? quantity = null,Object? fabricLength = null,Object? amount = null,Object? measurements = null,Object? hourlyRentPrice = freezed,Object? deliveryStatus = null,Object? returnedAt = freezed,Object? attributes = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? productId = freezed,Object? variantId = freezed,Object? serviceId = freezed,Object? name = null,Object? thumbnailImage = freezed,Object? productImage = freezed,Object? mainServiceType = freezed,Object? variantAttribute = freezed,Object? color = freezed,Object? category = freezed,Object? model = freezed,Object? quantity = null,Object? fabricLength = null,Object? amount = null,Object? measurements = null,Object? hourlyRentPrice = freezed,Object? deliveryStatus = null,Object? returnedAt = freezed,Object? stock = freezed,Object? remainingStock = freezed,Object? attributes = null,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int,productId: freezed == productId ? _self.productId : productId // ignore: cast_nullable_to_non_nullable
@@ -83,7 +92,9 @@ as int,measurements: null == measurements ? _self.measurements : measurements //
 as List<MeasurementValueEntity>,hourlyRentPrice: freezed == hourlyRentPrice ? _self.hourlyRentPrice : hourlyRentPrice // ignore: cast_nullable_to_non_nullable
 as int?,deliveryStatus: null == deliveryStatus ? _self.deliveryStatus : deliveryStatus // ignore: cast_nullable_to_non_nullable
 as ProductDeliveryStatus,returnedAt: freezed == returnedAt ? _self.returnedAt : returnedAt // ignore: cast_nullable_to_non_nullable
-as String?,attributes: null == attributes ? _self.attributes : attributes // ignore: cast_nullable_to_non_nullable
+as String?,stock: freezed == stock ? _self.stock : stock // ignore: cast_nullable_to_non_nullable
+as int?,remainingStock: freezed == remainingStock ? _self.remainingStock : remainingStock // ignore: cast_nullable_to_non_nullable
+as int?,attributes: null == attributes ? _self.attributes : attributes // ignore: cast_nullable_to_non_nullable
 as ProductAttributesEntity,
   ));
 }
@@ -178,10 +189,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id,  int? productId,  int? variantId,  int? serviceId,  String name,  String? thumbnailImage,  String? productImage,  MainServiceType? mainServiceType,  String? variantAttribute,  String? color,  String? category,  String? model,  int quantity,  double fabricLength,  int amount,  List<MeasurementValueEntity> measurements,  int? hourlyRentPrice,  ProductDeliveryStatus deliveryStatus,  String? returnedAt,  ProductAttributesEntity attributes)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id,  int? productId,  int? variantId,  int? serviceId,  String name,  String? thumbnailImage,  String? productImage,  MainServiceType? mainServiceType,  String? variantAttribute,  String? color,  String? category,  String? model,  int quantity,  double fabricLength,  int amount,  List<MeasurementValueEntity> measurements,  int? hourlyRentPrice,  ProductDeliveryStatus deliveryStatus,  String? returnedAt,  int? stock,  int? remainingStock,  ProductAttributesEntity attributes)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _ProductInfoEntity() when $default != null:
-return $default(_that.id,_that.productId,_that.variantId,_that.serviceId,_that.name,_that.thumbnailImage,_that.productImage,_that.mainServiceType,_that.variantAttribute,_that.color,_that.category,_that.model,_that.quantity,_that.fabricLength,_that.amount,_that.measurements,_that.hourlyRentPrice,_that.deliveryStatus,_that.returnedAt,_that.attributes);case _:
+return $default(_that.id,_that.productId,_that.variantId,_that.serviceId,_that.name,_that.thumbnailImage,_that.productImage,_that.mainServiceType,_that.variantAttribute,_that.color,_that.category,_that.model,_that.quantity,_that.fabricLength,_that.amount,_that.measurements,_that.hourlyRentPrice,_that.deliveryStatus,_that.returnedAt,_that.stock,_that.remainingStock,_that.attributes);case _:
   return orElse();
 
 }
@@ -199,10 +210,10 @@ return $default(_that.id,_that.productId,_that.variantId,_that.serviceId,_that.n
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id,  int? productId,  int? variantId,  int? serviceId,  String name,  String? thumbnailImage,  String? productImage,  MainServiceType? mainServiceType,  String? variantAttribute,  String? color,  String? category,  String? model,  int quantity,  double fabricLength,  int amount,  List<MeasurementValueEntity> measurements,  int? hourlyRentPrice,  ProductDeliveryStatus deliveryStatus,  String? returnedAt,  ProductAttributesEntity attributes)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id,  int? productId,  int? variantId,  int? serviceId,  String name,  String? thumbnailImage,  String? productImage,  MainServiceType? mainServiceType,  String? variantAttribute,  String? color,  String? category,  String? model,  int quantity,  double fabricLength,  int amount,  List<MeasurementValueEntity> measurements,  int? hourlyRentPrice,  ProductDeliveryStatus deliveryStatus,  String? returnedAt,  int? stock,  int? remainingStock,  ProductAttributesEntity attributes)  $default,) {final _that = this;
 switch (_that) {
 case _ProductInfoEntity():
-return $default(_that.id,_that.productId,_that.variantId,_that.serviceId,_that.name,_that.thumbnailImage,_that.productImage,_that.mainServiceType,_that.variantAttribute,_that.color,_that.category,_that.model,_that.quantity,_that.fabricLength,_that.amount,_that.measurements,_that.hourlyRentPrice,_that.deliveryStatus,_that.returnedAt,_that.attributes);case _:
+return $default(_that.id,_that.productId,_that.variantId,_that.serviceId,_that.name,_that.thumbnailImage,_that.productImage,_that.mainServiceType,_that.variantAttribute,_that.color,_that.category,_that.model,_that.quantity,_that.fabricLength,_that.amount,_that.measurements,_that.hourlyRentPrice,_that.deliveryStatus,_that.returnedAt,_that.stock,_that.remainingStock,_that.attributes);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -219,10 +230,10 @@ return $default(_that.id,_that.productId,_that.variantId,_that.serviceId,_that.n
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id,  int? productId,  int? variantId,  int? serviceId,  String name,  String? thumbnailImage,  String? productImage,  MainServiceType? mainServiceType,  String? variantAttribute,  String? color,  String? category,  String? model,  int quantity,  double fabricLength,  int amount,  List<MeasurementValueEntity> measurements,  int? hourlyRentPrice,  ProductDeliveryStatus deliveryStatus,  String? returnedAt,  ProductAttributesEntity attributes)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id,  int? productId,  int? variantId,  int? serviceId,  String name,  String? thumbnailImage,  String? productImage,  MainServiceType? mainServiceType,  String? variantAttribute,  String? color,  String? category,  String? model,  int quantity,  double fabricLength,  int amount,  List<MeasurementValueEntity> measurements,  int? hourlyRentPrice,  ProductDeliveryStatus deliveryStatus,  String? returnedAt,  int? stock,  int? remainingStock,  ProductAttributesEntity attributes)?  $default,) {final _that = this;
 switch (_that) {
 case _ProductInfoEntity() when $default != null:
-return $default(_that.id,_that.productId,_that.variantId,_that.serviceId,_that.name,_that.thumbnailImage,_that.productImage,_that.mainServiceType,_that.variantAttribute,_that.color,_that.category,_that.model,_that.quantity,_that.fabricLength,_that.amount,_that.measurements,_that.hourlyRentPrice,_that.deliveryStatus,_that.returnedAt,_that.attributes);case _:
+return $default(_that.id,_that.productId,_that.variantId,_that.serviceId,_that.name,_that.thumbnailImage,_that.productImage,_that.mainServiceType,_that.variantAttribute,_that.color,_that.category,_that.model,_that.quantity,_that.fabricLength,_that.amount,_that.measurements,_that.hourlyRentPrice,_that.deliveryStatus,_that.returnedAt,_that.stock,_that.remainingStock,_that.attributes);case _:
   return null;
 
 }
@@ -234,7 +245,7 @@ return $default(_that.id,_that.productId,_that.variantId,_that.serviceId,_that.n
 
 
 class _ProductInfoEntity implements ProductInfoEntity {
-  const _ProductInfoEntity({required this.id, required this.productId, required this.variantId, this.serviceId, required this.name, required this.thumbnailImage, this.productImage, this.mainServiceType, this.variantAttribute, this.color, this.category, this.model, required this.quantity, required this.fabricLength, required this.amount, final  List<MeasurementValueEntity> measurements = const [], this.hourlyRentPrice, this.deliveryStatus = ProductDeliveryStatus.notReturned, this.returnedAt, this.attributes = const ProductAttributesEntity()}): _measurements = measurements;
+  const _ProductInfoEntity({required this.id, required this.productId, required this.variantId, this.serviceId, required this.name, required this.thumbnailImage, this.productImage, this.mainServiceType, this.variantAttribute, this.color, this.category, this.model, required this.quantity, required this.fabricLength, required this.amount, final  List<MeasurementValueEntity> measurements = const [], this.hourlyRentPrice, this.deliveryStatus = ProductDeliveryStatus.notReturned, this.returnedAt, this.stock, this.remainingStock, this.attributes = const ProductAttributesEntity()}): _measurements = measurements;
   
 
 @override final  int id;
@@ -259,9 +270,20 @@ class _ProductInfoEntity implements ProductInfoEntity {
   return EqualUnmodifiableListView(_measurements);
 }
 
+// Mobile-only: a rental's return lifecycle. Rented items don't need
+// live stock counts — they still "exist", they just need to come
+// back — so mobile tracks this instead of stock/remainingStock.
 @override final  int? hourlyRentPrice;
 @override@JsonKey() final  ProductDeliveryStatus deliveryStatus;
 @override final  String? returnedAt;
+// Web-only: direct-sale stock tracking, real usage across booking,
+// sales, and product-management screens. No mobile equivalent because
+// mobile doesn't track live stock at this level — see hourlyRentPrice/
+// deliveryStatus/returnedAt above for what it tracks instead. Not the
+// same concept as mobile's catalog-level ProductVariantEntity.stock;
+// this is the line-item snapshot's own value.
+@override final  int? stock;
+@override final  int? remainingStock;
 @override@JsonKey() final  ProductAttributesEntity attributes;
 
 /// Create a copy of ProductInfoEntity
@@ -274,16 +296,16 @@ _$ProductInfoEntityCopyWith<_ProductInfoEntity> get copyWith => __$ProductInfoEn
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ProductInfoEntity&&(identical(other.id, id) || other.id == id)&&(identical(other.productId, productId) || other.productId == productId)&&(identical(other.variantId, variantId) || other.variantId == variantId)&&(identical(other.serviceId, serviceId) || other.serviceId == serviceId)&&(identical(other.name, name) || other.name == name)&&(identical(other.thumbnailImage, thumbnailImage) || other.thumbnailImage == thumbnailImage)&&(identical(other.productImage, productImage) || other.productImage == productImage)&&(identical(other.mainServiceType, mainServiceType) || other.mainServiceType == mainServiceType)&&(identical(other.variantAttribute, variantAttribute) || other.variantAttribute == variantAttribute)&&(identical(other.color, color) || other.color == color)&&(identical(other.category, category) || other.category == category)&&(identical(other.model, model) || other.model == model)&&(identical(other.quantity, quantity) || other.quantity == quantity)&&(identical(other.fabricLength, fabricLength) || other.fabricLength == fabricLength)&&(identical(other.amount, amount) || other.amount == amount)&&const DeepCollectionEquality().equals(other._measurements, _measurements)&&(identical(other.hourlyRentPrice, hourlyRentPrice) || other.hourlyRentPrice == hourlyRentPrice)&&(identical(other.deliveryStatus, deliveryStatus) || other.deliveryStatus == deliveryStatus)&&(identical(other.returnedAt, returnedAt) || other.returnedAt == returnedAt)&&(identical(other.attributes, attributes) || other.attributes == attributes));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ProductInfoEntity&&(identical(other.id, id) || other.id == id)&&(identical(other.productId, productId) || other.productId == productId)&&(identical(other.variantId, variantId) || other.variantId == variantId)&&(identical(other.serviceId, serviceId) || other.serviceId == serviceId)&&(identical(other.name, name) || other.name == name)&&(identical(other.thumbnailImage, thumbnailImage) || other.thumbnailImage == thumbnailImage)&&(identical(other.productImage, productImage) || other.productImage == productImage)&&(identical(other.mainServiceType, mainServiceType) || other.mainServiceType == mainServiceType)&&(identical(other.variantAttribute, variantAttribute) || other.variantAttribute == variantAttribute)&&(identical(other.color, color) || other.color == color)&&(identical(other.category, category) || other.category == category)&&(identical(other.model, model) || other.model == model)&&(identical(other.quantity, quantity) || other.quantity == quantity)&&(identical(other.fabricLength, fabricLength) || other.fabricLength == fabricLength)&&(identical(other.amount, amount) || other.amount == amount)&&const DeepCollectionEquality().equals(other._measurements, _measurements)&&(identical(other.hourlyRentPrice, hourlyRentPrice) || other.hourlyRentPrice == hourlyRentPrice)&&(identical(other.deliveryStatus, deliveryStatus) || other.deliveryStatus == deliveryStatus)&&(identical(other.returnedAt, returnedAt) || other.returnedAt == returnedAt)&&(identical(other.stock, stock) || other.stock == stock)&&(identical(other.remainingStock, remainingStock) || other.remainingStock == remainingStock)&&(identical(other.attributes, attributes) || other.attributes == attributes));
 }
 
 
 @override
-int get hashCode => Object.hashAll([runtimeType,id,productId,variantId,serviceId,name,thumbnailImage,productImage,mainServiceType,variantAttribute,color,category,model,quantity,fabricLength,amount,const DeepCollectionEquality().hash(_measurements),hourlyRentPrice,deliveryStatus,returnedAt,attributes]);
+int get hashCode => Object.hashAll([runtimeType,id,productId,variantId,serviceId,name,thumbnailImage,productImage,mainServiceType,variantAttribute,color,category,model,quantity,fabricLength,amount,const DeepCollectionEquality().hash(_measurements),hourlyRentPrice,deliveryStatus,returnedAt,stock,remainingStock,attributes]);
 
 @override
 String toString() {
-  return 'ProductInfoEntity(id: $id, productId: $productId, variantId: $variantId, serviceId: $serviceId, name: $name, thumbnailImage: $thumbnailImage, productImage: $productImage, mainServiceType: $mainServiceType, variantAttribute: $variantAttribute, color: $color, category: $category, model: $model, quantity: $quantity, fabricLength: $fabricLength, amount: $amount, measurements: $measurements, hourlyRentPrice: $hourlyRentPrice, deliveryStatus: $deliveryStatus, returnedAt: $returnedAt, attributes: $attributes)';
+  return 'ProductInfoEntity(id: $id, productId: $productId, variantId: $variantId, serviceId: $serviceId, name: $name, thumbnailImage: $thumbnailImage, productImage: $productImage, mainServiceType: $mainServiceType, variantAttribute: $variantAttribute, color: $color, category: $category, model: $model, quantity: $quantity, fabricLength: $fabricLength, amount: $amount, measurements: $measurements, hourlyRentPrice: $hourlyRentPrice, deliveryStatus: $deliveryStatus, returnedAt: $returnedAt, stock: $stock, remainingStock: $remainingStock, attributes: $attributes)';
 }
 
 
@@ -294,7 +316,7 @@ abstract mixin class _$ProductInfoEntityCopyWith<$Res> implements $ProductInfoEn
   factory _$ProductInfoEntityCopyWith(_ProductInfoEntity value, $Res Function(_ProductInfoEntity) _then) = __$ProductInfoEntityCopyWithImpl;
 @override @useResult
 $Res call({
- int id, int? productId, int? variantId, int? serviceId, String name, String? thumbnailImage, String? productImage, MainServiceType? mainServiceType, String? variantAttribute, String? color, String? category, String? model, int quantity, double fabricLength, int amount, List<MeasurementValueEntity> measurements, int? hourlyRentPrice, ProductDeliveryStatus deliveryStatus, String? returnedAt, ProductAttributesEntity attributes
+ int id, int? productId, int? variantId, int? serviceId, String name, String? thumbnailImage, String? productImage, MainServiceType? mainServiceType, String? variantAttribute, String? color, String? category, String? model, int quantity, double fabricLength, int amount, List<MeasurementValueEntity> measurements, int? hourlyRentPrice, ProductDeliveryStatus deliveryStatus, String? returnedAt, int? stock, int? remainingStock, ProductAttributesEntity attributes
 });
 
 
@@ -311,7 +333,7 @@ class __$ProductInfoEntityCopyWithImpl<$Res>
 
 /// Create a copy of ProductInfoEntity
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? productId = freezed,Object? variantId = freezed,Object? serviceId = freezed,Object? name = null,Object? thumbnailImage = freezed,Object? productImage = freezed,Object? mainServiceType = freezed,Object? variantAttribute = freezed,Object? color = freezed,Object? category = freezed,Object? model = freezed,Object? quantity = null,Object? fabricLength = null,Object? amount = null,Object? measurements = null,Object? hourlyRentPrice = freezed,Object? deliveryStatus = null,Object? returnedAt = freezed,Object? attributes = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? productId = freezed,Object? variantId = freezed,Object? serviceId = freezed,Object? name = null,Object? thumbnailImage = freezed,Object? productImage = freezed,Object? mainServiceType = freezed,Object? variantAttribute = freezed,Object? color = freezed,Object? category = freezed,Object? model = freezed,Object? quantity = null,Object? fabricLength = null,Object? amount = null,Object? measurements = null,Object? hourlyRentPrice = freezed,Object? deliveryStatus = null,Object? returnedAt = freezed,Object? stock = freezed,Object? remainingStock = freezed,Object? attributes = null,}) {
   return _then(_ProductInfoEntity(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int,productId: freezed == productId ? _self.productId : productId // ignore: cast_nullable_to_non_nullable
@@ -332,7 +354,9 @@ as int,measurements: null == measurements ? _self._measurements : measurements /
 as List<MeasurementValueEntity>,hourlyRentPrice: freezed == hourlyRentPrice ? _self.hourlyRentPrice : hourlyRentPrice // ignore: cast_nullable_to_non_nullable
 as int?,deliveryStatus: null == deliveryStatus ? _self.deliveryStatus : deliveryStatus // ignore: cast_nullable_to_non_nullable
 as ProductDeliveryStatus,returnedAt: freezed == returnedAt ? _self.returnedAt : returnedAt // ignore: cast_nullable_to_non_nullable
-as String?,attributes: null == attributes ? _self.attributes : attributes // ignore: cast_nullable_to_non_nullable
+as String?,stock: freezed == stock ? _self.stock : stock // ignore: cast_nullable_to_non_nullable
+as int?,remainingStock: freezed == remainingStock ? _self.remainingStock : remainingStock // ignore: cast_nullable_to_non_nullable
+as int?,attributes: null == attributes ? _self.attributes : attributes // ignore: cast_nullable_to_non_nullable
 as ProductAttributesEntity,
   ));
 }
