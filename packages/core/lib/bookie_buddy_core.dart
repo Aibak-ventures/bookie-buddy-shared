@@ -25,6 +25,7 @@ export 'features/service/domain/entities/service_entity/service_entity.dart';
 
 // Cross-feature entities/enums the above depend on
 export 'core/common/entities/additional_charges_entity/additional_charges_entity.dart';
+export 'core/common/helpers/shop_field_helper.dart';
 export 'core/common/entities/applied_tax_entity/applied_tax_entity.dart';
 export 'core/common/entities/document_details_entity/document_details_entity.dart';
 export 'core/common/entities/tax_configuration_entity/tax_configuration_entity.dart';

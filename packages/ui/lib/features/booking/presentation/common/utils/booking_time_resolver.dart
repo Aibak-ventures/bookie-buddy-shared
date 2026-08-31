@@ -3,12 +3,15 @@ import 'package:flutter/material.dart';
 
 import '../../../../../utils/extensions/receipt_format_extensions.dart';
 
-// Ported from the mobile app's booking/presentation/common/utils/
-// booking_time_resolver.dart — needs Flutter (TimeOfDay), so it lives here
-// rather than in bookie_buddy_core, same as the receipt canvas itself.
-// Narrow DateTime/TimeOfDay helpers it needs (`toTimeOfDay`,
-// `formatTime12Hour`) are inlined below rather than pulling in mobile's
-// large date_time_extensions.dart for two one-line methods.
+// Genuinely shared, not printer-specific — was duplicated three ways
+// (mobile's own copy, web's own copy, and a private inline copy baked
+// into this package's booking_receipt_canvas_builder) before being
+// promoted here as the one implementation. Needs Flutter (TimeOfDay), so
+// it lives in bookie_buddy_ui rather than bookie_buddy_core, same as the
+// receipt canvas itself. Narrow DateTime/TimeOfDay helpers it needs
+// (`toTimeOfDay`, `formatTime12Hour`) are inlined below rather than
+// pulling in either app's large date_time_extensions.dart for two
+// one-line methods.
 
 extension _DateTimeToTimeOfDay on DateTime {
   TimeOfDay get toTimeOfDay => TimeOfDay(hour: hour, minute: minute);

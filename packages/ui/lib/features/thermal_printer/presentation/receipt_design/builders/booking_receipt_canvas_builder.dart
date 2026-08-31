@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:bookie_buddy_core/bookie_buddy_core.dart';
 
 import '../../../../../utils/extensions/receipt_format_extensions.dart';
-import '../shared/booking_time_resolver.dart';
+import '../../../../booking/presentation/common/utils/booking_time_resolver.dart';
 import '../shared/receipt_canvas.dart';
 import '../shared/receipt_date_formatter.dart';
 import '../shared/receipt_shared_sections.dart';
