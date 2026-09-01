@@ -76,6 +76,9 @@ class ReceiptSharedSections {
 
   /// Prints one row per applied tax, preceded by a divider — a no-op when
   /// [appliedTaxes] is empty, so callers can call this unconditionally.
+  ///
+  /// A GST rule prints as its CGST + SGST halves (see
+  /// [AppliedTaxGstSplit.displayLines]); every other tax prints as one row.
   static void buildTaxRows(
     ReceiptCanvas canvas,
     List<AppliedTaxEntity> appliedTaxes,
@@ -83,10 +86,12 @@ class ReceiptSharedSections {
     if (appliedTaxes.isEmpty) return;
     canvas.divider();
     for (final tax in appliedTaxes) {
-      canvas.row([
-        ReceiptColumn(tax.formattedTaxLabel),
-        ReceiptColumn(tax.taxAmount.toCurrency(), align: TextAlign.right),
-      ]);
+      for (final line in tax.displayLines) {
+        canvas.row([
+          ReceiptColumn(line.label),
+          ReceiptColumn(line.amount.toCurrency(), align: TextAlign.right),
+        ]);
+      }
     }
   }
 }

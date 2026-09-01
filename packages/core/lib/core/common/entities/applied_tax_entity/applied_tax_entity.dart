@@ -54,6 +54,45 @@ extension AppliedTaxLabel on AppliedTaxEntity {
   );
 }
 
+/// One displayable tax line: the label to print and the amount next to it.
+/// A plain tax maps to a single line; a GST rule maps to its CGST + SGST
+/// halves — see [AppliedTaxGstSplit].
+typedef TaxDisplayLine = ({String label, double amount});
+
+/// Splits a GST tax into the CGST + SGST halves an Indian GST invoice has to
+/// show. This is presentation only — the stored snapshot keeps the single
+/// combined rule the backend charged, and the halves always add back up to
+/// [taxAmount] exactly (the second half absorbs any odd remainder).
+///
+/// Only a rule *named* GST is split; a shop that already configured separate
+/// CGST/SGST/IGST rules, or any non-GST tax, is left as one line.
+extension AppliedTaxGstSplit on AppliedTaxEntity {
+  static final RegExp _gstName = RegExp(r'^gst$', caseSensitive: false);
+
+  bool get isSplittableGst => _gstName.hasMatch(taxName.trim());
+
+  /// The lines to print for this tax: `[CGST, SGST]` for a GST rule,
+  /// otherwise the single combined line.
+  List<TaxDisplayLine> get displayLines {
+    if (!isSplittableGst) {
+      return [(label: formattedTaxLabel, amount: taxAmount)];
+    }
+
+    final halfRate = taxRate / 2;
+    final cgstAmount = (taxAmount / 2 * 100).round() / 100;
+    String labelFor(String name) => formatTaxLabel(
+      taxName: name,
+      taxRate: halfRate,
+      taxCalculationType: taxCalculationType,
+    );
+
+    return [
+      (label: labelFor('CGST'), amount: cgstAmount),
+      (label: labelFor('SGST'), amount: taxAmount - cgstAmount),
+    ];
+  }
+}
+
 /// Recalculates this same tax rule (stored rate/type/components — never the
 /// shop's current live config) against a fresh set of amounts. Use this
 /// whenever a booking/sale/custom work's amounts are edited after creation,
