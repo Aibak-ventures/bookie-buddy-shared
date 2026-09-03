@@ -16,5 +16,6 @@
     "thresholded",
     "usecase"
   ],
-  "dart.flutterSdkPath": ".fvm/versions/3.41.9"
+  "dart.flutterSdkPath": ".fvm/versions/3.41.9",
+  "code-runner.runInTerminal": true
 }
