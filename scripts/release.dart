@@ -171,18 +171,18 @@ void main(List<String> args) {
   }
 
   // 8. Check lib/core purity.
-  print('Checking lib/core purity...');
+  print('\nChecking lib/core purity...');
   _run('dart', ['run', 'scripts/check_core_purity.dart'], repoRoot);
 
   // 8b. Run the test suite. Apps pin this repo by tag — a regression that
   // slips into a release gets silently consumed under that tag's name, so
   // this gates the release exactly like the purity check does.
-  print('Running tests...');
+  print('\nRunning tests...');
   _run('flutter', ['test'], repoRoot);
 
   // 9. Update pubspec.yaml, if a version was given.
   if (args.isNotEmpty) {
-    print('Bumping ${pubspec.path} to $version');
+    print('\nBumping ${pubspec.path} to $version');
     // Only touches the top-level `version:` key, not any dependency
     // version — anchored to line start.
     final updated = pubspecText.replaceFirst(
@@ -206,14 +206,14 @@ void main(List<String> args) {
     quiet: true,
   );
   if (pubspecDiff.stdout.toString().trim().isEmpty) {
-    print('pubspec.yaml already has version $version at HEAD — nothing to '
+    print('\npubspec.yaml already has version $version at HEAD — nothing to '
         'commit, tagging HEAD directly.');
   } else {
-    print('Committing release...');
+    print('\nCommitting release...');
     _run('git', ['-C', repoRoot, 'add', 'pubspec.yaml'], repoRoot);
     _run('git', ['-C', repoRoot, 'commit', '-m', 'chore: release $tag'], repoRoot);
   }
-  print('Tagging $tag...');
+  print('\nTagging $tag...');
   _run('git', ['-C', repoRoot, 'tag', '-a', tag, '-m', 'Release $tag'], repoRoot);
   print('Tagged $tag locally.');
 
