@@ -1,0 +1,15 @@
+include: package:flutter_lints/flutter.yaml
+
+# lib/core/ is pure Dart by convention — no lib/ui/ or Flutter-only symbol
+# should be imported there. Not compiler-enforced now that both live in one
+# package (see scripts/check_core_purity.dart, run via scripts/release.dart).
+linter:
+  rules:
+    - prefer_single_quotes
+    - always_declare_return_types
+    - avoid_returning_null_for_void
+
+analyzer:
+  exclude:
+    # CLI scripts, not library code — print() is the point.
+    - scripts/**

@@ -5,6 +5,17 @@ see `docs/shared-packages-plan.md` in the mobile app repo; for the
 history of what's been extracted so far, see `docs/PENDING.md` in this
 repo. This file is the one to re-read before touching shared code.
 
+> This repo ships one package, `bookie_buddy_shared`, with `lib/core/`
+> (pure Dart by convention) and `lib/ui/` (Flutter-typed) as folders, not
+> separate pub packages — see `CHANGELOG.md` for the merge from the former
+> `bookie_buddy_core` + `bookie_buddy_ui` packages.
+>
+> ⚠️ **Consuming apps have not migrated to `bookie_buddy_shared` yet.**
+> `Bookie-Buddy` and `Desktop-Bookie-buddy` still declare
+> `bookie_buddy_core` / `bookie_buddy_ui` as of this writing — that
+> migration is separate, explicit follow-up work. The dependency examples
+> below describe the target state once that's done.
+
 ## How the apps depend on this repo
 
 Two ways, both permanent — pick by task, not by date:
@@ -21,28 +32,36 @@ Two ways, both permanent — pick by task, not by date:
 ```yaml
 # pubspec.yaml
 dependencies:
-  bookie_buddy_core:
+  bookie_buddy_shared:
     git:
       url: https://github.com/<org>/bookie-buddy-shared.git
-      path: packages/core
-      ref: v0.2.0   # a tag, not a branch
-  bookie_buddy_ui:
-    git:
-      url: https://github.com/<org>/bookie-buddy-shared.git
-      path: packages/ui
-      ref: v0.2.0
+      ref: v0.1.0   # a tag, not a branch
 ```
+
+Now that this repo is a single package, a tag name works directly — no
+SHA-pinning workaround needed. (That workaround existed only because the
+old `bookie_buddy_ui` package had a `path:` dependency on the old
+`bookie_buddy_core` package, and pub's solver couldn't reconcile a
+tag-pinned direct dependency with the commit-pinned nested one. With one
+package there's nothing nested to conflict with.)
 
 Bump it like any dependency: edit `ref:`, run `flutter pub get`, commit
 the lockfile.
 
 Cut a new tag when this repo has changes an app needs, via
-`scripts/release.sh` — it bumps `version:` in every `packages/*/pubspec.yaml`
-to match, commits, and tags in one step (doesn't push):
+`scripts/release.dart` — it checks `lib/core/` purity
+(`scripts/check_core_purity.dart`), bumps `version:` in `pubspec.yaml`,
+commits, and tags, then asks before pushing:
 
 ```bash
-scripts/release.sh v0.3.0
-git push origin main --tags
+dart run scripts/release.dart 0.2.0
+```
+
+Already hand-edited `version:` in `pubspec.yaml` and just want to commit,
+tag, and release it as-is? Omit the version — it reads the current one:
+
+```bash
+dart run scripts/release.dart
 ```
 
 Apps can be pinned to different tags — see `docs/PENDING.md` for what
@@ -55,15 +74,13 @@ this in each app's **`pubspec_overrides.yaml`** (not `pubspec.yaml`):
 
 ```yaml
 dependency_overrides:
-  bookie_buddy_core:
-    path: ../bookie-buddy-shared/packages/core
-  bookie_buddy_ui:
-    path: ../bookie-buddy-shared/packages/ui
+  bookie_buddy_shared:
+    path: ../bookie-buddy-shared
 ```
 
 Edits here are then live in the app instantly — no publish, no version
-bump, no `pub get`. Requires all three repos as sibling folders at that
-exact relative path.
+bump, no `pub get`. Requires this repo and the app as sibling folders at
+that exact relative path.
 
 `pubspec_overrides.yaml` is git-ignored by default (Dart's dedicated
 override file — [docs](https://dart.dev/tools/pub/dependencies#dependency-overrides)),
@@ -108,7 +125,7 @@ To double check what actually got resolved after `pub get`, look at the
 resolved path in `.dart_tool/package_config.json`:
 
 ```bash
-grep -A2 '"name": "bookie_buddy_core"' .dart_tool/package_config.json
+grep -A2 '"name": "bookie_buddy_shared"' .dart_tool/package_config.json
 ```
 
 A `rootUri` starting with `file://../bookie-buddy-shared/...` means the
@@ -118,24 +135,34 @@ the pinned tag.
 ## Deciding where a piece of code belongs
 
 - **Pure Dart, no Flutter import** (entities, usecases, repo interfaces,
-  business-logic enums, plain-value helpers) → `bookie_buddy_core`.
+  business-logic enums, plain-value helpers) → `lib/core/`.
 - **Flutter-typed but a pure function of data → visual property** (an
   enum → `Color`/`IconData` extension, a receipt-canvas builder, design
-  tokens) → `bookie_buddy_ui`.
+  tokens) → `lib/ui/`.
 - **Has a layout or interaction decision baked in** (a screen, a card,
   anything that differs between mobile and web on purpose — density,
   navigation chrome, hover states) → stays local to each app. Don't force
   this into the shared package just because it *could* compile there.
 
 When in doubt, check the entity/model split rule in the root `CLAUDE.md`
-first — it still applies inside `core`.
+first — it still applies inside `lib/core/`.
+
+`lib/core/`'s no-Flutter-import rule isn't compiler-enforced any more
+(both folders are one Flutter package now) — `scripts/check_core_purity.dart`
+is the enforcement instead; it runs automatically in `scripts/release.dart`,
+so a violation can't ship, but run it yourself after touching `lib/core/`
+rather than waiting for release time:
+
+```bash
+dart run scripts/check_core_purity.dart
+```
 
 ## Adding something brand-new
 
 If a feature doesn't exist in either app yet and you know both will need
-it, write it directly in `core`/`ui` to begin with. Don't write it in one
-app locally "for now" — that just creates the duplication you'll have to
-undo later.
+it, write it directly in `lib/core`/`lib/ui` to begin with. Don't write
+it in one app locally "for now" — that just creates the duplication
+you'll have to undo later.
 
 ## Moving existing duplicated code into the shared package
 
@@ -147,7 +174,7 @@ in order:
    copies after normalizing the package name, e.g.:
 
    ```bash
-   diff <(sed 's/booking_application/bookie_buddy_core/g' mobile_file.dart) core_file.dart
+   diff <(sed 's/booking_application/bookie_buddy_shared/g' mobile_file.dart) core_file.dart
    ```
 
    A real difference doesn't block sharing — it usually means one app
@@ -168,15 +195,15 @@ in order:
    both imports and `export`s `product_attributes_entity.dart`) — a
    barrel importer won't show up in a search for the direct file path.
    If a barrel re-export exists, it's often less churn to turn the local
-   file into a one-line `export 'package:bookie_buddy_core/...';` shim
-   than to touch every barrel consumer.
+   file into a one-line `export 'package:bookie_buddy_shared/core/...';`
+   shim than to touch every barrel consumer.
 
-3. **Add the file to `core`/`ui`** at a sensible permanent location (not
-   nested under whatever feature happened to need it first — see the
-   `booking_time_resolver.dart` move, which started under
-   `thermal_printer/` and got promoted to `features/booking/` once a
-   second consumer showed up), and add it to that package's barrel
-   export file (`bookie_buddy_core.dart` / `bookie_buddy_ui.dart`).
+3. **Add the file to `lib/core`/`lib/ui`** at a sensible permanent
+   location (not nested under whatever feature happened to need it
+   first — see the `booking_time_resolver.dart` move, which started
+   under `thermal_printer/` and got promoted to `features/booking/` once
+   a second consumer showed up), and add it to the barrel export file
+   (`lib/bookie_buddy_shared.dart`).
 
 4. **Repoint every real consumer's import**, then **delete both apps'
    local copies**. Use `perl -pi -e` for bulk import-path swaps, not
@@ -197,19 +224,18 @@ in order:
    different libraries" errors, not a clean compile.
 
 6. **Run codegen if you touched any `@freezed`/`@JsonSerializable`
-   class**, in whichever package(s) changed:
+   class**:
 
    ```bash
-   dart run build_runner build --delete-conflicting-outputs   # core (pure Dart)
-   flutter pub run build_runner build --delete-conflicting-outputs   # ui, mobile, web
+   dart run build_runner build --delete-conflicting-outputs   # this repo
+   flutter pub run build_runner build --delete-conflicting-outputs   # mobile, web
    ```
 
-7. **Analyze all four**, every time, even if you only think you touched
+7. **Analyze all three**, every time, even if you only think you touched
    one:
 
    ```bash
-   (cd packages/core && dart analyze)
-   (cd packages/ui && flutter analyze)
+   (cd . && flutter analyze)
    (cd ../Bookie-Buddy && flutter analyze)
    (cd ../Desktop-Bookie-buddy && flutter analyze)
    ```
@@ -227,7 +253,7 @@ in order:
 
    ```bash
    comm -12 \
-     <(cd packages/core/lib && find . -name "*.dart" ! -name "*.freezed.dart" ! -name "*.g.dart" | sort) \
+     <(cd lib/core && find . -name "*.dart" ! -name "*.freezed.dart" ! -name "*.g.dart" | sort) \
      <(cd ../Bookie-Buddy/lib && find . -name "*.dart" ! -name "*.freezed.dart" ! -name "*.g.dart" | sort)
    ```
 
