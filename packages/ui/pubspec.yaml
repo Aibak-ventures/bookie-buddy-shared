@@ -6,7 +6,7 @@ description: >
   Depends on bookie_buddy_core. See docs/shared-packages-plan.md in the
   mobile repo for the full rationale, and docs/PENDING.md in this repo for
   what's copied here but not yet wired up.
-version: 0.2.0
+version: 0.3.0
 publish_to: "none"
 
 environment:

@@ -4,7 +4,7 @@ description: >
   domain-referenced enums) for Bookie Buddy's mobile and web apps.
   Pure Dart — no Flutter dependency. See docs/shared-packages-plan.md in the
   mobile repo for the full rationale.
-version: 0.2.0
+version: 0.3.0
 publish_to: "none"
 
 environment:
