@@ -1,6 +1,6 @@
-import 'package:bookie_buddy_shared/core/core/common/entities/tax_configuration_request_entity/tax_configuration_request_entity.dart';
 import 'package:bookie_buddy_shared/core/core/constants/enums/tax_calculation_type_enum.dart';
 import 'package:bookie_buddy_shared/core/core/constants/enums/taxable_component_enum.dart';
+import 'package:bookie_buddy_shared/core/features/tax_and_compliance/domain/entities/tax_configuration_request_entity/tax_configuration_request_entity.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'tax_configuration_request_model.freezed.dart';
