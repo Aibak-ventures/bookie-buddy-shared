@@ -1,6 +1,8 @@
 
 import 'base_pagination_model.dart';
 
+export 'base_pagination_model.dart';
+
 class PaginationModel<T> extends BasePaginationModel {
   final List<T> data;
   @override
