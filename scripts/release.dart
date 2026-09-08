@@ -15,8 +15,10 @@ void main(List<String> args) {
   // 1. Validate arguments.
   if (args.length > 1) {
     stderr.writeln('Error: too many arguments (${args.length}).');
-    stderr.writeln('Fix: pass at most one — a semver version like 0.2.0 — '
-        'or none to release the version already in pubspec.yaml.');
+    stderr.writeln(
+      'Fix: pass at most one — a semver version like 0.2.0 — '
+      'or none to release the version already in pubspec.yaml.',
+    );
     stderr.writeln('Usage: dart run scripts/release.dart [vX.Y.Z]');
     exit(1);
   }
@@ -35,9 +37,13 @@ void main(List<String> args) {
   );
   if (insideRepo.exitCode != 0) {
     stderr.writeln('Error: $repoRoot is not a git repository.');
-    stderr.writeln('Cause: `git rev-parse --is-inside-work-tree` failed there.');
-    stderr.writeln('Fix: run this from inside the bookie-buddy-shared checkout '
-        '(or `git init` there first, if it\'s genuinely not a repo yet).');
+    stderr.writeln(
+      'Cause: `git rev-parse --is-inside-work-tree` failed there.',
+    );
+    stderr.writeln(
+      'Fix: run this from inside the bookie-buddy-shared checkout '
+      '(or `git init` there first, if it\'s genuinely not a repo yet).',
+    );
     exit(1);
   }
 
@@ -51,11 +57,15 @@ void main(List<String> args) {
   final branch = branchResult.stdout.toString().trim();
   if (branch == 'HEAD') {
     stderr.writeln('Error: you\'re in a detached HEAD state.');
-    stderr.writeln('Cause: `git rev-parse --abbrev-ref HEAD` returned "HEAD", not a '
-        'branch name — there\'s nothing for the release commit to land on, and '
-        'nothing to push it from later.');
-    stderr.writeln('Fix: `git checkout <branch>` (e.g. `git checkout main`) before '
-        'releasing.');
+    stderr.writeln(
+      'Cause: `git rev-parse --abbrev-ref HEAD` returned "HEAD", not a '
+      'branch name — there\'s nothing for the release commit to land on, and '
+      'nothing to push it from later.',
+    );
+    stderr.writeln(
+      'Fix: `git checkout <branch>` (e.g. `git checkout main`) before '
+      'releasing.',
+    );
     exit(1);
   }
 
@@ -70,77 +80,160 @@ void main(List<String> args) {
   // get swept in — but releasing from an otherwise-dirty tree is a good
   // sign you didn't mean to release *right now*, or forgot the other
   // changes exist. Catch that before tagging, not after.
-  final status = _run('git', ['-C', repoRoot, 'status', '--porcelain'], repoRoot, quiet: true);
+  final status = _run(
+    'git',
+    ['-C', repoRoot, 'status', '--porcelain'],
+    repoRoot,
+    quiet: true,
+  );
   final dirty = status.stdout
       .toString()
       .split('\n')
       .where((l) => l.trim().isNotEmpty && !l.trim().endsWith('pubspec.yaml'));
   if (dirty.isNotEmpty) {
-    stderr.writeln('Error: working tree has uncommitted changes beyond pubspec.yaml:');
+    stderr.writeln(
+      'Error: working tree has uncommitted changes beyond pubspec.yaml:',
+    );
     for (final l in dirty) {
       stderr.writeln('  $l');
     }
-    stderr.writeln('Cause: releasing from an otherwise-dirty tree usually means either '
-        'those changes were meant to ship in this release (and should be committed '
-        'first) or you didn\'t mean to release right now.');
-    stderr.writeln('Fix: commit them separately first (`git add -A && git commit`), '
-        'or stash them (`git stash`) and re-run.');
+    stderr.writeln(
+      'Cause: releasing from an otherwise-dirty tree usually means either '
+      'those changes were meant to ship in this release (and should be committed '
+      'first) or you didn\'t mean to release right now.',
+    );
+    stderr.writeln(
+      'Fix: commit them separately first (`git add -A && git commit`), '
+      'or stash them (`git stash`) and re-run.',
+    );
     exit(1);
   }
 
-  // 6. Determine the version.
-  final String version;
+  // 6. Find the latest existing release tag, if any — used below so that
+  // whatever version we land on (from pubspec.yaml, a CLI argument, or a
+  // manual retry) is actually newer than what's already been released, not
+  // just different from it.
+  final latestTag = _findLatestReleaseTag(repoRoot);
+
+  // 7. Determine the version.
+  String version;
   if (args.isEmpty) {
-    final match = RegExp(r'^version: (.+)$', multiLine: true).firstMatch(pubspecText);
+    final match = RegExp(
+      r'^version: (.+)$',
+      multiLine: true,
+    ).firstMatch(pubspecText);
     if (match == null) {
-      stderr.writeln('Error: could not find a `version:` key in ${pubspec.path}.');
-      stderr.writeln('Cause: no argument was given, so this script tried to read the '
-          'version to release from pubspec.yaml instead.');
-      stderr.writeln('Fix: add a `version: X.Y.Z` line to pubspec.yaml, or re-run with '
-          'an explicit version argument (e.g. `dart run scripts/release.dart 0.2.0`).');
+      stderr.writeln(
+        'Error: could not find a `version:` key in ${pubspec.path}.',
+      );
+      stderr.writeln(
+        'Cause: no argument was given, so this script tried to read the '
+        'version to release from pubspec.yaml instead.',
+      );
+      stderr.writeln(
+        'Fix: add a `version: X.Y.Z` line to pubspec.yaml, or re-run with '
+        'an explicit version argument (e.g. `dart run scripts/release.dart 0.2.0`).',
+      );
       exit(1);
     }
     version = match.group(1)!.trim();
     if (!_semver.hasMatch(version)) {
-      stderr.writeln('Error: pubspec.yaml has `version: $version`, which isn\'t a '
-          'plain semver.');
-      stderr.writeln('Cause: no argument was given, so this script tried to release '
-          'that value as-is, and it doesn\'t match X.Y.Z (e.g. 0.2.0).');
-      stderr.writeln('Fix: correct `version:` in pubspec.yaml by hand, or re-run with '
-          'an explicit version argument to overwrite it.');
+      stderr.writeln(
+        'Error: pubspec.yaml has `version: $version`, which isn\'t a '
+        'plain semver.',
+      );
+      stderr.writeln(
+        'Cause: no argument was given, so this script tried to release '
+        'that value as-is, and it doesn\'t match X.Y.Z (e.g. 0.2.0).',
+      );
+      stderr.writeln(
+        'Fix: correct `version:` in pubspec.yaml by hand, or re-run with '
+        'an explicit version argument to overwrite it.',
+      );
       exit(1);
     }
-    stdout.write('No version given — release the version already in pubspec.yaml, '
-        '$version? (y/N): ');
-    final confirm = stdin.readLineSync()?.trim().toLowerCase();
-    if (confirm != 'y' && confirm != 'yes') {
-      print('Cancelled. Re-run with an explicit version if $version wasn\'t what '
-          'you meant.');
-      exit(0);
+
+    // Only offer to confirm pubspec.yaml's version if it would actually be
+    // releasable — no point asking "release $version?" when it's stale.
+    final staleError = _notNewerThanLatestError(version, latestTag);
+    var needsNewVersion = true;
+    if (staleError == null) {
+      stdout.write(
+        'No version given — release the version already in pubspec.yaml, '
+        '$version? (y/N): ',
+      );
+      final confirm = readLineSync()?.toLowerCase();
+      needsNewVersion = confirm != 'y' && confirm != 'yes';
+    } else {
+      stderr.writeln(staleError);
+      print('The version already in pubspec.yaml can\'t be released as-is.');
+    }
+
+    if (needsNewVersion) {
+      while (true) {
+        stdout.write(
+          'Enter a version to release instead (or leave blank to cancel): ',
+        );
+        final input = readLineSync();
+        if (input == null || input.isEmpty) {
+          print('Cancelled.');
+          exit(0);
+        }
+        final candidate = input.startsWith('v') ? input.substring(1) : input;
+        if (!_semver.hasMatch(candidate)) {
+          stderr.writeln(
+            'Error: "$input" isn\'t a plain semver (e.g. 0.2.0). Try again.',
+          );
+          continue;
+        }
+        final error = _notNewerThanLatestError(candidate, latestTag);
+        if (error != null) {
+          stderr.writeln(error);
+          continue;
+        }
+        version = candidate;
+        break;
+      }
     }
   } else {
     final arg = args[0];
     version = arg.startsWith('v') ? arg.substring(1) : arg;
     if (!_semver.hasMatch(version)) {
       stderr.writeln('Error: "$arg" isn\'t a valid version.');
-      stderr.writeln('Cause: expected a plain semver, optionally v-prefixed '
-          '(X.Y.Z or vX.Y.Z).');
+      stderr.writeln(
+        'Cause: expected a plain semver, optionally v-prefixed '
+        '(X.Y.Z or vX.Y.Z).',
+      );
       stderr.writeln('Fix: pass e.g. `0.2.0` or `v0.2.0`.');
+      exit(1);
+    }
+    final error = _notNewerThanLatestError(version, latestTag);
+    if (error != null) {
+      stderr.writeln(error);
       exit(1);
     }
   }
 
   final tag = 'v$version';
 
-  // 7. Check the tag doesn't already exist locally...
-  final localTagCheck = _run('git', ['-C', repoRoot, 'tag', '--list', tag], repoRoot, quiet: true);
+  // 8. Check the tag doesn't already exist locally...
+  final localTagCheck = _run(
+    'git',
+    ['-C', repoRoot, 'tag', '--list', tag],
+    repoRoot,
+    quiet: true,
+  );
   if (localTagCheck.stdout.toString().trim().isNotEmpty) {
     stderr.writeln('Error: tag $tag already exists locally.');
-    stderr.writeln('Cause: `git tag --list $tag` found it — releasing again with the '
-        'same version would conflict with it.');
-    stderr.writeln('Fix: bump to a new version, or if $tag was created by mistake, '
-        'delete it first (`git tag -d $tag`, and `git push origin :refs/tags/$tag` too '
-        'if it was already pushed).');
+    stderr.writeln(
+      'Cause: `git tag --list $tag` found it — releasing again with the '
+      'same version would conflict with it.',
+    );
+    stderr.writeln(
+      'Fix: bump to a new version, or if $tag was created by mistake, '
+      'delete it first (`git tag -d $tag`, and `git push origin :refs/tags/$tag` too '
+      'if it was already pushed).',
+    );
     exit(1);
   }
   // ...or on the remote (a teammate may have pushed it without you having
@@ -156,31 +249,39 @@ void main(List<String> args) {
   );
   if (remoteTagCheck.exitCode != 0) {
     stderr.writeln('Warning: could not check whether $tag exists on origin.');
-    stderr.writeln('Cause: `git ls-remote --tags origin` failed — likely offline, or no '
-        '`origin` remote configured.');
-    stderr.writeln('Continuing without that check; the local-only check above still ran.');
+    stderr.writeln(
+      'Cause: `git ls-remote --tags origin` failed — likely offline, or no '
+      '`origin` remote configured.',
+    );
+    stderr.writeln(
+      'Continuing without that check; the local-only check above still ran.',
+    );
   } else if (remoteTagCheck.stdout.toString().trim().isNotEmpty) {
     stderr.writeln('Error: tag $tag already exists on origin.');
-    stderr.writeln('Cause: `git ls-remote` found it there, even though your local clone '
-        'hasn\'t fetched it (so the local-only check above missed it) — probably a '
-        'teammate already released this version.');
-    stderr.writeln('Fix: `git fetch --tags` to confirm, then bump to a new version — or '
-        'delete the remote tag first if it was pushed by mistake '
-        '(`git push origin :refs/tags/$tag`).');
+    stderr.writeln(
+      'Cause: `git ls-remote` found it there, even though your local clone '
+      'hasn\'t fetched it (so the local-only check above missed it) — probably a '
+      'teammate already released this version.',
+    );
+    stderr.writeln(
+      'Fix: `git fetch --tags` to confirm, then bump to a new version — or '
+      'delete the remote tag first if it was pushed by mistake '
+      '(`git push origin :refs/tags/$tag`).',
+    );
     exit(1);
   }
 
-  // 8. Check lib/core purity.
+  // 9. Check lib/core purity.
   print('\nChecking lib/core purity...');
   _run('dart', ['run', 'scripts/check_core_purity.dart'], repoRoot);
 
-  // 8b. Run the test suite. Apps pin this repo by tag — a regression that
+  // 10. Run the test suite. Apps pin this repo by tag — a regression that
   // slips into a release gets silently consumed under that tag's name, so
   // this gates the release exactly like the purity check does.
   print('\nRunning tests...');
   _run('flutter', ['test'], repoRoot);
 
-  // 9. Update pubspec.yaml, if a version was given.
+  // 11. Update pubspec.yaml, if a version was given.
   if (args.isNotEmpty) {
     print('\nBumping ${pubspec.path} to $version');
     // Only touches the top-level `version:` key, not any dependency
@@ -192,7 +293,7 @@ void main(List<String> args) {
     pubspec.writeAsStringSync(updated);
   }
 
-  // 10-13. Commit and tag — but only commit if pubspec.yaml actually
+  // 12-14. Commit and tag — but only commit if pubspec.yaml actually
   // differs from HEAD. It won't if: the given version matches what was
   // already there (a no-op bump), or no version was given and it was
   // already committed separately (e.g. hand-edited and committed earlier,
@@ -206,20 +307,36 @@ void main(List<String> args) {
     quiet: true,
   );
   if (pubspecDiff.stdout.toString().trim().isEmpty) {
-    print('\npubspec.yaml already has version $version at HEAD — nothing to '
-        'commit, tagging HEAD directly.');
+    print(
+      '\npubspec.yaml already has version $version at HEAD — nothing to '
+      'commit, tagging HEAD directly.',
+    );
   } else {
     print('\nCommitting release...');
     _run('git', ['-C', repoRoot, 'add', 'pubspec.yaml'], repoRoot);
-    _run('git', ['-C', repoRoot, 'commit', '-m', 'chore: release $tag'], repoRoot);
+    _run('git', [
+      '-C',
+      repoRoot,
+      'commit',
+      '-m',
+      'chore: release $tag',
+    ], repoRoot);
   }
   print('\nTagging $tag...');
-  _run('git', ['-C', repoRoot, 'tag', '-a', tag, '-m', 'Release $tag'], repoRoot);
+  _run('git', [
+    '-C',
+    repoRoot,
+    'tag',
+    '-a',
+    tag,
+    '-m',
+    'Release $tag',
+  ], repoRoot);
   print('Tagged $tag locally.');
 
-  // 14. Ask to push.
+  // 15. Ask to push.
   stdout.write('\nPush "$branch" and tag $tag to origin now? (y/N): ');
-  final answer = stdin.readLineSync()?.trim().toLowerCase();
+  final answer = readLineSync()?.toLowerCase();
 
   if (answer == 'y' || answer == 'yes') {
     print('Pushing...');
@@ -234,8 +351,63 @@ void main(List<String> args) {
   }
 
   print('');
-  print('Commit SHA for consuming apps\' pubspec.yaml ref: (if still pinning by SHA):');
+  print(
+    'Commit SHA for consuming apps\' pubspec.yaml ref: (if still pinning by SHA):',
+  );
   print('  git -C "$repoRoot" rev-parse $tag');
+}
+
+/// Compares two `X.Y.Z` semver strings numerically per component (not
+/// lexically, so `10.0.0` correctly sorts after `2.0.0`).
+/// Returns <0 if [a] < [b], 0 if equal, >0 if [a] > [b].
+int _compareSemver(String a, String b) {
+  final partsA = a.split('.').map(int.parse).toList();
+  final partsB = b.split('.').map(int.parse).toList();
+  for (var i = 0; i < 3; i++) {
+    final cmp = partsA[i].compareTo(partsB[i]);
+    if (cmp != 0) return cmp;
+  }
+  return 0;
+}
+
+/// Reads a line from stdin, trimming whitespace, or null if EOF.
+String? readLineSync() => stdin.readLineSync()?.trim();
+
+/// Returns the highest `vX.Y.Z` tag in [repoRoot] by semver order (not
+/// lexical order), or null if there are no release tags yet.
+String? _findLatestReleaseTag(String repoRoot) {
+  final tags =
+      _run(
+            'git',
+            ['-C', repoRoot, 'tag', '--list', 'v*'],
+            repoRoot,
+            quiet: true,
+          ).stdout
+          .toString()
+          .split('\n')
+          .map((l) => l.trim())
+          .where(
+            (l) => _semver.hasMatch(l.startsWith('v') ? l.substring(1) : l),
+          );
+  if (tags.isEmpty) return null;
+  return tags.reduce(
+    (a, b) => _compareSemver(a.substring(1), b.substring(1)) >= 0 ? a : b,
+  );
+}
+
+/// Error message (Cause/Fix formatted, ready to print) if [version] is not
+/// strictly newer than [latestTag] (a `vX.Y.Z` tag, or null if no release
+/// exists yet) — or null if [version] is fine to release.
+String? _notNewerThanLatestError(String version, String? latestTag) {
+  if (latestTag == null) return null;
+  final latestVersion = latestTag.substring(1);
+  if (_compareSemver(version, latestVersion) > 0) return null;
+  return 'Error: $version is not newer than the latest release, $latestTag.\n'
+      'Cause: the highest existing `v*` tag found via `git tag --list` is '
+      '$latestTag — releasing $version would go backwards or repeat it.\n'
+      'Fix: pick a version greater than $latestVersion, or `git fetch '
+      '--tags` first if $latestTag was released elsewhere and your clone '
+      'hasn\'t seen it yet.';
 }
 
 /// Runs [command], printing its output unless [quiet]. On a non-zero exit
@@ -259,8 +431,10 @@ ProcessResult _run(
       stdout.write(result.stdout);
       stderr.write(result.stderr);
     }
-    stderr.writeln('Error: `$command ${args.join(' ')}` failed (exit ${result.exitCode}) — '
-        'see its output above for the diagnosis.');
+    stderr.writeln(
+      'Error: `$command ${args.join(' ')}` failed (exit ${result.exitCode}) — '
+      'see its output above for the diagnosis.',
+    );
     exit(result.exitCode);
   }
   return result;
