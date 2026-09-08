@@ -1,5 +1,24 @@
 # Changelog
 
+## 1.2.0 — client domain layer
+
+`core/features/client/domain/` filled out past just `ClientEntity`
+(extracted earlier): `ClientRequestEntity`, `IClientRepository`, and the
+usecases (`GetClientsUseCase`, `AddClientUseCase`, `UpdateClientUseCase`,
+`DeleteClientUseCase`, `GetClientDetailsUseCase`). Both mobile and web
+migrated onto this in the same pass — local copies deleted from both
+apps. Field names follow mobile's existing convention (`phone1`/`phone2`,
+both E.164-formatted, no `E164` suffix — web's local
+`phone1E164`/`phone2E164` renamed to match); `id` is non-required
+nullable (web's was `required int? id`). Web's `getClientById` renamed to
+`getClientDetails` on the shared interface — mobile doesn't call it yet
+(its `ClientRepositoryImpl` throws `UnimplementedError` until it does),
+web's underlying datasource/endpoint method keeps its original name
+(data layer stays local per app). `searchPhone` stayed `int?` (mobile's
+existing parsed-from-text-field behavior) — web's was `String?` but never
+actually called with a non-null value, so the type change is a no-op
+there.
+
 ## 0.1.0 — merged into `bookie_buddy_shared`
 
 `bookie_buddy_core` and `bookie_buddy_ui` (two separate pub packages)

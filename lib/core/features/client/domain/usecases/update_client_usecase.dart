@@ -1,0 +1,11 @@
+import 'package:bookie_buddy_shared/core/features/client/domain/entities/client_entity/client_entity.dart';
+import 'package:bookie_buddy_shared/core/features/client/domain/entities/client_request_entity/client_request_entity.dart';
+import 'package:bookie_buddy_shared/core/features/client/domain/repositories/i_client_repository.dart';
+
+class UpdateClientUseCase {
+  final IClientRepository _repository;
+  UpdateClientUseCase(this._repository);
+
+  Future<ClientEntity> call(ClientRequestEntity client) =>
+      _repository.updateClient(client);
+}

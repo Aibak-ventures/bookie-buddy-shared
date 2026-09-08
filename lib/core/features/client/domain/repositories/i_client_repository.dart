@@ -1,0 +1,26 @@
+import 'package:bookie_buddy_shared/core/core/common/models/pagination_model/pagination_model.dart';
+import 'package:bookie_buddy_shared/core/features/client/domain/entities/client_entity/client_entity.dart';
+import 'package:bookie_buddy_shared/core/features/client/domain/entities/client_request_entity/client_request_entity.dart';
+
+abstract interface class IClientRepository {
+  Future<PaginationModel<ClientEntity>> getClients({
+    int page = 1,
+    String? searchName,
+    int? searchPhone,
+  });
+
+  //
+  Future<ClientEntity> getClientDetails(int clientId);
+
+  //
+  Future<ClientEntity> addClient(
+    ClientRequestEntity client, {
+    bool allowExisting = true,
+  });
+
+  //
+  Future<ClientEntity> updateClient(ClientRequestEntity client);
+
+  //
+  Future<void> deleteClient(int clientId);
+}

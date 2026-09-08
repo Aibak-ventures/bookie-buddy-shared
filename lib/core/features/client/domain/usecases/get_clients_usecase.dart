@@ -1,0 +1,18 @@
+import 'package:bookie_buddy_shared/core/core/common/models/pagination_model/pagination_model.dart';
+import 'package:bookie_buddy_shared/core/features/client/domain/entities/client_entity/client_entity.dart';
+import 'package:bookie_buddy_shared/core/features/client/domain/repositories/i_client_repository.dart';
+
+class GetClientsUseCase {
+  final IClientRepository _repository;
+  GetClientsUseCase(this._repository);
+
+  Future<PaginationModel<ClientEntity>> call({
+    int page = 1,
+    String? searchName,
+    int? searchPhone,
+  }) => _repository.getClients(
+    page: page,
+    searchName: searchName,
+    searchPhone: searchPhone,
+  );
+}
