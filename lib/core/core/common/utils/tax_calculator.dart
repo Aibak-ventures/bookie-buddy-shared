@@ -56,10 +56,14 @@ double calculateTaxAmount({
 /// case: a screen where the user types a single rate rather than the shop
 /// holding a rule for it, as the purchase form does. [taxRate] is nullable
 /// because such a field can simply be left blank.
+///
+/// [taxCalculationType] defaults to inclusive, mirroring `formatFlatGstLabel`:
+/// a rate the user types in states what is already inside the figure beside
+/// it, which is how a purchase records its GST.
 int calculateFlatTaxAmount({
   required int amount,
   required double? taxRate,
-  required TaxCalculationType taxCalculationType,
+  TaxCalculationType taxCalculationType = TaxCalculationType.inclusive,
 }) {
   if (taxRate == null || taxRate <= 0 || amount <= 0) return 0;
   return calculateTaxAmount(
