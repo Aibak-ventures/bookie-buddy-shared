@@ -14,7 +14,10 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$AdditionalChargesEntity {
 
- int? get id; String? get name; int? get amount;
+ int? get id; String? get name; int? get amount;/// The account this charge was paid from/into, when a caller asks for one
+/// (see `AddAdditionalChargesWidget.askForAccount` in the mobile app).
+/// `null` everywhere a charge isn't attributed to a specific account.
+ int? get accountId; String? get accountName;
 /// Create a copy of AdditionalChargesEntity
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +28,16 @@ $AdditionalChargesEntityCopyWith<AdditionalChargesEntity> get copyWith => _$Addi
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is AdditionalChargesEntity&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.amount, amount) || other.amount == amount));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is AdditionalChargesEntity&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.amount, amount) || other.amount == amount)&&(identical(other.accountId, accountId) || other.accountId == accountId)&&(identical(other.accountName, accountName) || other.accountName == accountName));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,name,amount);
+int get hashCode => Object.hash(runtimeType,id,name,amount,accountId,accountName);
 
 @override
 String toString() {
-  return 'AdditionalChargesEntity(id: $id, name: $name, amount: $amount)';
+  return 'AdditionalChargesEntity(id: $id, name: $name, amount: $amount, accountId: $accountId, accountName: $accountName)';
 }
 
 
@@ -45,7 +48,7 @@ abstract mixin class $AdditionalChargesEntityCopyWith<$Res>  {
   factory $AdditionalChargesEntityCopyWith(AdditionalChargesEntity value, $Res Function(AdditionalChargesEntity) _then) = _$AdditionalChargesEntityCopyWithImpl;
 @useResult
 $Res call({
- int? id, String? name, int? amount
+ int? id, String? name, int? amount, int? accountId, String? accountName
 });
 
 
@@ -62,12 +65,14 @@ class _$AdditionalChargesEntityCopyWithImpl<$Res>
 
 /// Create a copy of AdditionalChargesEntity
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = freezed,Object? name = freezed,Object? amount = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = freezed,Object? name = freezed,Object? amount = freezed,Object? accountId = freezed,Object? accountName = freezed,}) {
   return _then(_self.copyWith(
 id: freezed == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int?,name: freezed == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String?,amount: freezed == amount ? _self.amount : amount // ignore: cast_nullable_to_non_nullable
-as int?,
+as int?,accountId: freezed == accountId ? _self.accountId : accountId // ignore: cast_nullable_to_non_nullable
+as int?,accountName: freezed == accountName ? _self.accountName : accountName // ignore: cast_nullable_to_non_nullable
+as String?,
   ));
 }
 
@@ -152,10 +157,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int? id,  String? name,  int? amount)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int? id,  String? name,  int? amount,  int? accountId,  String? accountName)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _AdditionalChargesEntity() when $default != null:
-return $default(_that.id,_that.name,_that.amount);case _:
+return $default(_that.id,_that.name,_that.amount,_that.accountId,_that.accountName);case _:
   return orElse();
 
 }
@@ -173,10 +178,10 @@ return $default(_that.id,_that.name,_that.amount);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int? id,  String? name,  int? amount)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int? id,  String? name,  int? amount,  int? accountId,  String? accountName)  $default,) {final _that = this;
 switch (_that) {
 case _AdditionalChargesEntity():
-return $default(_that.id,_that.name,_that.amount);case _:
+return $default(_that.id,_that.name,_that.amount,_that.accountId,_that.accountName);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -193,10 +198,10 @@ return $default(_that.id,_that.name,_that.amount);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int? id,  String? name,  int? amount)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int? id,  String? name,  int? amount,  int? accountId,  String? accountName)?  $default,) {final _that = this;
 switch (_that) {
 case _AdditionalChargesEntity() when $default != null:
-return $default(_that.id,_that.name,_that.amount);case _:
+return $default(_that.id,_that.name,_that.amount,_that.accountId,_that.accountName);case _:
   return null;
 
 }
@@ -208,12 +213,17 @@ return $default(_that.id,_that.name,_that.amount);case _:
 
 
 class _AdditionalChargesEntity implements AdditionalChargesEntity {
-  const _AdditionalChargesEntity({this.id, this.name, this.amount});
+  const _AdditionalChargesEntity({this.id, this.name, this.amount, this.accountId, this.accountName});
   
 
 @override final  int? id;
 @override final  String? name;
 @override final  int? amount;
+/// The account this charge was paid from/into, when a caller asks for one
+/// (see `AddAdditionalChargesWidget.askForAccount` in the mobile app).
+/// `null` everywhere a charge isn't attributed to a specific account.
+@override final  int? accountId;
+@override final  String? accountName;
 
 /// Create a copy of AdditionalChargesEntity
 /// with the given fields replaced by the non-null parameter values.
@@ -225,16 +235,16 @@ _$AdditionalChargesEntityCopyWith<_AdditionalChargesEntity> get copyWith => __$A
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AdditionalChargesEntity&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.amount, amount) || other.amount == amount));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AdditionalChargesEntity&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.amount, amount) || other.amount == amount)&&(identical(other.accountId, accountId) || other.accountId == accountId)&&(identical(other.accountName, accountName) || other.accountName == accountName));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,name,amount);
+int get hashCode => Object.hash(runtimeType,id,name,amount,accountId,accountName);
 
 @override
 String toString() {
-  return 'AdditionalChargesEntity(id: $id, name: $name, amount: $amount)';
+  return 'AdditionalChargesEntity(id: $id, name: $name, amount: $amount, accountId: $accountId, accountName: $accountName)';
 }
 
 
@@ -245,7 +255,7 @@ abstract mixin class _$AdditionalChargesEntityCopyWith<$Res> implements $Additio
   factory _$AdditionalChargesEntityCopyWith(_AdditionalChargesEntity value, $Res Function(_AdditionalChargesEntity) _then) = __$AdditionalChargesEntityCopyWithImpl;
 @override @useResult
 $Res call({
- int? id, String? name, int? amount
+ int? id, String? name, int? amount, int? accountId, String? accountName
 });
 
 
@@ -262,12 +272,14 @@ class __$AdditionalChargesEntityCopyWithImpl<$Res>
 
 /// Create a copy of AdditionalChargesEntity
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = freezed,Object? name = freezed,Object? amount = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = freezed,Object? name = freezed,Object? amount = freezed,Object? accountId = freezed,Object? accountName = freezed,}) {
   return _then(_AdditionalChargesEntity(
 id: freezed == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int?,name: freezed == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String?,amount: freezed == amount ? _self.amount : amount // ignore: cast_nullable_to_non_nullable
-as int?,
+as int?,accountId: freezed == accountId ? _self.accountId : accountId // ignore: cast_nullable_to_non_nullable
+as int?,accountName: freezed == accountName ? _self.accountName : accountName // ignore: cast_nullable_to_non_nullable
+as String?,
   ));
 }
 
