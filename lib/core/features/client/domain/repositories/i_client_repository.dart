@@ -2,7 +2,10 @@ import 'package:bookie_buddy_shared/core/core/common/models/pagination_model/pag
 import 'package:bookie_buddy_shared/core/features/client/domain/entities/client_entity/client_entity.dart';
 import 'package:bookie_buddy_shared/core/features/client/domain/entities/client_request_entity/client_request_entity.dart';
 
+import '../../../../core/common/utils/cancellation_token.dart';
+
 abstract interface class IClientRepository {
+  //
   Future<PaginationModel<ClientEntity>> getClients({
     int page = 1,
     String? searchName,
@@ -23,4 +26,10 @@ abstract interface class IClientRepository {
 
   //
   Future<void> deleteClient(int clientId);
+
+  //
+  Future<String> downloadClientPdfReport({
+    required String defaultFileName,
+    required CancellationToken funCancelToken,
+  });
 }
