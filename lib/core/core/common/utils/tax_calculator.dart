@@ -48,3 +48,28 @@ double calculateTaxAmount({
     TaxCalculationType.inclusive => base - (base * 100 / (100 + taxRate)),
   };
 }
+
+/// The tax on a single flat [amount] at [taxRate], rounded to whole rupees.
+///
+/// [calculateTaxAmount] above is the general form — it splits an amount into
+/// taxable components and takes a discount off the base. This is the one-amount
+/// case: a screen where the user types a single rate rather than the shop
+/// holding a rule for it, as the purchase form does. [taxRate] is nullable
+/// because such a field can simply be left blank.
+///
+/// [taxCalculationType] defaults to inclusive, mirroring `formatFlatGstLabel`:
+/// a rate the user types in states what is already inside the figure beside
+/// it, which is how a purchase records its GST.
+int calculateFlatTaxAmount({
+  required int amount,
+  required double? taxRate,
+  TaxCalculationType taxCalculationType = TaxCalculationType.inclusive,
+}) {
+  if (taxRate == null || taxRate <= 0 || amount <= 0) return 0;
+  return calculateTaxAmount(
+    taxRate: taxRate,
+    taxCalculationType: taxCalculationType,
+    taxableComponents: const [TaxableComponent.productTotal],
+    componentAmounts: {TaxableComponent.productTotal: amount.toDouble()},
+  ).round();
+}

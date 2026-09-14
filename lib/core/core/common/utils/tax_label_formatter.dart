@@ -17,3 +17,15 @@ String formatTaxLabel({
       : '';
   return '$taxName ($rateLabel%)$suffix';
 }
+
+/// Label for a flat GST line whose rate the user typed in rather than the shop
+/// holding a tax rule for it — the purchase form's case. A blank field reads
+/// as 0%.
+String formatFlatGstLabel(
+  double? taxRate, {
+  TaxCalculationType taxCalculationType = TaxCalculationType.inclusive,
+}) => formatTaxLabel(
+  taxName: 'GST',
+  taxRate: taxRate ?? 0,
+  taxCalculationType: taxCalculationType,
+);

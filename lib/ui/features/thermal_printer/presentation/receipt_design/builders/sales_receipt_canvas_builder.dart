@@ -185,9 +185,23 @@ class SalesReceiptCanvasBuilder {
   }
 
   void _buildPaymentMethod(ReceiptCanvas canvas, SaleDetailsEntity sale) {
+    if (sale.payments.length > 1) {
+      // Split payment — print each leg's account and amount so the two
+      // numbers on the receipt actually add up.
+      for (final payment in sale.payments) {
+        canvas.row([
+          ReceiptColumn(payment.accountName ?? 'N/A'),
+          ReceiptColumn(payment.amount.toCurrency(), align: TextAlign.right),
+        ]);
+      }
+      return;
+    }
     canvas.row([
       const ReceiptColumn('Payment Method:'),
-      ReceiptColumn(sale.payment.paymentMethod.name, align: TextAlign.right),
+      ReceiptColumn(
+        sale.payments.firstOrNull?.paymentMethod.name ?? 'N/A',
+        align: TextAlign.right,
+      ),
     ]);
   }
 }

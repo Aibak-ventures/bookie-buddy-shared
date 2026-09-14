@@ -1,0 +1,13 @@
+import 'package:bookie_buddy_shared/core/features/client/domain/entities/client_entity/client_entity.dart';
+import 'package:bookie_buddy_shared/core/features/client/domain/entities/client_request_entity/client_request_entity.dart';
+import 'package:bookie_buddy_shared/core/features/client/domain/repositories/i_client_repository.dart';
+
+class AddClientUseCase {
+  final IClientRepository _repository;
+  AddClientUseCase(this._repository);
+
+  Future<ClientEntity> call(
+    ClientRequestEntity client, {
+    bool allowExisting = true,
+  }) => _repository.addClient(client, allowExisting: allowExisting);
+}

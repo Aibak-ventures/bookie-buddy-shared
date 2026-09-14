@@ -1,9 +1,10 @@
 import 'package:bookie_buddy_shared/core/core/common/entities/applied_tax_entity/applied_tax_entity.dart';
 import 'package:bookie_buddy_shared/core/core/constants/enums/main_service_type_enums.dart';
-import 'package:bookie_buddy_shared/core/core/constants/enums/payment_method_enums.dart';
 import 'package:bookie_buddy_shared/core/features/client/domain/entities/client_entity/client_entity.dart';
 import 'package:bookie_buddy_shared/core/features/product/domain/entities/product_entity/product_attributes_entity.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+
+import '../sale_payment_entity/sale_payment_entity.dart';
 
 part 'sale_details_entity.freezed.dart';
 
@@ -31,8 +32,10 @@ abstract class SaleDetailsEntity with _$SaleDetailsEntity {
     required int balanceDueAmount,
     required String createdAt,
     required List<ProductSaleInfoEntity> products,
-    required SaleDetailsPaymentHistoryEntity payment,
     @Default([]) List<AppliedTaxEntity> appliedTaxes,
+    // 1 entry for a plain sale, 2 for a cash/bank split sale. Use
+    // `payments.firstOrNull` wherever a single "the account" is needed.
+    @Default([]) List<SalePaymentEntity> payments,
   }) = _SaleDetailsEntity;
 }
 
@@ -56,17 +59,4 @@ abstract class ProductSaleInfoEntity with _$ProductSaleInfoEntity {
     MainServiceType? mainServiceType,
     @Default(ProductAttributesEntity()) ProductAttributesEntity attributes,
   }) = _ProductSaleInfoEntity;
-}
-
-@freezed
-abstract class SaleDetailsPaymentHistoryEntity
-    with _$SaleDetailsPaymentHistoryEntity {
-  const factory SaleDetailsPaymentHistoryEntity({
-    required int id,
-    required int amount,
-    required String? accountName,
-    required int? accountId,
-    required String date,
-    required PaymentMethod paymentMethod,
-  }) = _SaleDetailsPaymentHistoryEntity;
 }

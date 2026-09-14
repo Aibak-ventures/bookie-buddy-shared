@@ -24,6 +24,7 @@ export 'core/features/booking/domain/entities/booking_payment_history_entity/boo
 export 'core/features/booking/domain/entities/booking_refund_history_entity/booking_refund_history_entity.dart';
 export 'core/features/booking/domain/entities/booking_security_payment_entity/booking_security_payment_entity.dart';
 export 'core/features/booking/domain/entities/measurement_value_entity/measurement_value_entity.dart';
+export 'core/features/booking/domain/entities/unavailable_products_entity/unavailable_products_entity.dart';
 export 'core/features/client/domain/entities/client_entity/client_entity.dart';
 export 'core/features/product/domain/entities/product_entity/product_attributes_entity.dart';
 export 'core/features/product/domain/entities/product_info_entity/product_info_entity.dart';
@@ -37,7 +38,6 @@ export 'core/core/common/entities/applied_tax_entity/applied_tax_entity.dart';
 export 'core/core/common/entities/document_details_entity/document_details_entity.dart';
 export 'core/core/common/entities/tax_configuration_entity/tax_configuration_entity.dart';
 export 'core/core/common/entities/tax_summary_entity/tax_summary_entity.dart';
-export 'core/core/common/entities/unavailable_products_entity/unavailable_products_entity.dart';
 export 'core/core/common/entities/user_shop_entity/user_shop_entity.dart';
 export 'core/core/constants/enums/backend_keyed_enum.dart';
 export 'core/core/constants/enums/booking_rental_unit_enum.dart';
