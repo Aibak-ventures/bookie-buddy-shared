@@ -19,27 +19,32 @@ enum DeliveryStatus implements BackendKeyedEnum {
   returned('returned', 'Returned'),
   cancelled('cancelled', 'Cancelled');
 
-  const DeliveryStatus(this.value, this.name);
+  const DeliveryStatus(this.value, this.label);
 
   @override
   final String value;
-  final String name;
 
   @override
-  String get label => name;
+  final String label;
 
-  String getServiceSpecificName(MainServiceType? serviceType) {
-    if (serviceType == null) return name;
+  @Deprecated('use label instead')
+  String get name => label;
+
+  String getServiceSpecificLabel(MainServiceType? serviceType) {
+    if (serviceType == null) return label;
     if (serviceType.isRoom) {
       return switch (this) {
-        DeliveryStatus.booked => booked.name,
         DeliveryStatus.readyToDeliver => 'Checked-In',
-        DeliveryStatus.delivered => delivered.name,
         DeliveryStatus.returned => 'Checked-Out',
-        DeliveryStatus.cancelled => cancelled.name,
+        _ => label,
       };
     }
-    return name;
+    return label;
+  }
+
+  @Deprecated('use getServiceSpecificLabel instead')
+  String getServiceSpecificName(MainServiceType? serviceType) {
+    return getServiceSpecificLabel(serviceType);
   }
 
   static List<DeliveryStatus> getServiceSpecificStatus(
@@ -67,6 +72,9 @@ extension DeliveryStatusX on DeliveryStatus? {
   bool get isReadyToDeliver => this == DeliveryStatus.readyToDeliver;
   bool get isBooked => this == DeliveryStatus.booked;
   bool get isCancelled => this == DeliveryStatus.cancelled;
+
+  /// check if the booking is [returned] or [cancelled]
+  bool get isBookingClosed => isReturned || isCancelled;
 }
 
 /// Enum to represent the status of a booking such as upcoming or completed
@@ -166,11 +174,12 @@ enum ProductDeliveryStatus implements BackendKeyedEnum {
   @override
   String get label => name;
 
-  static ProductDeliveryStatus fromJson(String? value) => EnumJsonCodec.fromJson(
-    value,
-    values,
-    fallback: ProductDeliveryStatus.notReturned,
-  );
+  static ProductDeliveryStatus fromJson(String? value) =>
+      EnumJsonCodec.fromJson(
+        value,
+        values,
+        fallback: ProductDeliveryStatus.notReturned,
+      );
 
   static ProductDeliveryStatus? tryFromJson(String? value) =>
       EnumJsonCodec.tryFromJson(value, values);

@@ -8,6 +8,7 @@ linter:
     - prefer_single_quotes
     - always_declare_return_types
     - avoid_returning_null_for_void
+    # - public_member_api_docs
 
 analyzer:
   exclude:

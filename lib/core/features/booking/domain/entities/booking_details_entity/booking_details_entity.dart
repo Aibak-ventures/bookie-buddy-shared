@@ -67,3 +67,17 @@ abstract class BookingDetailsEntity with _$BookingDetailsEntity {
     @Default([]) List<AppliedTaxEntity> appliedTaxes,
   }) = _BookingDetailsEntity;
 }
+
+extension BookingDetailsEntityX on BookingDetailsEntity {
+  /// The security refund section (and using security as payment) is available
+  /// only once the security is paid and the booking is returned/cancelled, or
+  /// a refund/deduction has already been made.
+  bool get shouldShowSecurityRefundSection {
+    if (securityTransactionSummary.totalSecurityAmount <= 0 ||
+        !isSecurityPaid) {
+      return false;
+    }
+    return deliveryStatus.isBookingClosed ||
+        securityTransactionHistory.isNotEmpty;
+  }
+}
