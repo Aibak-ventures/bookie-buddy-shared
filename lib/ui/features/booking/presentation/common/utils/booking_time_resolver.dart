@@ -5,23 +5,11 @@ import 'package:flutter/material.dart';
 // into this package's booking_receipt_canvas_builder) before being
 // promoted here as the one implementation. Needs Flutter (TimeOfDay), so
 // it lives in bookie_buddy_ui rather than bookie_buddy_core, same as the
-// receipt canvas itself. Narrow DateTime/TimeOfDay helpers it needs
-// (`toTimeOfDay`, `formatTime12Hour`) are inlined below rather than
-// pulling in either app's large date_time_extensions.dart for two
-// one-line methods.
-
-extension _DateTimeToTimeOfDay on DateTime {
-  TimeOfDay get toTimeOfDay => TimeOfDay(hour: hour, minute: minute);
-}
-
-extension _TimeOfDayFormat on TimeOfDay {
-  String formatTime12Hour() {
-    final h = hourOfPeriod == 0 ? 12 : hourOfPeriod;
-    final m = minute.toString().padLeft(2, '0');
-    final p = period == DayPeriod.am ? 'AM' : 'PM';
-    return '$h:$m $p';
-  }
-}
+// receipt canvas itself. `toTimeOfDay`/`formatTime12Hour` used to be
+// inlined privately here to avoid pulling in either app's large
+// date_time_extensions.dart, but that file's real (lightweight) contents
+// now live in this package's own date_time_extensions.dart, so this just
+// uses that directly instead of keeping a second copy.
 
 /// Resolves the pickup/return time actually worth *showing* for a booking —
 /// shared by the booking details screen and the printed receipt so both

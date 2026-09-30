@@ -2,7 +2,7 @@ import 'dart:developer';
 
 import 'package:intl/intl.dart';
 
-import '../../../../../utils/extensions/receipt_format_extensions.dart';
+import 'package:bookie_buddy_shared/core/core/common/utils/string_date_extensions.dart';
 
 const _logName = 'ReceiptDateFormatter';
 
