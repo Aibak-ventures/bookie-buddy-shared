@@ -1,5 +1,66 @@
 # Changelog
 
+## 1.7.0 — single `CancellationToken` (carries the Dio token)
+
+**Breaking.** `CancellationToken` now owns a Dio `CancelToken`, exposed as
+`dioToken`, and `cancel([reason])` cancels both (idempotent). One token now
+covers app-level and HTTP cancellation, so callers no longer create and pass
+two.
+
+- Repository implementations in the consuming apps must pass
+  `cancelToken.dioToken` to Dio (`cancelToken:` / `dio.download`) so
+  in-flight requests are aborted too. This package only defines the
+  interfaces; it contains no implementations.
+- Download use cases and repository interfaces renamed `funCancelToken` →
+  `cancelToken`: `IAccountRepository.downloadAccountStatementPdf`,
+  `IClientRepository.downloadClientPdfReport`, and their use cases.
+- Removed the separate `dioCancelToken` parameter from
+  `downloadAccountStatementPdf` / `DownloadAccountStatementUseCase`.
+- Migration: replace `funCancelToken:` with `cancelToken:`, drop
+  `dioCancelToken:`, and use `token.dioToken` wherever a Dio `CancelToken`
+  was passed. UI that cancelled both tokens only needs `token.cancel()`.
+
+## 1.6.4 — payment notes
+
+Added `PaymentNotes`, standardized payment and refund message strings
+shared by both apps.
+
+## 1.6.3 — string extensions
+
+Extended the string extensions with additional utility methods and null
+checks.
+
+## 1.6.2 — refund availability and shared date/time utils
+
+Added `RefundAvailabilityCalculator` (ledger-based refund availability and
+unavailability messaging), a generic `SnackBarMessage` base class and a
+booking refund-history mapper. Consolidated the date/time and string-date
+extensions into core/ui split files so both apps share one implementation.
+
+## 1.6.1 — booking security refund
+
+Enhanced the booking status enums and added security-refund logic to
+`BookingDetailsEntity`.
+
+## 1.6.0 — client PDF report download
+
+Added `DownloadClientPdfReportUseCase` and
+`IClientRepository.downloadClientPdfReport`.
+
+## 1.5.0 — additional-charge accounts
+
+- `AdditionalChargesEntity` gained nullable `accountId` / `accountName`, so
+  a charge can be attributed to the account it was paid from/into.
+- `calculateFlatTaxAmount`'s `taxCalculationType` now defaults to
+  inclusive (was required). Non-breaking; existing callers pass it
+  explicitly.
+
+## 1.4.0 — sale payments
+
+Added `SalePaymentEntity` and `SalesPaymentRequestEntity`. The sales
+receipt builder handles multiple payment methods, showing each leg's
+account and amount for split payments.
+
 ## 1.2.0 — client domain layer
 
 `core/features/client/domain/` filled out past just `ClientEntity`

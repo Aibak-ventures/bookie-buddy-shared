@@ -30,6 +30,6 @@ abstract interface class IClientRepository {
   //
   Future<String> downloadClientPdfReport({
     required String defaultFileName,
-    required CancellationToken funCancelToken,
+    required CancellationToken cancelToken,
   });
 }

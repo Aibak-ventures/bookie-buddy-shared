@@ -11,15 +11,13 @@ class DownloadAccountStatementUseCase {
     required int accountId,
     required String startDate,
     required String endDate,
-    required CancellationToken funCancelToken,
-    CancelToken? dioCancelToken,
+    required CancellationToken cancelToken,
     ProgressCallback? onReceiveProgress,
   }) => _repository.downloadAccountStatementPdf(
     accountId: accountId,
     startDate: startDate,
     endDate: endDate,
-    funCancelToken: funCancelToken,
-    dioCancelToken: dioCancelToken,
+    cancelToken: cancelToken,
     onReceiveProgress: onReceiveProgress,
   );
 }

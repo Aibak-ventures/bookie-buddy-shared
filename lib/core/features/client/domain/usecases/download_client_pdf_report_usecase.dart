@@ -7,9 +7,9 @@ class DownloadClientPdfReportUseCase {
 
   Future<String> call({
     required String defaultFileName,
-    required CancellationToken funCancelToken,
+    required CancellationToken cancelToken,
   }) => _repository.downloadClientPdfReport(
     defaultFileName: defaultFileName,
-    funCancelToken: funCancelToken,
+    cancelToken: cancelToken,
   );
 }
