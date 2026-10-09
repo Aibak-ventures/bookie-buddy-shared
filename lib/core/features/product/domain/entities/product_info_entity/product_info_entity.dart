@@ -1,6 +1,6 @@
 import 'package:bookie_buddy_shared/core/core/constants/enums/booking_status_enums.dart';
 import 'package:bookie_buddy_shared/core/core/constants/enums/main_service_type_enums.dart';
-import 'package:bookie_buddy_shared/core/features/booking/domain/entities/measurement_value_entity/measurement_value_entity.dart';
+import 'package:bookie_buddy_shared/core/features/booking/domain/entities/person_measurements_entity/person_measurements_entity.dart';
 import 'package:bookie_buddy_shared/core/features/product/domain/entities/product_entity/product_attributes_entity.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -24,7 +24,7 @@ abstract class ProductInfoEntity with _$ProductInfoEntity {
     required int quantity,
     required double fabricLength,
     required int amount,
-    @Default([]) List<MeasurementValueEntity> measurements,
+    @Default([]) List<PersonMeasurementsEntity> peopleMeasurements,
     // Mobile-only: a rental's return lifecycle. Rented items don't need
     // live stock counts — they still "exist", they just need to come
     // back — so mobile tracks this instead of stock/remainingStock.

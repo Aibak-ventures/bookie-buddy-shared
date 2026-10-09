@@ -141,10 +141,16 @@ extension StringNumberX on String {
     final parts = trim().split(' ');
     if (parts.isEmpty) return '';
     if (parts.length == 1) {
-      return parts[0].isNotEmpty ? parts[0][0].toUpperCase() : '';
+      return parts[0].isNotEmpty ? _firstCharacter(parts[0]).toUpperCase() : '';
     }
-    return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+    return (_firstCharacter(parts[0]) + _firstCharacter(parts.last))
+        .toUpperCase();
   }
+
+  /// First character as a whole code point. `s[0]` would return half of a
+  /// surrogate pair for an emoji or other astral character, which is not a
+  /// valid string and throws when rendered.
+  static String _firstCharacter(String s) => String.fromCharCode(s.runes.first);
 }
 
 extension StringNullableUtilsX on String? {

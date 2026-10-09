@@ -1,5 +1,20 @@
 # Changelog
 
+## 1.8.0 — per-person measurements
+
+**Breaking.** Added `PersonMeasurementsEntity` (a name plus its
+`MeasurementValueEntity` list) so one product line can hold a measurement set
+per person. `ProductInfoEntity.measurements` is replaced by
+`peopleMeasurements` (`List<PersonMeasurementsEntity>`); an empty name is the
+legacy single set. The JSON key stays `measurements`.
+`PersonMeasurementsEntityListX` adds `allValues`, `limitedTo(n)` (keep the
+first n people when a quantity shrinks) and `fingerprint` (order-
+independent change detection); `MeasurementValueListX.toSinglePerson()` wraps a
+flat list.
+
+Also fixed: `String.getInitialLetters` split a surrogate pair for emoji and other
+astral characters, producing an invalid string that throws when rendered.
+
 ## 1.7.0 — single `CancellationToken` (carries the Dio token)
 
 **Breaking.** `CancellationToken` now owns a Dio `CancelToken`, exposed as

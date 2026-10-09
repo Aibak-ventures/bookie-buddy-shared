@@ -24,6 +24,7 @@ export 'core/features/booking/domain/entities/booking_payment_history_entity/boo
 export 'core/features/booking/domain/entities/booking_refund_history_entity/booking_refund_history_entity.dart';
 export 'core/features/booking/domain/entities/booking_security_payment_entity/booking_security_payment_entity.dart';
 export 'core/features/booking/domain/entities/measurement_value_entity/measurement_value_entity.dart';
+export 'core/features/booking/domain/entities/person_measurements_entity/person_measurements_entity.dart';
 export 'core/features/booking/domain/entities/unavailable_products_entity/unavailable_products_entity.dart';
 export 'core/features/client/domain/entities/client_entity/client_entity.dart';
 export 'core/features/product/domain/entities/product_entity/product_attributes_entity.dart';
