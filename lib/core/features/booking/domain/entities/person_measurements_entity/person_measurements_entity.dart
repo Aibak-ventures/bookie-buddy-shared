@@ -27,6 +27,11 @@ extension PersonMeasurementsEntityListX on List<PersonMeasurementsEntity> {
     for (final person in this) ...person.measurements,
   ];
 
+  /// Drops people without measurements, which have nothing to store. Names
+  /// are left as they are; an unnamed person is named when written.
+  List<PersonMeasurementsEntity> withoutEmptyPeople() =>
+      where((p) => p.measurements.isNotEmpty).toList();
+
   /// The first [max] people. A line with quantity N can only hold N people,
   /// so when the quantity shrinks the trailing ones are the ones dropped.
   List<PersonMeasurementsEntity> limitedTo(int max) =>

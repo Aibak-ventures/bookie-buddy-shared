@@ -1,5 +1,33 @@
 # Changelog
 
+## 1.9.0 — shared measurement models and wire format
+
+Moved the `measurements` blob handling out of the apps so mobile and web read
+and write it identically. Additive; no breaking changes.
+
+- Added `MeasurementValueModel` and `PersonMeasurementsModel`
+  (`lib/core/features/booking/data/models/`), with `fromCustomJson` /
+  `toCustomJson` and `List<PersonMeasurementsEntity>.toMeasurementsJson()`.
+  - Read accepts the legacy flat shape and the keyed shape; write is always
+    keyed, inner values keyed by the backend key (`chest`), unnamed people
+    stored as "Person N".
+  - Values that belong to the product, not a person (`VehicleMeasurementKeys`,
+    currently `running_kilometers`), are stored beside the people instead of
+    under "Person 1": `{"running_kilometers": "1000 Km"}`. They read back as
+    part of the first person, so apps keep treating them as ordinary values.
+- Added `MeasurementConstants.personNameAt`.
+- Added `PersonMeasurementRules` (`displayName`, `capacity`,
+  `usesSinglePersonForm`, `countLabel`).
+- Added `withoutEmptyPeople()` on `List<PersonMeasurementsEntity>`.
+- Added `StandardMeasurementFields` (`all`, plus a constant per key): the one
+  list of default measurement fields (name, backend key, description, gender)
+  both apps' forms are built from. It is the union of the former mobile and
+  web lists, so web gains sleeve width, regal, elbow, pad and shoulder strap.
+- All of the above are exported from `bookie_buddy_shared.dart`.
+
+Migration: apps must delete their local copies of these models and field
+lists and import them from here.
+
 ## 1.8.0 — per-person measurements
 
 **Breaking.** Added `PersonMeasurementsEntity` (a name plus its
