@@ -34,6 +34,18 @@ export 'core/features/client/domain/entities/client_entity/client_entity.dart';
 export 'core/features/product/domain/entities/product_entity/product_attributes_entity.dart';
 export 'core/features/product/domain/entities/product_info_entity/product_info_entity.dart';
 export 'core/features/sales/domain/entities/sale_details_entity/sale_details_entity.dart';
+export 'core/features/marketplace/domain/entities/marketplace_enquiry_entity/marketplace_enquiry_entity.dart';
+export 'core/features/marketplace/domain/entities/marketplace_filter_option_entity/marketplace_filter_option_entity.dart';
+export 'core/features/marketplace/domain/entities/marketplace_fabric_entity/marketplace_fabric_entity.dart';
+export 'core/features/marketplace/domain/entities/marketplace_media_entity/marketplace_media_entity.dart';
+export 'core/features/marketplace/domain/entities/marketplace_product_details_entity/marketplace_product_details_entity.dart';
+export 'core/features/marketplace/domain/entities/marketplace_product_entity/marketplace_product_entity.dart';
+export 'core/features/marketplace/domain/entities/marketplace_product_filter_entity/marketplace_product_filter_entity.dart';
+export 'core/features/marketplace/domain/repositories/i_marketplace_repository.dart';
+export 'core/features/marketplace/domain/usecases/build_marketplace_enquiry_message_usecase.dart';
+export 'core/features/marketplace/domain/usecases/get_marketplace_filter_options_usecase.dart';
+export 'core/features/marketplace/domain/usecases/get_marketplace_product_details_usecase.dart';
+export 'core/features/marketplace/domain/usecases/get_marketplace_products_usecase.dart';
 export 'core/features/service/domain/entities/service_entity/service_entity.dart';
 
 // Cross-feature entities/enums the above depend on
@@ -51,6 +63,9 @@ export 'core/core/constants/enums/booking_status_enums.dart';
 export 'core/core/constants/enums/cooling_period_mode_enum.dart';
 export 'core/core/constants/enums/gender_type_enums.dart';
 export 'core/core/constants/enums/main_service_type_enums.dart';
+export 'core/core/constants/enums/marketplace_filter_option_type_enum.dart';
+export 'core/core/constants/enums/marketplace_main_category_enum.dart';
+export 'core/core/constants/enums/marketplace_sort_by_enum.dart';
 export 'core/core/constants/enums/payment_method_enums.dart';
 export 'core/core/constants/enums/shop_based_enums.dart';
 export 'core/core/constants/enums/tax_calculation_type_enum.dart';
