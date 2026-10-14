@@ -3,12 +3,17 @@
 enum MarketplaceFilterOptionType {
   fabrics('Fabric'),
   subcategories('Subcategory'),
-  // TODO(marketplace): unverified — the models and colors option lists don't
-  // exist on the backend yet.
   models('Model'),
   colors('Color');
 
   final String label;
 
   const MarketplaceFilterOptionType(this.label);
+
+  /// Whether the product filter takes this facet by id (fabrics and
+  /// subcategories) rather than by name (colors and models).
+  bool get isIdBased => switch (this) {
+    fabrics || subcategories => true,
+    models || colors => false,
+  };
 }

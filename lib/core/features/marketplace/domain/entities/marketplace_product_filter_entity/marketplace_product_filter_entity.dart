@@ -4,19 +4,20 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'marketplace_product_filter_entity.freezed.dart';
 
-/// Criteria for the marketplace listing. Every facet is sent by name.
+/// Criteria for the marketplace listing.
 ///
 /// The API requires at least one category; leave [categories] empty to use
-/// every [MarketplaceMainCategory] (see the products usecase).
+/// the requested [MarketplaceMainCategory] names (see the products usecase).
 @freezed
 abstract class MarketplaceProductFilterEntity
     with _$MarketplaceProductFilterEntity {
   const factory MarketplaceProductFilterEntity({
     @Default([]) List<String> categories,
-    // TODO(marketplace): unverified — the `subcategories`, `fabrics` and
-    // `models` filters are not in the documented request body yet.
-    @Default([]) List<String> subcategories,
-    @Default([]) List<String> fabrics,
+    // Fabrics and subcategories are sent by id; colors and models by name.
+    @Default([]) List<int> subcategoryIds,
+    @Default([]) List<int> fabricIds,
+    // TODO(marketplace): unverified — `models` is not in the documented
+    // request body yet.
     @Default([]) List<String> models,
     @Default([]) List<String> colors,
     bool? isPremium,
@@ -26,4 +27,17 @@ abstract class MarketplaceProductFilterEntity
     MarketplaceSortBy? sortBy,
     @Default(true) bool showSellingPrice,
   }) = _MarketplaceProductFilterEntity;
+}
+
+extension MarketplaceProductFilterEntityX on MarketplaceProductFilterEntity {
+  bool get hasPriceRange => minPrice != null || maxPrice != null;
+
+  /// How many selections narrow the list: each chosen subcategory, fabric,
+  /// model and color, plus one for a price range. Search and sort don't count.
+  int get activeFilterCount =>
+      subcategoryIds.length +
+      fabricIds.length +
+      models.length +
+      colors.length +
+      (hasPriceRange ? 1 : 0);
 }

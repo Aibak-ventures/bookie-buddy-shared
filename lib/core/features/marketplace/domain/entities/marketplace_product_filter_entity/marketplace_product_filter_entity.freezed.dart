@@ -14,9 +14,10 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$MarketplaceProductFilterEntity {
 
- List<String> get categories;// TODO(marketplace): unverified — the `subcategories`, `fabrics` and
-// `models` filters are not in the documented request body yet.
- List<String> get subcategories; List<String> get fabrics; List<String> get models; List<String> get colors; bool? get isPremium; double? get minPrice; double? get maxPrice; String? get search; MarketplaceSortBy? get sortBy; bool get showSellingPrice;
+ List<String> get categories;// Fabrics and subcategories are sent by id; colors and models by name.
+ List<int> get subcategoryIds; List<int> get fabricIds;// TODO(marketplace): unverified — `models` is not in the documented
+// request body yet.
+ List<String> get models; List<String> get colors; bool? get isPremium; double? get minPrice; double? get maxPrice; String? get search; MarketplaceSortBy? get sortBy; bool get showSellingPrice;
 /// Create a copy of MarketplaceProductFilterEntity
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -27,16 +28,16 @@ $MarketplaceProductFilterEntityCopyWith<MarketplaceProductFilterEntity> get copy
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is MarketplaceProductFilterEntity&&const DeepCollectionEquality().equals(other.categories, categories)&&const DeepCollectionEquality().equals(other.subcategories, subcategories)&&const DeepCollectionEquality().equals(other.fabrics, fabrics)&&const DeepCollectionEquality().equals(other.models, models)&&const DeepCollectionEquality().equals(other.colors, colors)&&(identical(other.isPremium, isPremium) || other.isPremium == isPremium)&&(identical(other.minPrice, minPrice) || other.minPrice == minPrice)&&(identical(other.maxPrice, maxPrice) || other.maxPrice == maxPrice)&&(identical(other.search, search) || other.search == search)&&(identical(other.sortBy, sortBy) || other.sortBy == sortBy)&&(identical(other.showSellingPrice, showSellingPrice) || other.showSellingPrice == showSellingPrice));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is MarketplaceProductFilterEntity&&const DeepCollectionEquality().equals(other.categories, categories)&&const DeepCollectionEquality().equals(other.subcategoryIds, subcategoryIds)&&const DeepCollectionEquality().equals(other.fabricIds, fabricIds)&&const DeepCollectionEquality().equals(other.models, models)&&const DeepCollectionEquality().equals(other.colors, colors)&&(identical(other.isPremium, isPremium) || other.isPremium == isPremium)&&(identical(other.minPrice, minPrice) || other.minPrice == minPrice)&&(identical(other.maxPrice, maxPrice) || other.maxPrice == maxPrice)&&(identical(other.search, search) || other.search == search)&&(identical(other.sortBy, sortBy) || other.sortBy == sortBy)&&(identical(other.showSellingPrice, showSellingPrice) || other.showSellingPrice == showSellingPrice));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(categories),const DeepCollectionEquality().hash(subcategories),const DeepCollectionEquality().hash(fabrics),const DeepCollectionEquality().hash(models),const DeepCollectionEquality().hash(colors),isPremium,minPrice,maxPrice,search,sortBy,showSellingPrice);
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(categories),const DeepCollectionEquality().hash(subcategoryIds),const DeepCollectionEquality().hash(fabricIds),const DeepCollectionEquality().hash(models),const DeepCollectionEquality().hash(colors),isPremium,minPrice,maxPrice,search,sortBy,showSellingPrice);
 
 @override
 String toString() {
-  return 'MarketplaceProductFilterEntity(categories: $categories, subcategories: $subcategories, fabrics: $fabrics, models: $models, colors: $colors, isPremium: $isPremium, minPrice: $minPrice, maxPrice: $maxPrice, search: $search, sortBy: $sortBy, showSellingPrice: $showSellingPrice)';
+  return 'MarketplaceProductFilterEntity(categories: $categories, subcategoryIds: $subcategoryIds, fabricIds: $fabricIds, models: $models, colors: $colors, isPremium: $isPremium, minPrice: $minPrice, maxPrice: $maxPrice, search: $search, sortBy: $sortBy, showSellingPrice: $showSellingPrice)';
 }
 
 
@@ -47,7 +48,7 @@ abstract mixin class $MarketplaceProductFilterEntityCopyWith<$Res>  {
   factory $MarketplaceProductFilterEntityCopyWith(MarketplaceProductFilterEntity value, $Res Function(MarketplaceProductFilterEntity) _then) = _$MarketplaceProductFilterEntityCopyWithImpl;
 @useResult
 $Res call({
- List<String> categories, List<String> subcategories, List<String> fabrics, List<String> models, List<String> colors, bool? isPremium, double? minPrice, double? maxPrice, String? search, MarketplaceSortBy? sortBy, bool showSellingPrice
+ List<String> categories, List<int> subcategoryIds, List<int> fabricIds, List<String> models, List<String> colors, bool? isPremium, double? minPrice, double? maxPrice, String? search, MarketplaceSortBy? sortBy, bool showSellingPrice
 });
 
 
@@ -64,12 +65,12 @@ class _$MarketplaceProductFilterEntityCopyWithImpl<$Res>
 
 /// Create a copy of MarketplaceProductFilterEntity
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? categories = null,Object? subcategories = null,Object? fabrics = null,Object? models = null,Object? colors = null,Object? isPremium = freezed,Object? minPrice = freezed,Object? maxPrice = freezed,Object? search = freezed,Object? sortBy = freezed,Object? showSellingPrice = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? categories = null,Object? subcategoryIds = null,Object? fabricIds = null,Object? models = null,Object? colors = null,Object? isPremium = freezed,Object? minPrice = freezed,Object? maxPrice = freezed,Object? search = freezed,Object? sortBy = freezed,Object? showSellingPrice = null,}) {
   return _then(_self.copyWith(
 categories: null == categories ? _self.categories : categories // ignore: cast_nullable_to_non_nullable
-as List<String>,subcategories: null == subcategories ? _self.subcategories : subcategories // ignore: cast_nullable_to_non_nullable
-as List<String>,fabrics: null == fabrics ? _self.fabrics : fabrics // ignore: cast_nullable_to_non_nullable
-as List<String>,models: null == models ? _self.models : models // ignore: cast_nullable_to_non_nullable
+as List<String>,subcategoryIds: null == subcategoryIds ? _self.subcategoryIds : subcategoryIds // ignore: cast_nullable_to_non_nullable
+as List<int>,fabricIds: null == fabricIds ? _self.fabricIds : fabricIds // ignore: cast_nullable_to_non_nullable
+as List<int>,models: null == models ? _self.models : models // ignore: cast_nullable_to_non_nullable
 as List<String>,colors: null == colors ? _self.colors : colors // ignore: cast_nullable_to_non_nullable
 as List<String>,isPremium: freezed == isPremium ? _self.isPremium : isPremium // ignore: cast_nullable_to_non_nullable
 as bool?,minPrice: freezed == minPrice ? _self.minPrice : minPrice // ignore: cast_nullable_to_non_nullable
@@ -162,10 +163,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( List<String> categories,  List<String> subcategories,  List<String> fabrics,  List<String> models,  List<String> colors,  bool? isPremium,  double? minPrice,  double? maxPrice,  String? search,  MarketplaceSortBy? sortBy,  bool showSellingPrice)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( List<String> categories,  List<int> subcategoryIds,  List<int> fabricIds,  List<String> models,  List<String> colors,  bool? isPremium,  double? minPrice,  double? maxPrice,  String? search,  MarketplaceSortBy? sortBy,  bool showSellingPrice)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _MarketplaceProductFilterEntity() when $default != null:
-return $default(_that.categories,_that.subcategories,_that.fabrics,_that.models,_that.colors,_that.isPremium,_that.minPrice,_that.maxPrice,_that.search,_that.sortBy,_that.showSellingPrice);case _:
+return $default(_that.categories,_that.subcategoryIds,_that.fabricIds,_that.models,_that.colors,_that.isPremium,_that.minPrice,_that.maxPrice,_that.search,_that.sortBy,_that.showSellingPrice);case _:
   return orElse();
 
 }
@@ -183,10 +184,10 @@ return $default(_that.categories,_that.subcategories,_that.fabrics,_that.models,
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( List<String> categories,  List<String> subcategories,  List<String> fabrics,  List<String> models,  List<String> colors,  bool? isPremium,  double? minPrice,  double? maxPrice,  String? search,  MarketplaceSortBy? sortBy,  bool showSellingPrice)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( List<String> categories,  List<int> subcategoryIds,  List<int> fabricIds,  List<String> models,  List<String> colors,  bool? isPremium,  double? minPrice,  double? maxPrice,  String? search,  MarketplaceSortBy? sortBy,  bool showSellingPrice)  $default,) {final _that = this;
 switch (_that) {
 case _MarketplaceProductFilterEntity():
-return $default(_that.categories,_that.subcategories,_that.fabrics,_that.models,_that.colors,_that.isPremium,_that.minPrice,_that.maxPrice,_that.search,_that.sortBy,_that.showSellingPrice);case _:
+return $default(_that.categories,_that.subcategoryIds,_that.fabricIds,_that.models,_that.colors,_that.isPremium,_that.minPrice,_that.maxPrice,_that.search,_that.sortBy,_that.showSellingPrice);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -203,10 +204,10 @@ return $default(_that.categories,_that.subcategories,_that.fabrics,_that.models,
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( List<String> categories,  List<String> subcategories,  List<String> fabrics,  List<String> models,  List<String> colors,  bool? isPremium,  double? minPrice,  double? maxPrice,  String? search,  MarketplaceSortBy? sortBy,  bool showSellingPrice)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( List<String> categories,  List<int> subcategoryIds,  List<int> fabricIds,  List<String> models,  List<String> colors,  bool? isPremium,  double? minPrice,  double? maxPrice,  String? search,  MarketplaceSortBy? sortBy,  bool showSellingPrice)?  $default,) {final _that = this;
 switch (_that) {
 case _MarketplaceProductFilterEntity() when $default != null:
-return $default(_that.categories,_that.subcategories,_that.fabrics,_that.models,_that.colors,_that.isPremium,_that.minPrice,_that.maxPrice,_that.search,_that.sortBy,_that.showSellingPrice);case _:
+return $default(_that.categories,_that.subcategoryIds,_that.fabricIds,_that.models,_that.colors,_that.isPremium,_that.minPrice,_that.maxPrice,_that.search,_that.sortBy,_that.showSellingPrice);case _:
   return null;
 
 }
@@ -218,7 +219,7 @@ return $default(_that.categories,_that.subcategories,_that.fabrics,_that.models,
 
 
 class _MarketplaceProductFilterEntity implements MarketplaceProductFilterEntity {
-  const _MarketplaceProductFilterEntity({final  List<String> categories = const [], final  List<String> subcategories = const [], final  List<String> fabrics = const [], final  List<String> models = const [], final  List<String> colors = const [], this.isPremium, this.minPrice, this.maxPrice, this.search, this.sortBy, this.showSellingPrice = true}): _categories = categories,_subcategories = subcategories,_fabrics = fabrics,_models = models,_colors = colors;
+  const _MarketplaceProductFilterEntity({final  List<String> categories = const [], final  List<int> subcategoryIds = const [], final  List<int> fabricIds = const [], final  List<String> models = const [], final  List<String> colors = const [], this.isPremium, this.minPrice, this.maxPrice, this.search, this.sortBy, this.showSellingPrice = true}): _categories = categories,_subcategoryIds = subcategoryIds,_fabricIds = fabricIds,_models = models,_colors = colors;
   
 
  final  List<String> _categories;
@@ -228,25 +229,27 @@ class _MarketplaceProductFilterEntity implements MarketplaceProductFilterEntity 
   return EqualUnmodifiableListView(_categories);
 }
 
-// TODO(marketplace): unverified — the `subcategories`, `fabrics` and
-// `models` filters are not in the documented request body yet.
- final  List<String> _subcategories;
-// TODO(marketplace): unverified — the `subcategories`, `fabrics` and
-// `models` filters are not in the documented request body yet.
-@override@JsonKey() List<String> get subcategories {
-  if (_subcategories is EqualUnmodifiableListView) return _subcategories;
+// Fabrics and subcategories are sent by id; colors and models by name.
+ final  List<int> _subcategoryIds;
+// Fabrics and subcategories are sent by id; colors and models by name.
+@override@JsonKey() List<int> get subcategoryIds {
+  if (_subcategoryIds is EqualUnmodifiableListView) return _subcategoryIds;
   // ignore: implicit_dynamic_type
-  return EqualUnmodifiableListView(_subcategories);
+  return EqualUnmodifiableListView(_subcategoryIds);
 }
 
- final  List<String> _fabrics;
-@override@JsonKey() List<String> get fabrics {
-  if (_fabrics is EqualUnmodifiableListView) return _fabrics;
+ final  List<int> _fabricIds;
+@override@JsonKey() List<int> get fabricIds {
+  if (_fabricIds is EqualUnmodifiableListView) return _fabricIds;
   // ignore: implicit_dynamic_type
-  return EqualUnmodifiableListView(_fabrics);
+  return EqualUnmodifiableListView(_fabricIds);
 }
 
+// TODO(marketplace): unverified — `models` is not in the documented
+// request body yet.
  final  List<String> _models;
+// TODO(marketplace): unverified — `models` is not in the documented
+// request body yet.
 @override@JsonKey() List<String> get models {
   if (_models is EqualUnmodifiableListView) return _models;
   // ignore: implicit_dynamic_type
@@ -277,16 +280,16 @@ _$MarketplaceProductFilterEntityCopyWith<_MarketplaceProductFilterEntity> get co
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _MarketplaceProductFilterEntity&&const DeepCollectionEquality().equals(other._categories, _categories)&&const DeepCollectionEquality().equals(other._subcategories, _subcategories)&&const DeepCollectionEquality().equals(other._fabrics, _fabrics)&&const DeepCollectionEquality().equals(other._models, _models)&&const DeepCollectionEquality().equals(other._colors, _colors)&&(identical(other.isPremium, isPremium) || other.isPremium == isPremium)&&(identical(other.minPrice, minPrice) || other.minPrice == minPrice)&&(identical(other.maxPrice, maxPrice) || other.maxPrice == maxPrice)&&(identical(other.search, search) || other.search == search)&&(identical(other.sortBy, sortBy) || other.sortBy == sortBy)&&(identical(other.showSellingPrice, showSellingPrice) || other.showSellingPrice == showSellingPrice));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _MarketplaceProductFilterEntity&&const DeepCollectionEquality().equals(other._categories, _categories)&&const DeepCollectionEquality().equals(other._subcategoryIds, _subcategoryIds)&&const DeepCollectionEquality().equals(other._fabricIds, _fabricIds)&&const DeepCollectionEquality().equals(other._models, _models)&&const DeepCollectionEquality().equals(other._colors, _colors)&&(identical(other.isPremium, isPremium) || other.isPremium == isPremium)&&(identical(other.minPrice, minPrice) || other.minPrice == minPrice)&&(identical(other.maxPrice, maxPrice) || other.maxPrice == maxPrice)&&(identical(other.search, search) || other.search == search)&&(identical(other.sortBy, sortBy) || other.sortBy == sortBy)&&(identical(other.showSellingPrice, showSellingPrice) || other.showSellingPrice == showSellingPrice));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_categories),const DeepCollectionEquality().hash(_subcategories),const DeepCollectionEquality().hash(_fabrics),const DeepCollectionEquality().hash(_models),const DeepCollectionEquality().hash(_colors),isPremium,minPrice,maxPrice,search,sortBy,showSellingPrice);
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_categories),const DeepCollectionEquality().hash(_subcategoryIds),const DeepCollectionEquality().hash(_fabricIds),const DeepCollectionEquality().hash(_models),const DeepCollectionEquality().hash(_colors),isPremium,minPrice,maxPrice,search,sortBy,showSellingPrice);
 
 @override
 String toString() {
-  return 'MarketplaceProductFilterEntity(categories: $categories, subcategories: $subcategories, fabrics: $fabrics, models: $models, colors: $colors, isPremium: $isPremium, minPrice: $minPrice, maxPrice: $maxPrice, search: $search, sortBy: $sortBy, showSellingPrice: $showSellingPrice)';
+  return 'MarketplaceProductFilterEntity(categories: $categories, subcategoryIds: $subcategoryIds, fabricIds: $fabricIds, models: $models, colors: $colors, isPremium: $isPremium, minPrice: $minPrice, maxPrice: $maxPrice, search: $search, sortBy: $sortBy, showSellingPrice: $showSellingPrice)';
 }
 
 
@@ -297,7 +300,7 @@ abstract mixin class _$MarketplaceProductFilterEntityCopyWith<$Res> implements $
   factory _$MarketplaceProductFilterEntityCopyWith(_MarketplaceProductFilterEntity value, $Res Function(_MarketplaceProductFilterEntity) _then) = __$MarketplaceProductFilterEntityCopyWithImpl;
 @override @useResult
 $Res call({
- List<String> categories, List<String> subcategories, List<String> fabrics, List<String> models, List<String> colors, bool? isPremium, double? minPrice, double? maxPrice, String? search, MarketplaceSortBy? sortBy, bool showSellingPrice
+ List<String> categories, List<int> subcategoryIds, List<int> fabricIds, List<String> models, List<String> colors, bool? isPremium, double? minPrice, double? maxPrice, String? search, MarketplaceSortBy? sortBy, bool showSellingPrice
 });
 
 
@@ -314,12 +317,12 @@ class __$MarketplaceProductFilterEntityCopyWithImpl<$Res>
 
 /// Create a copy of MarketplaceProductFilterEntity
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? categories = null,Object? subcategories = null,Object? fabrics = null,Object? models = null,Object? colors = null,Object? isPremium = freezed,Object? minPrice = freezed,Object? maxPrice = freezed,Object? search = freezed,Object? sortBy = freezed,Object? showSellingPrice = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? categories = null,Object? subcategoryIds = null,Object? fabricIds = null,Object? models = null,Object? colors = null,Object? isPremium = freezed,Object? minPrice = freezed,Object? maxPrice = freezed,Object? search = freezed,Object? sortBy = freezed,Object? showSellingPrice = null,}) {
   return _then(_MarketplaceProductFilterEntity(
 categories: null == categories ? _self._categories : categories // ignore: cast_nullable_to_non_nullable
-as List<String>,subcategories: null == subcategories ? _self._subcategories : subcategories // ignore: cast_nullable_to_non_nullable
-as List<String>,fabrics: null == fabrics ? _self._fabrics : fabrics // ignore: cast_nullable_to_non_nullable
-as List<String>,models: null == models ? _self._models : models // ignore: cast_nullable_to_non_nullable
+as List<String>,subcategoryIds: null == subcategoryIds ? _self._subcategoryIds : subcategoryIds // ignore: cast_nullable_to_non_nullable
+as List<int>,fabricIds: null == fabricIds ? _self._fabricIds : fabricIds // ignore: cast_nullable_to_non_nullable
+as List<int>,models: null == models ? _self._models : models // ignore: cast_nullable_to_non_nullable
 as List<String>,colors: null == colors ? _self._colors : colors // ignore: cast_nullable_to_non_nullable
 as List<String>,isPremium: freezed == isPremium ? _self.isPremium : isPremium // ignore: cast_nullable_to_non_nullable
 as bool?,minPrice: freezed == minPrice ? _self.minPrice : minPrice // ignore: cast_nullable_to_non_nullable

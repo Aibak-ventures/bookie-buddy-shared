@@ -4,10 +4,8 @@ part 'marketplace_filter_option_entity.freezed.dart';
 
 /// One selectable value of a filter (a fabric, subcategory, model or color).
 ///
-/// The filter request sends [name] only, so that is the identity of an option.
-///
-/// TODO(marketplace): unverified — [id] and [categoryName] may not exist on
-/// every option list; only [name] is assumed to be there.
+/// Fabrics and subcategories carry an [id], which is what the filter request
+/// sends. Colors and models are plain names with no id.
 @freezed
 abstract class MarketplaceFilterOptionEntity
     with _$MarketplaceFilterOptionEntity {

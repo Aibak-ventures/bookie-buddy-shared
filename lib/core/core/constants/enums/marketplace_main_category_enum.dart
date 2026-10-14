@@ -4,17 +4,8 @@ import 'package:bookie_buddy_shared/core/features/service/domain/entities/servic
 /// The main categories the marketplace is organized by. The backend can add
 /// subcategories under each, but the main categories are fixed here.
 ///
-/// Every product listing request must carry at least one of these, so the
-/// listing always sends [allBackendNames].
-/// Compiled once per pattern — [MarketplaceMainCategory.matchesAny] can run on
-/// every UI rebuild.
-final _compiledPatterns = <String, RegExp>{};
-
-RegExp _compile(String pattern) => _compiledPatterns.putIfAbsent(
-  pattern,
-  () => RegExp(pattern, caseSensitive: false),
-);
-
+/// Every product listing request must carry at least one of these; see
+/// [requestedBackendNames] for which ones are sent.
 enum MarketplaceMainCategory implements BackendKeyedEnum {
   // TODO(marketplace): unverified — the backend category name is assumed.
   grooms('Grooms', 'Grooms', [r'\bgrooms?\b', r'\bdress code\b']);
@@ -38,9 +29,11 @@ enum MarketplaceMainCategory implements BackendKeyedEnum {
     this.serviceNamePatterns,
   );
 
-  /// Backend names of every main category — sent on each listing request.
-  static List<String> get allBackendNames =>
-      values.map((c) => c.value).toList();
+  /// The categories sent on listing and filter-option requests.
+  ///
+  /// Only Grooms for now, as it is the only category the backend has models
+  /// for. Widen this (or use [availableFor]) when more categories go live.
+  static List<String> get requestedBackendNames => [grooms.value];
 
   /// Whether any of [services] (by sub-service name) belongs to this category.
   bool matchesAny(List<ServiceEntity> services) {
@@ -57,3 +50,12 @@ enum MarketplaceMainCategory implements BackendKeyedEnum {
   static bool isAvailableFor(List<ServiceEntity> services) =>
       availableFor(services).isNotEmpty;
 }
+
+/// Compiled once per pattern — [MarketplaceMainCategory.matchesAny] can run on
+/// every UI rebuild.
+final _compiledPatterns = <String, RegExp>{};
+
+RegExp _compile(String pattern) => _compiledPatterns.putIfAbsent(
+  pattern,
+  () => RegExp(pattern, caseSensitive: false),
+);

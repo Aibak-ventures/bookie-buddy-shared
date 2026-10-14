@@ -12,10 +12,12 @@ class GetMarketplaceProductsUseCase {
     MarketplaceProductFilterEntity filter, {
     int page = 1,
   }) => _repository.getProducts(
-    // The backend rejects a listing without a category, so fall back to all
-    // main categories.
+    // The backend rejects a listing without a category, so fall back to the
+    // requested main categories.
     filter.categories.isEmpty
-        ? filter.copyWith(categories: MarketplaceMainCategory.allBackendNames)
+        ? filter.copyWith(
+            categories: MarketplaceMainCategory.requestedBackendNames,
+          )
         : filter,
     page: page,
   );
