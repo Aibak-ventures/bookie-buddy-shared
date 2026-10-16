@@ -7,13 +7,15 @@ class GetMarketplaceFilterOptionsUseCase {
   final IMarketplaceRepository _repository;
   const GetMarketplaceFilterOptionsUseCase(this._repository);
 
-  /// Options for [type] within [categoryNames]; the requested main categories
-  /// when none are given.
-  Future<List<MarketplaceFilterOptionEntity>> call(
-    MarketplaceFilterOptionType type, {
+  /// The options of each filter in [types], within [categoryNames]. Every
+  /// filter and the requested main categories when none are given, so a caller
+  /// only names what it wants to narrow down.
+  Future<MarketplaceFilterOptions> call({
+    List<MarketplaceFilterOptionType> types =
+        MarketplaceFilterOptionType.values,
     List<String> categoryNames = const [],
   }) => _repository.getFilterOptions(
-    type,
+    types: types,
     categoryNames: categoryNames.isEmpty
         ? MarketplaceMainCategory.requestedBackendNames
         : categoryNames,

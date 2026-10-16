@@ -14,10 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$MarketplaceProductFilterEntity {
 
- List<String> get categories;// Fabrics and subcategories are sent by id; colors and models by name.
- List<int> get subcategoryIds; List<int> get fabricIds;// TODO(marketplace): unverified — `models` is not in the documented
-// request body yet.
- List<String> get models; List<String> get colors; bool? get isPremium; double? get minPrice; double? get maxPrice; String? get search; MarketplaceSortBy? get sortBy; bool get showSellingPrice;
+ List<String> get categories; List<int> get subcategoryIds; List<int> get fabricIds; List<String> get models; List<String> get colors; bool? get isPremium; double? get minPrice; double? get maxPrice; String? get search; MarketplaceSortBy? get sortBy; bool get showSellingPrice;
 /// Create a copy of MarketplaceProductFilterEntity
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -229,9 +226,7 @@ class _MarketplaceProductFilterEntity implements MarketplaceProductFilterEntity 
   return EqualUnmodifiableListView(_categories);
 }
 
-// Fabrics and subcategories are sent by id; colors and models by name.
  final  List<int> _subcategoryIds;
-// Fabrics and subcategories are sent by id; colors and models by name.
 @override@JsonKey() List<int> get subcategoryIds {
   if (_subcategoryIds is EqualUnmodifiableListView) return _subcategoryIds;
   // ignore: implicit_dynamic_type
@@ -245,11 +240,7 @@ class _MarketplaceProductFilterEntity implements MarketplaceProductFilterEntity 
   return EqualUnmodifiableListView(_fabricIds);
 }
 
-// TODO(marketplace): unverified — `models` is not in the documented
-// request body yet.
  final  List<String> _models;
-// TODO(marketplace): unverified — `models` is not in the documented
-// request body yet.
 @override@JsonKey() List<String> get models {
   if (_models is EqualUnmodifiableListView) return _models;
   // ignore: implicit_dynamic_type

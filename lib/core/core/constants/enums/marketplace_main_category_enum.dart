@@ -7,7 +7,6 @@ import 'package:bookie_buddy_shared/core/features/service/domain/entities/servic
 /// Every product listing request must carry at least one of these; see
 /// [requestedBackendNames] for which ones are sent.
 enum MarketplaceMainCategory implements BackendKeyedEnum {
-  // TODO(marketplace): unverified — the backend category name is assumed.
   grooms('Grooms', 'Grooms', [r'\bgrooms?\b', r'\bdress code\b']);
 
   /// The category name sent to the backend.

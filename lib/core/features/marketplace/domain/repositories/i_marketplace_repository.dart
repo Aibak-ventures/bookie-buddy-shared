@@ -15,10 +15,10 @@ abstract interface class IMarketplaceRepository {
   //
   Future<MarketplaceProductDetailsEntity> getProductDetails(int productId);
 
-  /// Every available option for [type], across all pages, limited to the main
-  /// categories in [categoryNames].
-  Future<List<MarketplaceFilterOptionEntity>> getFilterOptions(
-    MarketplaceFilterOptionType type, {
+  /// The options of each filter in [types], across all pages, limited to the
+  /// main categories in [categoryNames]. One request serves every type.
+  Future<MarketplaceFilterOptions> getFilterOptions({
     required List<String> categoryNames,
+    required List<MarketplaceFilterOptionType> types,
   });
 }
