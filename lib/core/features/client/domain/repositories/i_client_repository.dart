@@ -32,4 +32,12 @@ abstract interface class IClientRepository {
     required String defaultFileName,
     required CancellationToken cancelToken,
   });
+
+  /// Downloads the client report Excel and returns the local file path.
+  /// Omit [startDate]/[endDate] for the full (all-time) report.
+  Future<String> downloadClientExcelReport({
+    DateTime? startDate,
+    DateTime? endDate,
+    required CancellationToken cancelToken,
+  });
 }
