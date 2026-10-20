@@ -1,5 +1,17 @@
 # Changelog
 
+## 1.11.0 — security paid date rules
+
+Shared the rules for the date a booking's security deposit was paid, so mobile
+and web edit screens can't drift. Additive; no breaking changes.
+
+- Added `BookingDetailsSecurityPaidDateX` on `BookingDetailsEntity`
+  (`bookedDateOnly`, `securityPaidLastDate`, `canEditSecurityPaidDate`,
+  `savedSecurityPaidDate`). The paid date can't be before the booked date, nor
+  after today or the first security refund/deduction; the field is pointless
+  when that range is a single day. Apps should use these instead of local
+  copies.
+
 ## 1.9.0 — shared measurement models and wire format
 
 Moved the `measurements` blob handling out of the apps so mobile and web read

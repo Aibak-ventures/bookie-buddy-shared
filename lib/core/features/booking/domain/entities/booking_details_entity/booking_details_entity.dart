@@ -1,6 +1,8 @@
 import 'package:bookie_buddy_shared/core/core/common/entities/additional_charges_entity/additional_charges_entity.dart';
 import 'package:bookie_buddy_shared/core/core/common/entities/applied_tax_entity/applied_tax_entity.dart';
 import 'package:bookie_buddy_shared/core/core/common/entities/document_details_entity/document_details_entity.dart';
+import 'package:bookie_buddy_shared/core/core/common/utils/date_time_extensions.dart';
+import 'package:bookie_buddy_shared/core/core/common/utils/string_date_extensions.dart';
 import 'package:bookie_buddy_shared/core/core/constants/enums/booking_status_enums.dart';
 import 'package:bookie_buddy_shared/core/core/constants/enums/booking_rental_unit_enum.dart';
 import 'package:bookie_buddy_shared/core/core/constants/enums/cooling_period_mode_enum.dart';
@@ -80,4 +82,56 @@ extension BookingDetailsEntityX on BookingDetailsEntity {
     return deliveryStatus.isBookingClosed ||
         securityTransactionHistory.isNotEmpty;
   }
+}
+
+/// Rules for the date the security deposit was paid, shared by the apps'
+/// edit-booking screens so they can't drift apart.
+///
+/// The paid date can't be before the booked date, and can't be after the
+/// first security refund/deduction (the deposit can't be paid after it was
+/// already refunded or deducted) or after today. Only the calendar day of
+/// every date counts; a UTC timestamp is read as the local calendar day.
+extension BookingDetailsSecurityPaidDateX on BookingDetailsEntity {
+  /// Earliest allowed security paid date (and pickup date): the booked date.
+  /// Falls back to the creation date, then today, if it can't be parsed.
+  DateTime get bookedDateOnly =>
+      _calendarDay(bookedDate) ??
+      _calendarDay(createdAt) ??
+      DateTime.now().dateOnly;
+
+  /// Latest allowed security paid date: [today] (defaults to now) or the day
+  /// of the first security refund/deduction (any entry in
+  /// [securityTransactionHistory]), whichever is earlier. Entries with an
+  /// unparseable date are ignored.
+  DateTime securityPaidLastDate({DateTime? today}) {
+    var last = (today ?? DateTime.now()).dateOnly;
+    for (final transaction in securityTransactionHistory) {
+      final day = _calendarDay(transaction.createdAt);
+      if (day != null && day.isBefore(last)) last = day;
+    }
+    return last;
+  }
+
+  /// Whether there is more than one day to choose from. When the booked date
+  /// and the latest allowed date are the same day, the date field is pointless.
+  bool canEditSecurityPaidDate({DateTime? today}) =>
+      securityPaidLastDate(today: today).isAfter(bookedDateOnly);
+
+  /// The saved security paid date, clamped into the allowed range (old data
+  /// may sit outside it). Defaults to the latest allowed date when none is
+  /// saved. The result is never after [securityPaidLastDate].
+  DateTime savedSecurityPaidDate({DateTime? today}) {
+    final last = securityPaidLastDate(today: today);
+    final saved = _calendarDay(securityPayment?.paidAt) ?? last;
+    final booked = bookedDateOnly;
+    final lowerBounded = saved.isBefore(booked) ? booked : saved;
+    return lowerBounded.isAfter(last) ? last : lowerBounded;
+  }
+}
+
+/// Local calendar day of [value], or `null` when it is empty/unparseable.
+DateTime? _calendarDay(String? value) {
+  final parsed = value?.tryParseToDateTime();
+  if (parsed == null) return null;
+  return (parsed.isUtc ? parsed.toLocal() : parsed).dateOnly;
 }
