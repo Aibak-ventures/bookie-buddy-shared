@@ -1,7 +1,8 @@
 /// Shared domain + visual layer for Bookie Buddy's mobile and web apps.
 ///
 /// `core/` is pure Dart by convention (see `scripts/check_core_purity.dart`);
-/// `ui/` is Flutter-typed and depends on `core/`.
+/// `ui/` is Flutter-typed and depends on `core/`. `tooling/` (dev-only script
+/// helpers) is deliberately not exported here.
 library;
 
 // ---------------------------------------------------------------------------

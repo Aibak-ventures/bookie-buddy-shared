@@ -157,6 +157,31 @@ rather than waiting for release time:
 dart run scripts/check_core_purity.dart
 ```
 
+## Script tooling (`lib/tooling/`)
+
+Dev-only helpers for Dart scripts (cross-OS, no shell scripts): `ScriptContext`
+(logging, running processes, prompts), `ScriptCommand` / `ScriptRunner` /
+`runCommand` / `runScript` (entry points), and `FlutterTooling` (`fvm flutter`,
+pubspec version, arm64 split-per-ABI APK). It is **not** app code:
+
+- Import it directly in a script:
+  `import 'package:bookie_buddy_shared/tooling/tooling.dart';`. It is
+  deliberately **not** exported by `bookie_buddy_shared.dart` (that barrel
+  pulls in `dart:ui`, which plain `dart run` can't load).
+- Nothing in `lib/core/`, `lib/ui/` or the barrel may import it, and it may
+  import only plain-Dart `dart:` libraries and its own files. Both rules are
+  checked by `scripts/check_core_purity.dart` (run automatically by
+  `scripts/release.dart`).
+- Scripts (`scripts/`, `example/`, and apps' `tool/`) import only the tooling
+  — preferably the `tooling.dart` barrel, though any file under `tooling/` is
+  fine — no `dart:io`, no packages; add a helper to `lib/tooling/` instead.
+  `scripts/check_core_purity.dart` enforces this for `scripts/` and `example/`.
+  `dart run example/tooling_demo.dart` shows what every helper does.
+- Consuming apps put their scripts in `tool/` — see the mobile repo's
+  `tool/build_internal_apk.dart` (standalone entry point) and `tool/build.dart`
+  (one entry point, many commands). Apps need no extra dependency beyond
+  `bookie_buddy_shared`.
+
 ## Adding something brand-new
 
 If a feature doesn't exist in either app yet and you know both will need

@@ -1,5 +1,26 @@
 # Changelog
 
+## 1.12.0 — script tooling
+
+Added `lib/tooling/` — dev-only helpers for Dart project scripts, shared by
+the mobile and web repos. Additive; no breaking changes.
+
+- `ScriptContext`, `ScriptCommand`, `ScriptRunner`, `runCommand`,
+  `runScript`, `FlutterTooling`. Import
+  `package:bookie_buddy_shared/tooling/tooling.dart` directly; it is not
+  exported by the main barrel.
+- `scripts/check_core_purity.dart` now also enforces three import rules:
+  `lib/core/`, `lib/ui/` and the barrel don't touch `lib/tooling/`;
+  `lib/tooling/` imports only plain-Dart `dart:` libraries and its own files;
+  `scripts/` and `example/` import only the tooling (barrel preferred; no
+  `dart:io`, no packages, no `..` imports).
+- `scripts/release.dart` and `check_core_purity.dart` are now written on the
+  tooling.
+- Clickable output: `ScriptContext.pathLink()`, `String.link()` (terminal
+  hyperlinks), and http(s) URLs in output messages are linked automatically.
+- Added `example/tooling_demo.dart` — a runnable tour of the helpers and their
+  colored output.
+
 ## 1.11.0 — security paid date rules
 
 Shared the rules for the date a booking's security deposit was paid, so mobile

@@ -8,6 +8,11 @@ from this repo.
 | --- | --- | --- |
 | [`lib/core`](lib/core) | Entities, usecases, repository interfaces, domain enums | No — pure Dart by convention, checked by `scripts/check_core_purity.dart` |
 | [`lib/ui`](lib/ui) | Design tokens, enum→color/icon mappings, receipt-rendering pipeline | Yes |
+| [`lib/tooling`](lib/tooling) | Dev-only helpers for Dart project scripts (`tool/*.dart`, `scripts/*.dart`) — not app code | No — plain `dart:io`, isolated by `scripts/check_core_purity.dart` |
+
+`lib/tooling` is not exported by `bookie_buddy_shared.dart`; scripts import
+it directly (`package:bookie_buddy_shared/tooling/tooling.dart`). See
+"Script tooling" in the dev guide.
 
 Formerly two packages (`bookie_buddy_core`, `bookie_buddy_ui`) — merged
 into one; see `CHANGELOG.md`. The `core`/`ui` split is now a folder
