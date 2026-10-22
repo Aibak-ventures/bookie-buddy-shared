@@ -17,6 +17,7 @@ Future<void> main(List<String> args) {
     ColorsDemo(),
     BuildDemo(),
     CommandsDemo(),
+    GitDemo(),
     FilesDemo(),
     ExtensionsDemo(),
   ];
@@ -65,6 +66,8 @@ class ColorsDemo extends ScriptCommand {
       ..step('Clickable links (terminals that support hyperlinks)')
       ..info('pathLink() a file:    ${context.pathLink('pubspec.yaml')}')
       ..info('pathLink() a folder:  ${context.pathLink('lib/tooling')}')
+      ..info('A message that is just an existing absolute path is linked:')
+      ..info(context.path('lib/tooling'))
       ..info('URLs in any message:  see https://dart.dev/get-started')
       ..info(
         '.link() on any text:  ${'click here'.cyan.link('https://pub.dev')}',
@@ -141,6 +144,43 @@ class CommandsDemo extends ScriptCommand {
         '${exe.padRight(26)}${found ? 'found'.green : 'missing'.red}',
       );
     }
+  }
+}
+
+/// GitTooling queries (read-only).
+class GitDemo extends ScriptCommand {
+  @override
+  String get name => 'git';
+
+  @override
+  String get description => 'GitTooling: branch, dirty files, tags (read-only)';
+
+  @override
+  Future<void> run(ScriptContext context, List<String> args) async {
+    final git = GitTooling(context);
+    context.step('GitTooling (read-only queries)');
+    if (!await git.isInsideRepo()) {
+      context.warn('not inside a git repository');
+      return;
+    }
+    final dirty = await git.dirtyFiles();
+    context
+      ..info(
+        'currentBranch():     ${(await git.currentBranch() ?? 'detached').cyan}',
+      )
+      ..info(
+        'dirtyFiles():        ${dirty.isEmpty ? 'clean'.green : '${dirty.length} changed'.yellow}',
+      )
+      ..info(
+        'latestVersionTag():  ${(await git.latestVersionTag() ?? 'none').cyan}',
+      )
+      ..info(
+        'tagExists("v0.0.0"): ${await git.tagExists('v0.0.0') ? 'yes'.green : 'no'.red}',
+      );
+    dirty.take(3).forEach(context.info);
+    context.info(
+      'commit() / tag() / push() are used by scripts/release.dart.'.dim,
+    );
   }
 }
 
@@ -270,7 +310,8 @@ class AllDemo extends ScriptCommand {
   String get name => 'all';
 
   @override
-  String get description => 'Run colors, build, commands, files, extensions';
+  String get description =>
+      'Run colors, build, commands, git, files, extensions';
 
   @override
   Future<void> run(ScriptContext context, List<String> args) async {

@@ -3,23 +3,30 @@
 ## 1.12.0 — script tooling
 
 Added `lib/tooling/` — dev-only helpers for Dart project scripts, shared by
-the mobile and web repos. Additive; no breaking changes.
+the mobile and web repos. Additive; no breaking changes. Import
+`package:bookie_buddy_shared/tooling/tooling.dart` directly; it is not exported
+by the main barrel. See `lib/tooling/README.md`.
 
-- `ScriptContext`, `ScriptCommand`, `ScriptRunner`, `runCommand`,
-  `runScript`, `FlutterTooling`. Import
-  `package:bookie_buddy_shared/tooling/tooling.dart` directly; it is not
-  exported by the main barrel.
-- `scripts/check_core_purity.dart` now also enforces three import rules:
+- `ScriptContext` (colored output, running processes, files, prompts),
+  `ScriptCommand` / `ScriptRunner` / `runCommand` / `runScript`,
+  `FlutterTooling`, `GitTooling`, and `String` / `ProcessResult` extensions.
+- Clickable output: http(s) URLs and a message that is exactly an existing
+  absolute path are linked automatically; `ScriptContext.pathLink()` and
+  `String.link()` link explicitly. Colors and links turn off when output is
+  piped or `NO_COLOR` is set; `FORCE_COLOR` turns them on.
+- A command that can't be started, and any other exception in a script, ends
+  with a clean `Error: ...` instead of a stack trace.
+- `scripts/release.dart` and `scripts/check_core_purity.dart` now use the
+  tooling (`release.dart` also reports a failed push with the manual command).
+  The dirty-tree check matches `pubspec.yaml` exactly instead of any path
+  ending in it.
+- `scripts/check_core_purity.dart` also enforces three import rules:
   `lib/core/`, `lib/ui/` and the barrel don't touch `lib/tooling/`;
   `lib/tooling/` imports only plain-Dart `dart:` libraries and its own files;
   `scripts/` and `example/` import only the tooling (barrel preferred; no
   `dart:io`, no packages, no `..` imports).
-- `scripts/release.dart` and `check_core_purity.dart` are now written on the
-  tooling.
-- Clickable output: `ScriptContext.pathLink()`, `String.link()` (terminal
-  hyperlinks), and http(s) URLs in output messages are linked automatically.
-- Added `example/tooling_demo.dart` — a runnable tour of the helpers and their
-  colored output.
+- Added `example/tooling_demo.dart` (a runnable tour of the helpers) and
+  `test/tooling/`.
 
 ## 1.11.0 — security paid date rules
 

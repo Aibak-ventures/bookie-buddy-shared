@@ -8,11 +8,12 @@ from this repo.
 | --- | --- | --- |
 | [`lib/core`](lib/core) | Entities, usecases, repository interfaces, domain enums | No — pure Dart by convention, checked by `scripts/check_core_purity.dart` |
 | [`lib/ui`](lib/ui) | Design tokens, enum→color/icon mappings, receipt-rendering pipeline | Yes |
-| [`lib/tooling`](lib/tooling) | Dev-only helpers for Dart project scripts (`tool/*.dart`, `scripts/*.dart`) — not app code | No — plain `dart:io`, isolated by `scripts/check_core_purity.dart` |
+| [`lib/tooling`](lib/tooling) | Dev-only helpers for Dart project scripts (`tool/*.dart`, `scripts/*.dart`) — not app code | No — only `dart:` libraries, isolated by `scripts/check_core_purity.dart` |
 
 `lib/tooling` is not exported by `bookie_buddy_shared.dart`; scripts import
 it directly (`package:bookie_buddy_shared/tooling/tooling.dart`). See
-"Script tooling" in the dev guide.
+`lib/tooling/README.md` for what it offers and the "Script tooling" section
+of the dev guide for the rules.
 
 Formerly two packages (`bookie_buddy_core`, `bookie_buddy_ui`) — merged
 into one; see `CHANGELOG.md`. The `core`/`ui` split is now a folder
@@ -56,7 +57,8 @@ lib/
 the Clean Architecture rule "entities/usecases never import Flutter" a
 build error instead of a review nit, back when `core` was its own
 non-Flutter package. That's now checked by `scripts/check_core_purity.dart`
-instead (run automatically by `scripts/release.dart`).
+instead (run automatically by `scripts/release.dart`), together with the
+boundaries around `lib/tooling` (see below).
 
 ## Codegen
 
@@ -75,10 +77,14 @@ Commit the resulting diff.
 
 ## Versioning
 
-One tag covers the whole package, bumped via `scripts/release.dart` (which
-also runs `scripts/check_core_purity.dart` first, and asks before
-pushing). Give it the new version, or omit it to release whatever
-`version:` is already in `pubspec.yaml`:
+One tag covers the whole package, bumped via `scripts/release.dart`. It
+refuses to run on a detached HEAD or a dirty working tree (apart from
+`pubspec.yaml`), or for a version that isn't newer than the latest `v*` tag
+(or whose tag already exists locally or on `origin`). Then it runs
+`scripts/check_core_purity.dart` and the whole test suite, bumps `version:`,
+commits, creates an annotated tag, and asks before pushing. Give it the new
+version, or omit it to release whatever `version:` is already in
+`pubspec.yaml`:
 
 ```bash
 dart run scripts/release.dart 0.2.0

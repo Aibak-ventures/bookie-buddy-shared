@@ -92,7 +92,7 @@ Future<void> _check(ScriptContext context) async {
         'Flutter, move that file to lib/ui instead.',
       );
   } else {
-    context.info('lib/core is pure Dart. OK.');
+    context.ok('lib/core is pure Dart. OK.');
   }
 
   // 2a. Nothing production-facing may touch lib/tooling/.
@@ -120,7 +120,7 @@ Future<void> _check(ScriptContext context) async {
         'in lib/core instead.',
       );
   } else {
-    context.info('lib/core, lib/ui and the barrel do not use lib/tooling. OK.');
+    context.ok('lib/core, lib/ui and the barrel do not use lib/tooling. OK.');
   }
 
   // 2b. lib/tooling/ must stay self-contained plain Dart.
@@ -146,7 +146,7 @@ Future<void> _check(ScriptContext context) async {
         'out of lib/tooling.',
       );
   } else {
-    context.info('lib/tooling is self-contained. OK.');
+    context.ok('lib/tooling is self-contained. OK.');
   }
 
   // 3. Scripts use only the tooling.
@@ -174,7 +174,7 @@ Future<void> _check(ScriptContext context) async {
         'lib/tooling instead of importing dart:io or a package.',
       );
   } else {
-    context.info('scripts/ and example/ use only the tooling. OK.');
+    context.ok('scripts/ and example/ use only the tooling. OK.');
   }
 
   if (failed) context.fail('import-boundary check failed — see above.');

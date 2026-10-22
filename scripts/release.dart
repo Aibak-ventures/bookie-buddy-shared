@@ -1,6 +1,8 @@
-// Cuts a release: checks lib/core/ purity, bumps `version:` in
-// pubspec.yaml (if a version is given), commits, tags, and optionally
-// pushes.
+// Cuts a release: checks the working tree and that the version is newer than
+// the latest tag, runs the import-boundary check (check_core_purity.dart) and
+// the test suite, bumps `version:` in pubspec.yaml (if a version is given),
+// commits, creates an annotated tag, and optionally pushes. Written on
+// lib/tooling.
 //
 // Usage:
 //   dart run scripts/release.dart 0.2.0   # bump pubspec.yaml, then release
@@ -28,13 +30,10 @@ Future<void> _release(ScriptContext context, List<String> args) async {
   // 2. Repository root: the script runs with it as the working directory, so
   // plain `git ...` commands below act on this repo.
   final repoRoot = context.root.path;
+  final git = GitTooling(context);
 
   // 3. Verify we're inside a git repository.
-  final insideRepo = await context.exec('git', [
-    'rev-parse',
-    '--is-inside-work-tree',
-  ]);
-  if (!insideRepo.succeeded) {
+  if (!await git.isInsideRepo()) {
     context.fail(
       '$repoRoot is not a git repository.\n'
       'Cause: `git rev-parse --is-inside-work-tree` failed there.\n'
@@ -44,12 +43,8 @@ Future<void> _release(ScriptContext context, List<String> args) async {
   }
 
   // 4. Verify the current branch (not detached HEAD).
-  final branch = await context.capture('git', [
-    'rev-parse',
-    '--abbrev-ref',
-    'HEAD',
-  ]);
-  if (branch == 'HEAD') {
+  final branch = await git.currentBranch();
+  if (branch == null) {
     context.fail(
       'you\'re in a detached HEAD state.\n'
       'Cause: `git rev-parse --abbrev-ref HEAD` returned "HEAD", not a '
@@ -62,6 +57,13 @@ Future<void> _release(ScriptContext context, List<String> args) async {
 
   final pubspecText = context.read('pubspec.yaml');
 
+  final dirtyExceptFiles = const [
+    'pubspec.yaml',
+    'CHANGELOG.md',
+    'CONTRIBUTING.md',
+    'README.md',
+  ];
+
   // 5. Verify a clean working tree, except for pubspec.yaml — which may
   // legitimately already be dirty (you hand-edited `version:` and are
   // running with no arg) or is about to be written by this script (you
@@ -70,8 +72,7 @@ Future<void> _release(ScriptContext context, List<String> args) async {
   // get swept in — but releasing from an otherwise-dirty tree is a good
   // sign you didn't mean to release *right now*, or forgot the other
   // changes exist. Catch that before tagging, not after.
-  final status = await context.capture('git', ['status', '--porcelain']);
-  final dirty = status.nonEmptyLines.where((l) => !l.endsWith('pubspec.yaml'));
+  final dirty = await git.dirtyFiles(except: dirtyExceptFiles);
   if (dirty.isNotEmpty) {
     context.fail(
       'working tree has uncommitted changes beyond pubspec.yaml:\n'
@@ -88,7 +89,7 @@ Future<void> _release(ScriptContext context, List<String> args) async {
   // whatever version we land on (from pubspec.yaml, a CLI argument, or a
   // manual retry) is actually newer than what's already been released, not
   // just different from it.
-  final latestTag = await _findLatestReleaseTag(context);
+  final latestTag = await git.latestVersionTag();
 
   // 7. Determine the version.
   String version;
@@ -174,8 +175,7 @@ Future<void> _release(ScriptContext context, List<String> args) async {
   final tag = 'v$version';
 
   // 8. Check the tag doesn't already exist locally...
-  final localTagCheck = await context.capture('git', ['tag', '--list', tag]);
-  if (localTagCheck.isNotEmpty) {
+  if (await git.tagExists(tag)) {
     context.fail(
       'tag $tag already exists locally.\n'
       'Cause: `git tag --list $tag` found it — releasing again with the '
@@ -189,13 +189,8 @@ Future<void> _release(ScriptContext context, List<String> args) async {
   // fetched it — local-only would miss that and the eventual push would
   // fail instead, with a less clear error). Best-effort: don't block a
   // release on a network hiccup or missing `origin`, just warn.
-  final remoteTagCheck = await context.exec('git', [
-    'ls-remote',
-    '--tags',
-    'origin',
-    'refs/tags/$tag',
-  ]);
-  if (!remoteTagCheck.succeeded) {
+  final onRemote = await git.remoteTagExists(tag);
+  if (onRemote == null) {
     context
       ..warn('could not check whether $tag exists on origin.')
       ..warn(
@@ -206,7 +201,7 @@ Future<void> _release(ScriptContext context, List<String> args) async {
         'Continuing without that check; the local-only check above still '
         'ran.',
       );
-  } else if (remoteTagCheck.output.isNotEmpty) {
+  } else if (onRemote) {
     context.fail(
       'tag $tag already exists on origin.\n'
       'Cause: `git ls-remote` found it there, even though your local clone '
@@ -247,34 +242,24 @@ Future<void> _release(ScriptContext context, List<String> args) async {
   // now just tagging it). `git commit` would otherwise fail with "nothing
   // to commit" — check for that ourselves, so it's a normal path instead
   // of an error.
-  final pubspecDiff = await context.capture('git', [
-    'status',
-    '--porcelain',
-    '--',
-    'pubspec.yaml',
-  ]);
-  if (pubspecDiff.isEmpty) {
+  if (!await git.hasChanges('pubspec.yaml')) {
     context.info(
       '\npubspec.yaml already has version $version at HEAD — nothing to '
       'commit, tagging HEAD directly.',
     );
   } else {
     context.step('Committing release...');
-    await context.run('git', ['add', 'pubspec.yaml']);
-    await context.run('git', ['commit', '-m', 'chore: release $tag']);
+    await git.commit('chore: release $tag', paths: ['pubspec.yaml']);
   }
   context.step('Tagging $tag...');
-  await context.run('git', ['tag', '-a', tag, '-m', 'Release $tag']);
+  await git.tag(tag, message: 'Release $tag');
   context.info('Tagged $tag locally.');
 
   // 15. Ask to push.
   if (context.confirm('\nPush "$branch" and tag $tag to origin now?')) {
     context.info('Pushing...');
-    // Push the branch and this tag by name — not `--tags`, which pushes
-    // every local tag not yet on the remote (stray/experimental tags
-    // included, not just the one this release just made).
     try {
-      await context.run('git', ['push', 'origin', branch, tag]);
+      await git.push(branch, tag);
     } on ScriptFailure {
       context.fail(
         'push failed — the release commit and tag $tag exist locally.\n'
@@ -296,21 +281,6 @@ Future<void> _release(ScriptContext context, List<String> args) async {
       'by SHA):',
     )
     ..info('  git -C "$repoRoot" rev-parse $tag');
-}
-
-/// Returns the highest `vX.Y.Z` tag in the repo by semver order (not
-/// lexical order), or null if there are no release tags yet.
-Future<String?> _findLatestReleaseTag(ScriptContext context) async {
-  final tags = (await context.capture('git', [
-    'tag',
-    '--list',
-    'v*',
-  ])).nonEmptyLines.where((t) => t.withoutPrefix('v').isSemver);
-  if (tags.isEmpty) return null;
-  return tags.reduce(
-    (a, b) =>
-        a.withoutPrefix('v').compareSemver(b.withoutPrefix('v')) >= 0 ? a : b,
-  );
 }
 
 /// Error message (Cause/Fix formatted, without the leading "Error: ") if

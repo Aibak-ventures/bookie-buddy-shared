@@ -49,9 +49,10 @@ Bump it like any dependency: edit `ref:`, run `flutter pub get`, commit
 the lockfile.
 
 Cut a new tag when this repo has changes an app needs, via
-`scripts/release.dart` — it checks `lib/core/` purity
-(`scripts/check_core_purity.dart`), bumps `version:` in `pubspec.yaml`,
-commits, and tags, then asks before pushing:
+`scripts/release.dart` — it needs a clean tree (apart from `pubspec.yaml`)
+and a version newer than the latest `v*` tag, runs the import-boundary check
+(`scripts/check_core_purity.dart`) and the full test suite, bumps `version:` in
+`pubspec.yaml`, commits, and tags, then asks before pushing:
 
 ```bash
 dart run scripts/release.dart 0.2.0
@@ -149,9 +150,10 @@ first — it still applies inside `lib/core/`.
 
 `lib/core/`'s no-Flutter-import rule isn't compiler-enforced any more
 (both folders are one Flutter package now) — `scripts/check_core_purity.dart`
-is the enforcement instead; it runs automatically in `scripts/release.dart`,
-so a violation can't ship, but run it yourself after touching `lib/core/`
-rather than waiting for release time:
+is the enforcement instead (it also guards the `lib/tooling/` boundaries, see
+below); it runs automatically in `scripts/release.dart`, so a violation can't
+ship, but run it yourself after touching `lib/core/` or `lib/tooling/` rather
+than waiting for release time:
 
 ```bash
 dart run scripts/check_core_purity.dart
@@ -159,24 +161,29 @@ dart run scripts/check_core_purity.dart
 
 ## Script tooling (`lib/tooling/`)
 
-Dev-only helpers for Dart scripts (cross-OS, no shell scripts): `ScriptContext`
-(logging, running processes, prompts), `ScriptCommand` / `ScriptRunner` /
-`runCommand` / `runScript` (entry points), and `FlutterTooling` (`fvm flutter`,
-pubspec version, arm64 split-per-ABI APK). It is **not** app code:
+Dev-only helpers for Dart scripts (cross-OS, no shell scripts):
+`ScriptContext` (colored, clickable output; running processes; files;
+prompts), `ScriptCommand` / `ScriptRunner` / `runCommand` / `runScript` (entry
+points), `FlutterTooling` (`fvm flutter`, pubspec version, arm64 split-per-ABI
+APK), `GitTooling` (branch, dirty files, tags, commit/tag/push), plus `String`
+and `ProcessResult` extensions. Every member is listed in
+`lib/tooling/README.md`. It is **not** app code:
 
 - Import it directly in a script:
   `import 'package:bookie_buddy_shared/tooling/tooling.dart';`. It is
   deliberately **not** exported by `bookie_buddy_shared.dart` (that barrel
   pulls in `dart:ui`, which plain `dart run` can't load).
 - Nothing in `lib/core/`, `lib/ui/` or the barrel may import it, and it may
-  import only plain-Dart `dart:` libraries and its own files. Both rules are
-  checked by `scripts/check_core_purity.dart` (run automatically by
-  `scripts/release.dart`).
+  import only plain-Dart `dart:` libraries (not `dart:ui`) and its own files.
+  Both rules are checked by `scripts/check_core_purity.dart` (run automatically
+  by `scripts/release.dart`).
 - Scripts (`scripts/`, `example/`, and apps' `tool/`) import only the tooling
   — preferably the `tooling.dart` barrel, though any file under `tooling/` is
-  fine — no `dart:io`, no packages; add a helper to `lib/tooling/` instead.
+  fine — no `dart:io`, no packages, no `..` imports; add a helper to
+  `lib/tooling/` instead.
   `scripts/check_core_purity.dart` enforces this for `scripts/` and `example/`.
-  `dart run example/tooling_demo.dart` shows what every helper does.
+  `dart run example/tooling_demo.dart` shows what the helpers do, and
+  `test/tooling/` tests them.
 - Consuming apps put their scripts in `tool/` — see the mobile repo's
   `tool/build_internal_apk.dart` (standalone entry point) and `tool/build.dart`
   (one entry point, many commands). Apps need no extra dependency beyond

@@ -51,45 +51,59 @@ class ScriptContext {
   /// Absolute path of [relativePath] inside [root].
   String path(String relativePath) => '${root.path}/$relativePath';
 
-  // Output methods make any http(s) URL in the message clickable.
-  void info(String message) => stdout.writeln(_linkUrls(message));
+  // Output methods make http(s) URLs, and a message that is exactly one
+  // existing absolute file/folder path, clickable.
+  void info(String message) => stdout.writeln(_linkify(message));
 
   /// A section heading for a script step (after a blank line), e.g.
   /// `Building DEV APK...`.
   void step(String message) =>
-      stdout.writeln('\n${_linkUrls(message).cyan.bold}');
+      stdout.writeln('\n${_linkify(message).cyan.bold}');
 
   void success(String message) =>
-      stdout.writeln('✓ ${_linkUrls(message)}'.green);
+      stdout.writeln('✓ ${_linkify(message)}'.green);
+
+  /// Like [success] without the `✓` — a green line.
+  void ok(String message) => stdout.writeln(_linkify(message).green);
 
   void warn(String message) =>
-      stderr.writeln('Warning: ${_linkUrls(message)}'.yellow);
+      stderr.writeln('Warning: ${_linkify(message)}'.yellow);
 
   /// Prints [message] to stderr in red (use [fail] to abort).
-  void error(String message) => stderr.writeln(_linkUrls(message).red);
+  void error(String message) => stderr.writeln(_linkify(message).red);
 
   static final _url = RegExp(r'https?://[^\s)\]>"\x1B]+');
   static final _trailingPunctuation = RegExp(r"[.,;:!?']+$");
 
-  /// Links plain URLs in [message]; a message that already carries explicit
-  /// hyperlinks (OSC 8) is left as is.
-  static String _linkUrls(String message) => message.contains('\x1B]8;')
-      ? message
-      : message.replaceAllMapped(_url, (m) {
-          // Sentence punctuation right after a URL isn't part of it.
-          final url = m[0]!.replaceFirst(_trailingPunctuation, '');
-          return '${url.link(url)}${m[0]!.substring(url.length)}';
-        });
+  /// Makes URLs and a whole-message path clickable. A message that already
+  /// carries explicit hyperlinks (OSC 8) is left as is.
+  static String _linkify(String message) {
+    if (message.contains('\x1B]8;')) return message;
+    final text = message.trim();
+    if (File(text).isAbsolute &&
+        FileSystemEntity.typeSync(text) != FileSystemEntityType.notFound) {
+      return message.replaceFirst(text, _linkPath(text));
+    }
+    return message.replaceAllMapped(_url, (m) {
+      // Sentence punctuation right after a URL isn't part of it.
+      final url = m[0]!.replaceFirst(_trailingPunctuation, '');
+      return '${url.link(url)}${m[0]!.substring(url.length)}';
+    });
+  }
+
+  static String _linkPath(String absolute) =>
+      absolute.link(Uri.file(absolute).toString());
 
   /// [relativePath] (file or folder, relative to [root]; absolute paths pass
   /// through) as its absolute path, clickable in terminals that support
   /// hyperlinks. Works for paths with spaces, unlike plain-text detection.
-  /// Print it with the output methods: `context.success(context.pathLink(apk))`.
+  /// Use it for a path inside a longer message; a message that is just an
+  /// existing absolute path is linked automatically.
   String pathLink(String relativePath) {
     final absolute = Uri.file(relativePath).isAbsolute
         ? relativePath
         : path(relativePath);
-    return absolute.link(Uri.file(absolute).toString());
+    return _linkPath(absolute);
   }
 
   /// Whether [relativePath] (file or folder) exists in [root].
