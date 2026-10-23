@@ -1,5 +1,21 @@
 # Changelog
 
+## 2.0.0 — Flutter 3.47 and material_ui
+
+Moves the package to Flutter 3.47.7 / Dart 3.13 and to `material_ui`, the
+standalone Material library that replaces `package:flutter/material.dart`.
+**Breaking**: consumers must be on Flutter >=3.47.0 and use `material_ui`, or
+`TimeOfDay`, `DateUtils` and the other Material types exposed by `lib/ui/` will
+be a different class from the ones the app uses.
+
+- SDK constraints are now `sdk: ">=3.13.0 <4.0.0"` and `flutter: ">=3.47.0"`.
+- `lib/ui/` imports `package:material_ui/material_ui.dart` instead of
+  `package:flutter/material.dart`; `material_ui` is a new dependency. Apps
+  migrate with `dart fix --apply --code=migrate_design_widgets`.
+- `freezed` is now `^4.0.3`; all `.freezed.dart` and `.g.dart` files are
+  regenerated. Older freezed output no longer compiles on Dart 3.13.
+- `build/**` is excluded from analysis.
+
 ## 1.12.0 — script tooling
 
 Added `lib/tooling/` — dev-only helpers for Dart project scripts, shared by

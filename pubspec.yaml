@@ -10,7 +10,7 @@ description: >
   rationale, and docs/PENDING.md in this repo for what's copied here but
   not yet wired up.
 
-version: 1.12.0
+version: 2.0.0
 
 publish_to: "none"
 
