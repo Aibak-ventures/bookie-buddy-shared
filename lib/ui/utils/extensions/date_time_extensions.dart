@@ -1,9 +1,9 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:intl/intl.dart';
 
 /// The Flutter-typed half of `DateTime`/`TimeOfDay` formatting/comparison
 /// that's the same regardless of an app's own UI date-display pattern —
-/// needs `package:flutter/material.dart` (`TimeOfDay`, `DateUtils`), so it
+/// needs `package:material_ui/material_ui.dart` (`TimeOfDay`, `DateUtils`), so it
 /// can't live in `lib/core`. The pure-Dart half (`format`, `dateOnly`,
 /// `QuickDateFilters`, etc.) lives in
 /// `lib/core/core/common/utils/date_time_extensions.dart` instead.

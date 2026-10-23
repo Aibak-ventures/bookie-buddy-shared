@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'document_details_entity.dart';
@@ -9,6 +9,7 @@ part of 'document_details_entity.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
@@ -25,16 +26,21 @@ $DocumentDetailsEntityCopyWith<DocumentDetailsEntity> get copyWith => _$Document
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is DocumentDetailsEntity&&(identical(other.status, status) || other.status == status)&&(identical(other.totalCount, totalCount) || other.totalCount == totalCount)&&(identical(other.uploadedCount, uploadedCount) || other.uploadedCount == uploadedCount));
+  final _this = this as DocumentDetailsEntity;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is DocumentDetailsEntity&&(identical(other.status, _this.status) || other.status == _this.status)&&(identical(other.totalCount, _this.totalCount) || other.totalCount == _this.totalCount)&&(identical(other.uploadedCount, _this.uploadedCount) || other.uploadedCount == _this.uploadedCount));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,status,totalCount,uploadedCount);
+int get hashCode {
+  final _this = this as DocumentDetailsEntity;
+  return Object.hash(runtimeType,_this.status,_this.totalCount,_this.uploadedCount);
+}
 
 @override
 String toString() {
-  return 'DocumentDetailsEntity(status: $status, totalCount: $totalCount, uploadedCount: $uploadedCount)';
+  final _this = this as DocumentDetailsEntity;
+  return 'DocumentDetailsEntity(status: ${_this.status}, totalCount: ${_this.totalCount}, uploadedCount: ${_this.uploadedCount})';
 }
 
 
@@ -63,7 +69,7 @@ class _$DocumentDetailsEntityCopyWithImpl<$Res>
 /// Create a copy of DocumentDetailsEntity
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? status = null,Object? totalCount = null,Object? uploadedCount = null,}) {
-  return _then(_self.copyWith(
+  return _then(DocumentDetailsEntity(
 status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
 as DocumentDetailsStatus,totalCount: null == totalCount ? _self.totalCount : totalCount // ignore: cast_nullable_to_non_nullable
 as int,uploadedCount: null == uploadedCount ? _self.uploadedCount : uploadedCount // ignore: cast_nullable_to_non_nullable
@@ -225,16 +231,18 @@ _$DocumentDetailsEntityCopyWith<_DocumentDetailsEntity> get copyWith => __$Docum
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _DocumentDetailsEntity&&(identical(other.status, status) || other.status == status)&&(identical(other.totalCount, totalCount) || other.totalCount == totalCount)&&(identical(other.uploadedCount, uploadedCount) || other.uploadedCount == uploadedCount));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _DocumentDetailsEntity&&(identical(other.status, status) || other.status == status)&&(identical(other.totalCount, totalCount) || other.totalCount == totalCount)&&(identical(other.uploadedCount, uploadedCount) || other.uploadedCount == uploadedCount));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,status,totalCount,uploadedCount);
+int get hashCode {
+    return Object.hash(runtimeType,status,totalCount,uploadedCount);
+}
 
 @override
 String toString() {
-  return 'DocumentDetailsEntity(status: $status, totalCount: $totalCount, uploadedCount: $uploadedCount)';
+    return 'DocumentDetailsEntity(status: $status, totalCount: $totalCount, uploadedCount: $uploadedCount)';
 }
 
 

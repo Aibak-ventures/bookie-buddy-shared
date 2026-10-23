@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 import 'package:bookie_buddy_shared/core/features/thermal_printer/domain/entities/print_ticket_entity/print_ticket_entity.dart';
 import 'package:bookie_buddy_shared/core/features/thermal_printer/domain/print_ticket_builder.dart';

@@ -14,3 +14,4 @@ analyzer:
   exclude:
     # CLI scripts, not library code — print() is the point.
     - scripts/**
+    - build/**

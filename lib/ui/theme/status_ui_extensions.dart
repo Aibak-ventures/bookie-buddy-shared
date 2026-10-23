@@ -1,5 +1,5 @@
 import 'package:bookie_buddy_shared/bookie_buddy_shared.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 // The Flutter-typed halves of enums that had to be split when their pure
 // values moved into bookie_buddy_core (Color/IconData aren't allowed in

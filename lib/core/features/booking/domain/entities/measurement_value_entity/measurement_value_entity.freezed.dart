@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'measurement_value_entity.dart';
@@ -9,6 +9,7 @@ part of 'measurement_value_entity.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
@@ -25,16 +26,21 @@ $MeasurementValueEntityCopyWith<MeasurementValueEntity> get copyWith => _$Measur
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is MeasurementValueEntity&&(identical(other.name, name) || other.name == name)&&(identical(other.key, key) || other.key == key)&&(identical(other.value, value) || other.value == value)&&(identical(other.gender, gender) || other.gender == gender));
+  final _this = this as MeasurementValueEntity;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is MeasurementValueEntity&&(identical(other.name, _this.name) || other.name == _this.name)&&(identical(other.key, _this.key) || other.key == _this.key)&&(identical(other.value, _this.value) || other.value == _this.value)&&(identical(other.gender, _this.gender) || other.gender == _this.gender));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,name,key,value,gender);
+int get hashCode {
+  final _this = this as MeasurementValueEntity;
+  return Object.hash(runtimeType,_this.name,_this.key,_this.value,_this.gender);
+}
 
 @override
 String toString() {
-  return 'MeasurementValueEntity(name: $name, key: $key, value: $value, gender: $gender)';
+  final _this = this as MeasurementValueEntity;
+  return 'MeasurementValueEntity(name: ${_this.name}, key: ${_this.key}, value: ${_this.value}, gender: ${_this.gender})';
 }
 
 
@@ -63,7 +69,7 @@ class _$MeasurementValueEntityCopyWithImpl<$Res>
 /// Create a copy of MeasurementValueEntity
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? name = null,Object? key = null,Object? value = null,Object? gender = freezed,}) {
-  return _then(_self.copyWith(
+  return _then(MeasurementValueEntity(
 name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,key: null == key ? _self.key : key // ignore: cast_nullable_to_non_nullable
 as String,value: null == value ? _self.value : value // ignore: cast_nullable_to_non_nullable
@@ -227,16 +233,18 @@ _$MeasurementValueEntityCopyWith<_MeasurementValueEntity> get copyWith => __$Mea
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _MeasurementValueEntity&&(identical(other.name, name) || other.name == name)&&(identical(other.key, key) || other.key == key)&&(identical(other.value, value) || other.value == value)&&(identical(other.gender, gender) || other.gender == gender));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _MeasurementValueEntity&&(identical(other.name, name) || other.name == name)&&(identical(other.key, key) || other.key == key)&&(identical(other.value, value) || other.value == value)&&(identical(other.gender, gender) || other.gender == gender));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,name,key,value,gender);
+int get hashCode {
+    return Object.hash(runtimeType,name,key,value,gender);
+}
 
 @override
 String toString() {
-  return 'MeasurementValueEntity(name: $name, key: $key, value: $value, gender: $gender)';
+    return 'MeasurementValueEntity(name: $name, key: $key, value: $value, gender: $gender)';
 }
 
 

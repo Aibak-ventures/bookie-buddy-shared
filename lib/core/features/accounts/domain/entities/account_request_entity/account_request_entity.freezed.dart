@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'account_request_entity.dart';
@@ -9,6 +9,7 @@ part of 'account_request_entity.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
@@ -25,16 +26,21 @@ $AccountRequestEntityCopyWith<AccountRequestEntity> get copyWith => _$AccountReq
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is AccountRequestEntity&&(identical(other.accountName, accountName) || other.accountName == accountName)&&(identical(other.accountNumber, accountNumber) || other.accountNumber == accountNumber)&&(identical(other.accountType, accountType) || other.accountType == accountType)&&(identical(other.description, description) || other.description == description)&&(identical(other.isActive, isActive) || other.isActive == isActive)&&(identical(other.isDefault, isDefault) || other.isDefault == isDefault));
+  final _this = this as AccountRequestEntity;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is AccountRequestEntity&&(identical(other.accountName, _this.accountName) || other.accountName == _this.accountName)&&(identical(other.accountNumber, _this.accountNumber) || other.accountNumber == _this.accountNumber)&&(identical(other.accountType, _this.accountType) || other.accountType == _this.accountType)&&(identical(other.description, _this.description) || other.description == _this.description)&&(identical(other.isActive, _this.isActive) || other.isActive == _this.isActive)&&(identical(other.isDefault, _this.isDefault) || other.isDefault == _this.isDefault));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,accountName,accountNumber,accountType,description,isActive,isDefault);
+int get hashCode {
+  final _this = this as AccountRequestEntity;
+  return Object.hash(runtimeType,_this.accountName,_this.accountNumber,_this.accountType,_this.description,_this.isActive,_this.isDefault);
+}
 
 @override
 String toString() {
-  return 'AccountRequestEntity(accountName: $accountName, accountNumber: $accountNumber, accountType: $accountType, description: $description, isActive: $isActive, isDefault: $isDefault)';
+  final _this = this as AccountRequestEntity;
+  return 'AccountRequestEntity(accountName: ${_this.accountName}, accountNumber: ${_this.accountNumber}, accountType: ${_this.accountType}, description: ${_this.description}, isActive: ${_this.isActive}, isDefault: ${_this.isDefault})';
 }
 
 
@@ -63,7 +69,7 @@ class _$AccountRequestEntityCopyWithImpl<$Res>
 /// Create a copy of AccountRequestEntity
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? accountName = freezed,Object? accountNumber = freezed,Object? accountType = freezed,Object? description = freezed,Object? isActive = freezed,Object? isDefault = freezed,}) {
-  return _then(_self.copyWith(
+  return _then(AccountRequestEntity(
 accountName: freezed == accountName ? _self.accountName : accountName // ignore: cast_nullable_to_non_nullable
 as String?,accountNumber: freezed == accountNumber ? _self.accountNumber : accountNumber // ignore: cast_nullable_to_non_nullable
 as String?,accountType: freezed == accountType ? _self.accountType : accountType // ignore: cast_nullable_to_non_nullable
@@ -231,16 +237,18 @@ _$AccountRequestEntityCopyWith<_AccountRequestEntity> get copyWith => __$Account
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AccountRequestEntity&&(identical(other.accountName, accountName) || other.accountName == accountName)&&(identical(other.accountNumber, accountNumber) || other.accountNumber == accountNumber)&&(identical(other.accountType, accountType) || other.accountType == accountType)&&(identical(other.description, description) || other.description == description)&&(identical(other.isActive, isActive) || other.isActive == isActive)&&(identical(other.isDefault, isDefault) || other.isDefault == isDefault));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _AccountRequestEntity&&(identical(other.accountName, accountName) || other.accountName == accountName)&&(identical(other.accountNumber, accountNumber) || other.accountNumber == accountNumber)&&(identical(other.accountType, accountType) || other.accountType == accountType)&&(identical(other.description, description) || other.description == description)&&(identical(other.isActive, isActive) || other.isActive == isActive)&&(identical(other.isDefault, isDefault) || other.isDefault == isDefault));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,accountName,accountNumber,accountType,description,isActive,isDefault);
+int get hashCode {
+    return Object.hash(runtimeType,accountName,accountNumber,accountType,description,isActive,isDefault);
+}
 
 @override
 String toString() {
-  return 'AccountRequestEntity(accountName: $accountName, accountNumber: $accountNumber, accountType: $accountType, description: $description, isActive: $isActive, isDefault: $isDefault)';
+    return 'AccountRequestEntity(accountName: $accountName, accountNumber: $accountNumber, accountType: $accountType, description: $description, isActive: $isActive, isDefault: $isDefault)';
 }
 
 

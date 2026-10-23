@@ -1,10 +1,10 @@
 import 'package:bookie_buddy_shared/core/core/common/utils/string_date_extensions.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:intl/intl.dart';
 
 /// The Flutter-typed half of string date/time parsing that's the same
 /// regardless of an app's own UI date-display pattern — needs
-/// `package:flutter/material.dart` (`TimeOfDay`, `DateUtils`), so it can't
+/// `package:material_ui/material_ui.dart` (`TimeOfDay`, `DateUtils`), so it can't
 /// live in `lib/core`. The pure-Dart half (`parseToDateTime`,
 /// `formatToUiDate`, `formatToUiTime`, `formatToUiDateTime`) lives in
 /// `lib/core/core/common/utils/string_date_extensions.dart` instead.
@@ -87,7 +87,10 @@ extension StringXDateFormatUi on String {
     try {
       final today = DateTime.now();
       final given = parseToDateTime();
-      return DateUtils.isSameDay(given, today.subtract(const Duration(days: 1)));
+      return DateUtils.isSameDay(
+        given,
+        today.subtract(const Duration(days: 1)),
+      );
     } catch (e, stack) {
       throw FormatException('Unrecognized date format: $this', stack);
     }

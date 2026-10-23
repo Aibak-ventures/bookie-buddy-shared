@@ -1,5 +1,5 @@
 import 'package:bookie_buddy_shared/core/core/common/utils/date_time_extensions.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// `TimeOfDay`-dependent date/time helpers — split out of `AppDateUtils`
 /// (now pure Dart, in `lib/core`) because `TimeOfDay` is a Flutter type.

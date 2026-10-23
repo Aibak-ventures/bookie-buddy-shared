@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'booking_other_details_entity.dart';
@@ -9,24 +9,13 @@ part of 'booking_other_details_entity.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$BookingOtherDetailsEntity {
 
- String? get locationStart; String? get locationFrom; String? get locationTo; int? get totalProductCount; RoomGuestsEntity? get roomGuests; List<RoomMealType>? get roomMeals;// Web-only: vehicle odometer reading. No mobile equivalent. Named
-// `runningKilometers` here — web's own model/JSON key is just `end`, an
-// unclear legacy name kept as-is in the data layer since renaming a
-// JSON key is a bigger, separate change.
-//
-// Read/display only — this value is never submitted back through this
-// entity. Its one consumer prefills an edit-screen text field; the
-// value the user actually types is submitted per-product instead
-// (ProductSelectedEntity.runningKilometers on web), not via
-// BookingOtherDetails at all, on either the new-booking or edit path.
-// Don't add a write-side counterpart for this field — there's no write
-// path here to model.
- String? get runningKilometers;
+ String? get locationStart; String? get locationFrom; String? get locationTo; int? get totalProductCount; RoomGuestsEntity? get roomGuests; List<RoomMealType>? get roomMeals; String? get runningKilometers;
 /// Create a copy of BookingOtherDetailsEntity
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -37,16 +26,21 @@ $BookingOtherDetailsEntityCopyWith<BookingOtherDetailsEntity> get copyWith => _$
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is BookingOtherDetailsEntity&&(identical(other.locationStart, locationStart) || other.locationStart == locationStart)&&(identical(other.locationFrom, locationFrom) || other.locationFrom == locationFrom)&&(identical(other.locationTo, locationTo) || other.locationTo == locationTo)&&(identical(other.totalProductCount, totalProductCount) || other.totalProductCount == totalProductCount)&&(identical(other.roomGuests, roomGuests) || other.roomGuests == roomGuests)&&const DeepCollectionEquality().equals(other.roomMeals, roomMeals)&&(identical(other.runningKilometers, runningKilometers) || other.runningKilometers == runningKilometers));
+  final _this = this as BookingOtherDetailsEntity;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is BookingOtherDetailsEntity&&(identical(other.locationStart, _this.locationStart) || other.locationStart == _this.locationStart)&&(identical(other.locationFrom, _this.locationFrom) || other.locationFrom == _this.locationFrom)&&(identical(other.locationTo, _this.locationTo) || other.locationTo == _this.locationTo)&&(identical(other.totalProductCount, _this.totalProductCount) || other.totalProductCount == _this.totalProductCount)&&(identical(other.roomGuests, _this.roomGuests) || other.roomGuests == _this.roomGuests)&&const DeepCollectionEquality().equals(other.roomMeals, _this.roomMeals)&&(identical(other.runningKilometers, _this.runningKilometers) || other.runningKilometers == _this.runningKilometers));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,locationStart,locationFrom,locationTo,totalProductCount,roomGuests,const DeepCollectionEquality().hash(roomMeals),runningKilometers);
+int get hashCode {
+  final _this = this as BookingOtherDetailsEntity;
+  return Object.hash(runtimeType,_this.locationStart,_this.locationFrom,_this.locationTo,_this.totalProductCount,_this.roomGuests,const DeepCollectionEquality().hash(_this.roomMeals),_this.runningKilometers);
+}
 
 @override
 String toString() {
-  return 'BookingOtherDetailsEntity(locationStart: $locationStart, locationFrom: $locationFrom, locationTo: $locationTo, totalProductCount: $totalProductCount, roomGuests: $roomGuests, roomMeals: $roomMeals, runningKilometers: $runningKilometers)';
+  final _this = this as BookingOtherDetailsEntity;
+  return 'BookingOtherDetailsEntity(locationStart: ${_this.locationStart}, locationFrom: ${_this.locationFrom}, locationTo: ${_this.locationTo}, totalProductCount: ${_this.totalProductCount}, roomGuests: ${_this.roomGuests}, roomMeals: ${_this.roomMeals}, runningKilometers: ${_this.runningKilometers})';
 }
 
 
@@ -75,7 +69,7 @@ class _$BookingOtherDetailsEntityCopyWithImpl<$Res>
 /// Create a copy of BookingOtherDetailsEntity
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? locationStart = freezed,Object? locationFrom = freezed,Object? locationTo = freezed,Object? totalProductCount = freezed,Object? roomGuests = freezed,Object? roomMeals = freezed,Object? runningKilometers = freezed,}) {
-  return _then(_self.copyWith(
+  return _then(BookingOtherDetailsEntity(
 locationStart: freezed == locationStart ? _self.locationStart : locationStart // ignore: cast_nullable_to_non_nullable
 as String?,locationFrom: freezed == locationFrom ? _self.locationFrom : locationFrom // ignore: cast_nullable_to_non_nullable
 as String?,locationTo: freezed == locationTo ? _self.locationTo : locationTo // ignore: cast_nullable_to_non_nullable
@@ -236,7 +230,7 @@ return $default(_that.locationStart,_that.locationFrom,_that.locationTo,_that.to
 
 
 class _BookingOtherDetailsEntity implements BookingOtherDetailsEntity {
-  const _BookingOtherDetailsEntity({this.locationStart, this.locationFrom, this.locationTo, this.totalProductCount, this.roomGuests, final  List<RoomMealType>? roomMeals, this.runningKilometers}): _roomMeals = roomMeals;
+  const _BookingOtherDetailsEntity({this.locationStart, this.locationFrom, this.locationTo, this.totalProductCount, this.roomGuests,  List<RoomMealType>? roomMeals, this.runningKilometers}): _roomMeals = roomMeals;
   
 
 @override final  String? locationStart;
@@ -253,18 +247,6 @@ class _BookingOtherDetailsEntity implements BookingOtherDetailsEntity {
   return EqualUnmodifiableListView(value);
 }
 
-// Web-only: vehicle odometer reading. No mobile equivalent. Named
-// `runningKilometers` here — web's own model/JSON key is just `end`, an
-// unclear legacy name kept as-is in the data layer since renaming a
-// JSON key is a bigger, separate change.
-//
-// Read/display only — this value is never submitted back through this
-// entity. Its one consumer prefills an edit-screen text field; the
-// value the user actually types is submitted per-product instead
-// (ProductSelectedEntity.runningKilometers on web), not via
-// BookingOtherDetails at all, on either the new-booking or edit path.
-// Don't add a write-side counterpart for this field — there's no write
-// path here to model.
 @override final  String? runningKilometers;
 
 /// Create a copy of BookingOtherDetailsEntity
@@ -277,16 +259,18 @@ _$BookingOtherDetailsEntityCopyWith<_BookingOtherDetailsEntity> get copyWith => 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _BookingOtherDetailsEntity&&(identical(other.locationStart, locationStart) || other.locationStart == locationStart)&&(identical(other.locationFrom, locationFrom) || other.locationFrom == locationFrom)&&(identical(other.locationTo, locationTo) || other.locationTo == locationTo)&&(identical(other.totalProductCount, totalProductCount) || other.totalProductCount == totalProductCount)&&(identical(other.roomGuests, roomGuests) || other.roomGuests == roomGuests)&&const DeepCollectionEquality().equals(other._roomMeals, _roomMeals)&&(identical(other.runningKilometers, runningKilometers) || other.runningKilometers == runningKilometers));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _BookingOtherDetailsEntity&&(identical(other.locationStart, locationStart) || other.locationStart == locationStart)&&(identical(other.locationFrom, locationFrom) || other.locationFrom == locationFrom)&&(identical(other.locationTo, locationTo) || other.locationTo == locationTo)&&(identical(other.totalProductCount, totalProductCount) || other.totalProductCount == totalProductCount)&&(identical(other.roomGuests, roomGuests) || other.roomGuests == roomGuests)&&const DeepCollectionEquality().equals(other.roomMeals, _roomMeals)&&(identical(other.runningKilometers, runningKilometers) || other.runningKilometers == runningKilometers));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,locationStart,locationFrom,locationTo,totalProductCount,roomGuests,const DeepCollectionEquality().hash(_roomMeals),runningKilometers);
+int get hashCode {
+    return Object.hash(runtimeType,locationStart,locationFrom,locationTo,totalProductCount,roomGuests,const DeepCollectionEquality().hash(_roomMeals),runningKilometers);
+}
 
 @override
 String toString() {
-  return 'BookingOtherDetailsEntity(locationStart: $locationStart, locationFrom: $locationFrom, locationTo: $locationTo, totalProductCount: $totalProductCount, roomGuests: $roomGuests, roomMeals: $roomMeals, runningKilometers: $runningKilometers)';
+    return 'BookingOtherDetailsEntity(locationStart: $locationStart, locationFrom: $locationFrom, locationTo: $locationTo, totalProductCount: $totalProductCount, roomGuests: $roomGuests, roomMeals: $roomMeals, runningKilometers: $runningKilometers)';
 }
 
 

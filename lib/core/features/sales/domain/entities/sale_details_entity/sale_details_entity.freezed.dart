@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'sale_details_entity.dart';
@@ -9,19 +9,13 @@ part of 'sale_details_entity.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$SaleDetailsEntity {
 
- int get id; String get clientPhone;// Full client record as returned by the sale-details endpoint. Mobile's
-// sale-details screen only ever needs [clientPhone] and doesn't request
-// this; web's customer-details section and its "edit sale as booking"
-// flow need the fuller record (name, phone2), so this stays
-// nullable/web-only rather than something mobile has to populate.
- ClientEntity? get client; int? get staffId; String? get staffName; String get address; String get invoiceId; String get description; String get saleDate; int get totalAmount; int get discountAmount; int get paidAmount; int get productTotal; int get balanceDueAmount; String get createdAt; List<ProductSaleInfoEntity> get products; List<AppliedTaxEntity> get appliedTaxes;// 1 entry for a plain sale, 2 for a cash/bank split sale. Use
-// `payments.firstOrNull` wherever a single "the account" is needed.
- List<SalePaymentEntity> get payments;
+ int get id; String get clientPhone; ClientEntity? get client; int? get staffId; String? get staffName; String get address; String get invoiceId; String get description; String get saleDate; int get totalAmount; int get discountAmount; int get paidAmount; int get productTotal; int get balanceDueAmount; String get createdAt; List<ProductSaleInfoEntity> get products; List<AppliedTaxEntity> get appliedTaxes; List<SalePaymentEntity> get payments;
 /// Create a copy of SaleDetailsEntity
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -32,16 +26,21 @@ $SaleDetailsEntityCopyWith<SaleDetailsEntity> get copyWith => _$SaleDetailsEntit
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is SaleDetailsEntity&&(identical(other.id, id) || other.id == id)&&(identical(other.clientPhone, clientPhone) || other.clientPhone == clientPhone)&&(identical(other.client, client) || other.client == client)&&(identical(other.staffId, staffId) || other.staffId == staffId)&&(identical(other.staffName, staffName) || other.staffName == staffName)&&(identical(other.address, address) || other.address == address)&&(identical(other.invoiceId, invoiceId) || other.invoiceId == invoiceId)&&(identical(other.description, description) || other.description == description)&&(identical(other.saleDate, saleDate) || other.saleDate == saleDate)&&(identical(other.totalAmount, totalAmount) || other.totalAmount == totalAmount)&&(identical(other.discountAmount, discountAmount) || other.discountAmount == discountAmount)&&(identical(other.paidAmount, paidAmount) || other.paidAmount == paidAmount)&&(identical(other.productTotal, productTotal) || other.productTotal == productTotal)&&(identical(other.balanceDueAmount, balanceDueAmount) || other.balanceDueAmount == balanceDueAmount)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&const DeepCollectionEquality().equals(other.products, products)&&const DeepCollectionEquality().equals(other.appliedTaxes, appliedTaxes)&&const DeepCollectionEquality().equals(other.payments, payments));
+  final _this = this as SaleDetailsEntity;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is SaleDetailsEntity&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.clientPhone, _this.clientPhone) || other.clientPhone == _this.clientPhone)&&(identical(other.client, _this.client) || other.client == _this.client)&&(identical(other.staffId, _this.staffId) || other.staffId == _this.staffId)&&(identical(other.staffName, _this.staffName) || other.staffName == _this.staffName)&&(identical(other.address, _this.address) || other.address == _this.address)&&(identical(other.invoiceId, _this.invoiceId) || other.invoiceId == _this.invoiceId)&&(identical(other.description, _this.description) || other.description == _this.description)&&(identical(other.saleDate, _this.saleDate) || other.saleDate == _this.saleDate)&&(identical(other.totalAmount, _this.totalAmount) || other.totalAmount == _this.totalAmount)&&(identical(other.discountAmount, _this.discountAmount) || other.discountAmount == _this.discountAmount)&&(identical(other.paidAmount, _this.paidAmount) || other.paidAmount == _this.paidAmount)&&(identical(other.productTotal, _this.productTotal) || other.productTotal == _this.productTotal)&&(identical(other.balanceDueAmount, _this.balanceDueAmount) || other.balanceDueAmount == _this.balanceDueAmount)&&(identical(other.createdAt, _this.createdAt) || other.createdAt == _this.createdAt)&&const DeepCollectionEquality().equals(other.products, _this.products)&&const DeepCollectionEquality().equals(other.appliedTaxes, _this.appliedTaxes)&&const DeepCollectionEquality().equals(other.payments, _this.payments));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,clientPhone,client,staffId,staffName,address,invoiceId,description,saleDate,totalAmount,discountAmount,paidAmount,productTotal,balanceDueAmount,createdAt,const DeepCollectionEquality().hash(products),const DeepCollectionEquality().hash(appliedTaxes),const DeepCollectionEquality().hash(payments));
+int get hashCode {
+  final _this = this as SaleDetailsEntity;
+  return Object.hash(runtimeType,_this.id,_this.clientPhone,_this.client,_this.staffId,_this.staffName,_this.address,_this.invoiceId,_this.description,_this.saleDate,_this.totalAmount,_this.discountAmount,_this.paidAmount,_this.productTotal,_this.balanceDueAmount,_this.createdAt,const DeepCollectionEquality().hash(_this.products),const DeepCollectionEquality().hash(_this.appliedTaxes),const DeepCollectionEquality().hash(_this.payments));
+}
 
 @override
 String toString() {
-  return 'SaleDetailsEntity(id: $id, clientPhone: $clientPhone, client: $client, staffId: $staffId, staffName: $staffName, address: $address, invoiceId: $invoiceId, description: $description, saleDate: $saleDate, totalAmount: $totalAmount, discountAmount: $discountAmount, paidAmount: $paidAmount, productTotal: $productTotal, balanceDueAmount: $balanceDueAmount, createdAt: $createdAt, products: $products, appliedTaxes: $appliedTaxes, payments: $payments)';
+  final _this = this as SaleDetailsEntity;
+  return 'SaleDetailsEntity(id: ${_this.id}, clientPhone: ${_this.clientPhone}, client: ${_this.client}, staffId: ${_this.staffId}, staffName: ${_this.staffName}, address: ${_this.address}, invoiceId: ${_this.invoiceId}, description: ${_this.description}, saleDate: ${_this.saleDate}, totalAmount: ${_this.totalAmount}, discountAmount: ${_this.discountAmount}, paidAmount: ${_this.paidAmount}, productTotal: ${_this.productTotal}, balanceDueAmount: ${_this.balanceDueAmount}, createdAt: ${_this.createdAt}, products: ${_this.products}, appliedTaxes: ${_this.appliedTaxes}, payments: ${_this.payments})';
 }
 
 
@@ -70,7 +69,7 @@ class _$SaleDetailsEntityCopyWithImpl<$Res>
 /// Create a copy of SaleDetailsEntity
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? clientPhone = null,Object? client = freezed,Object? staffId = freezed,Object? staffName = freezed,Object? address = null,Object? invoiceId = null,Object? description = null,Object? saleDate = null,Object? totalAmount = null,Object? discountAmount = null,Object? paidAmount = null,Object? productTotal = null,Object? balanceDueAmount = null,Object? createdAt = null,Object? products = null,Object? appliedTaxes = null,Object? payments = null,}) {
-  return _then(_self.copyWith(
+  return _then(SaleDetailsEntity(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int,clientPhone: null == clientPhone ? _self.clientPhone : clientPhone // ignore: cast_nullable_to_non_nullable
 as String,client: freezed == client ? _self.client : client // ignore: cast_nullable_to_non_nullable
@@ -242,16 +241,11 @@ return $default(_that.id,_that.clientPhone,_that.client,_that.staffId,_that.staf
 
 
 class _SaleDetailsEntity implements SaleDetailsEntity {
-  const _SaleDetailsEntity({required this.id, required this.clientPhone, this.client, this.staffId, this.staffName, required this.address, required this.invoiceId, required this.description, required this.saleDate, required this.totalAmount, required this.discountAmount, required this.paidAmount, required this.productTotal, required this.balanceDueAmount, required this.createdAt, required final  List<ProductSaleInfoEntity> products, final  List<AppliedTaxEntity> appliedTaxes = const [], final  List<SalePaymentEntity> payments = const []}): _products = products,_appliedTaxes = appliedTaxes,_payments = payments;
+  const _SaleDetailsEntity({required this.id, required this.clientPhone, this.client, this.staffId, this.staffName, required this.address, required this.invoiceId, required this.description, required this.saleDate, required this.totalAmount, required this.discountAmount, required this.paidAmount, required this.productTotal, required this.balanceDueAmount, required this.createdAt, required  List<ProductSaleInfoEntity> products,  List<AppliedTaxEntity> appliedTaxes = const [],  List<SalePaymentEntity> payments = const []}): _products = products,_appliedTaxes = appliedTaxes,_payments = payments;
   
 
 @override final  int id;
 @override final  String clientPhone;
-// Full client record as returned by the sale-details endpoint. Mobile's
-// sale-details screen only ever needs [clientPhone] and doesn't request
-// this; web's customer-details section and its "edit sale as booking"
-// flow need the fuller record (name, phone2), so this stays
-// nullable/web-only rather than something mobile has to populate.
 @override final  ClientEntity? client;
 @override final  int? staffId;
 @override final  String? staffName;
@@ -279,11 +273,7 @@ class _SaleDetailsEntity implements SaleDetailsEntity {
   return EqualUnmodifiableListView(_appliedTaxes);
 }
 
-// 1 entry for a plain sale, 2 for a cash/bank split sale. Use
-// `payments.firstOrNull` wherever a single "the account" is needed.
  final  List<SalePaymentEntity> _payments;
-// 1 entry for a plain sale, 2 for a cash/bank split sale. Use
-// `payments.firstOrNull` wherever a single "the account" is needed.
 @override@JsonKey() List<SalePaymentEntity> get payments {
   if (_payments is EqualUnmodifiableListView) return _payments;
   // ignore: implicit_dynamic_type
@@ -301,16 +291,18 @@ _$SaleDetailsEntityCopyWith<_SaleDetailsEntity> get copyWith => __$SaleDetailsEn
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SaleDetailsEntity&&(identical(other.id, id) || other.id == id)&&(identical(other.clientPhone, clientPhone) || other.clientPhone == clientPhone)&&(identical(other.client, client) || other.client == client)&&(identical(other.staffId, staffId) || other.staffId == staffId)&&(identical(other.staffName, staffName) || other.staffName == staffName)&&(identical(other.address, address) || other.address == address)&&(identical(other.invoiceId, invoiceId) || other.invoiceId == invoiceId)&&(identical(other.description, description) || other.description == description)&&(identical(other.saleDate, saleDate) || other.saleDate == saleDate)&&(identical(other.totalAmount, totalAmount) || other.totalAmount == totalAmount)&&(identical(other.discountAmount, discountAmount) || other.discountAmount == discountAmount)&&(identical(other.paidAmount, paidAmount) || other.paidAmount == paidAmount)&&(identical(other.productTotal, productTotal) || other.productTotal == productTotal)&&(identical(other.balanceDueAmount, balanceDueAmount) || other.balanceDueAmount == balanceDueAmount)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&const DeepCollectionEquality().equals(other._products, _products)&&const DeepCollectionEquality().equals(other._appliedTaxes, _appliedTaxes)&&const DeepCollectionEquality().equals(other._payments, _payments));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _SaleDetailsEntity&&(identical(other.id, id) || other.id == id)&&(identical(other.clientPhone, clientPhone) || other.clientPhone == clientPhone)&&(identical(other.client, client) || other.client == client)&&(identical(other.staffId, staffId) || other.staffId == staffId)&&(identical(other.staffName, staffName) || other.staffName == staffName)&&(identical(other.address, address) || other.address == address)&&(identical(other.invoiceId, invoiceId) || other.invoiceId == invoiceId)&&(identical(other.description, description) || other.description == description)&&(identical(other.saleDate, saleDate) || other.saleDate == saleDate)&&(identical(other.totalAmount, totalAmount) || other.totalAmount == totalAmount)&&(identical(other.discountAmount, discountAmount) || other.discountAmount == discountAmount)&&(identical(other.paidAmount, paidAmount) || other.paidAmount == paidAmount)&&(identical(other.productTotal, productTotal) || other.productTotal == productTotal)&&(identical(other.balanceDueAmount, balanceDueAmount) || other.balanceDueAmount == balanceDueAmount)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&const DeepCollectionEquality().equals(other.products, _products)&&const DeepCollectionEquality().equals(other.appliedTaxes, _appliedTaxes)&&const DeepCollectionEquality().equals(other.payments, _payments));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,clientPhone,client,staffId,staffName,address,invoiceId,description,saleDate,totalAmount,discountAmount,paidAmount,productTotal,balanceDueAmount,createdAt,const DeepCollectionEquality().hash(_products),const DeepCollectionEquality().hash(_appliedTaxes),const DeepCollectionEquality().hash(_payments));
+int get hashCode {
+    return Object.hash(runtimeType,id,clientPhone,client,staffId,staffName,address,invoiceId,description,saleDate,totalAmount,discountAmount,paidAmount,productTotal,balanceDueAmount,createdAt,const DeepCollectionEquality().hash(_products),const DeepCollectionEquality().hash(_appliedTaxes),const DeepCollectionEquality().hash(_payments));
+}
 
 @override
 String toString() {
-  return 'SaleDetailsEntity(id: $id, clientPhone: $clientPhone, client: $client, staffId: $staffId, staffName: $staffName, address: $address, invoiceId: $invoiceId, description: $description, saleDate: $saleDate, totalAmount: $totalAmount, discountAmount: $discountAmount, paidAmount: $paidAmount, productTotal: $productTotal, balanceDueAmount: $balanceDueAmount, createdAt: $createdAt, products: $products, appliedTaxes: $appliedTaxes, payments: $payments)';
+    return 'SaleDetailsEntity(id: $id, clientPhone: $clientPhone, client: $client, staffId: $staffId, staffName: $staffName, address: $address, invoiceId: $invoiceId, description: $description, saleDate: $saleDate, totalAmount: $totalAmount, discountAmount: $discountAmount, paidAmount: $paidAmount, productTotal: $productTotal, balanceDueAmount: $balanceDueAmount, createdAt: $createdAt, products: $products, appliedTaxes: $appliedTaxes, payments: $payments)';
 }
 
 
@@ -391,16 +383,21 @@ $ProductSaleInfoEntityCopyWith<ProductSaleInfoEntity> get copyWith => _$ProductS
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ProductSaleInfoEntity&&(identical(other.id, id) || other.id == id)&&(identical(other.productId, productId) || other.productId == productId)&&(identical(other.variantId, variantId) || other.variantId == variantId)&&(identical(other.name, name) || other.name == name)&&(identical(other.variantAttribute, variantAttribute) || other.variantAttribute == variantAttribute)&&(identical(other.quantity, quantity) || other.quantity == quantity)&&(identical(other.fabricLength, fabricLength) || other.fabricLength == fabricLength)&&(identical(other.price, price) || other.price == price)&&(identical(other.subtotal, subtotal) || other.subtotal == subtotal)&&(identical(other.image, image) || other.image == image)&&(identical(other.thumbnailImage, thumbnailImage) || other.thumbnailImage == thumbnailImage)&&(identical(other.color, color) || other.color == color)&&(identical(other.category, category) || other.category == category)&&(identical(other.model, model) || other.model == model)&&(identical(other.mainServiceType, mainServiceType) || other.mainServiceType == mainServiceType)&&(identical(other.attributes, attributes) || other.attributes == attributes));
+  final _this = this as ProductSaleInfoEntity;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ProductSaleInfoEntity&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.productId, _this.productId) || other.productId == _this.productId)&&(identical(other.variantId, _this.variantId) || other.variantId == _this.variantId)&&(identical(other.name, _this.name) || other.name == _this.name)&&(identical(other.variantAttribute, _this.variantAttribute) || other.variantAttribute == _this.variantAttribute)&&(identical(other.quantity, _this.quantity) || other.quantity == _this.quantity)&&(identical(other.fabricLength, _this.fabricLength) || other.fabricLength == _this.fabricLength)&&(identical(other.price, _this.price) || other.price == _this.price)&&(identical(other.subtotal, _this.subtotal) || other.subtotal == _this.subtotal)&&(identical(other.image, _this.image) || other.image == _this.image)&&(identical(other.thumbnailImage, _this.thumbnailImage) || other.thumbnailImage == _this.thumbnailImage)&&(identical(other.color, _this.color) || other.color == _this.color)&&(identical(other.category, _this.category) || other.category == _this.category)&&(identical(other.model, _this.model) || other.model == _this.model)&&(identical(other.mainServiceType, _this.mainServiceType) || other.mainServiceType == _this.mainServiceType)&&(identical(other.attributes, _this.attributes) || other.attributes == _this.attributes));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,productId,variantId,name,variantAttribute,quantity,fabricLength,price,subtotal,image,thumbnailImage,color,category,model,mainServiceType,attributes);
+int get hashCode {
+  final _this = this as ProductSaleInfoEntity;
+  return Object.hash(runtimeType,_this.id,_this.productId,_this.variantId,_this.name,_this.variantAttribute,_this.quantity,_this.fabricLength,_this.price,_this.subtotal,_this.image,_this.thumbnailImage,_this.color,_this.category,_this.model,_this.mainServiceType,_this.attributes);
+}
 
 @override
 String toString() {
-  return 'ProductSaleInfoEntity(id: $id, productId: $productId, variantId: $variantId, name: $name, variantAttribute: $variantAttribute, quantity: $quantity, fabricLength: $fabricLength, price: $price, subtotal: $subtotal, image: $image, thumbnailImage: $thumbnailImage, color: $color, category: $category, model: $model, mainServiceType: $mainServiceType, attributes: $attributes)';
+  final _this = this as ProductSaleInfoEntity;
+  return 'ProductSaleInfoEntity(id: ${_this.id}, productId: ${_this.productId}, variantId: ${_this.variantId}, name: ${_this.name}, variantAttribute: ${_this.variantAttribute}, quantity: ${_this.quantity}, fabricLength: ${_this.fabricLength}, price: ${_this.price}, subtotal: ${_this.subtotal}, image: ${_this.image}, thumbnailImage: ${_this.thumbnailImage}, color: ${_this.color}, category: ${_this.category}, model: ${_this.model}, mainServiceType: ${_this.mainServiceType}, attributes: ${_this.attributes})';
 }
 
 
@@ -429,7 +426,7 @@ class _$ProductSaleInfoEntityCopyWithImpl<$Res>
 /// Create a copy of ProductSaleInfoEntity
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? productId = null,Object? variantId = null,Object? name = null,Object? variantAttribute = freezed,Object? quantity = null,Object? fabricLength = null,Object? price = null,Object? subtotal = null,Object? image = freezed,Object? thumbnailImage = freezed,Object? color = freezed,Object? category = freezed,Object? model = freezed,Object? mainServiceType = freezed,Object? attributes = null,}) {
-  return _then(_self.copyWith(
+  return _then(ProductSaleInfoEntity(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int,productId: null == productId ? _self.productId : productId // ignore: cast_nullable_to_non_nullable
 as int,variantId: null == variantId ? _self.variantId : variantId // ignore: cast_nullable_to_non_nullable
@@ -626,16 +623,18 @@ _$ProductSaleInfoEntityCopyWith<_ProductSaleInfoEntity> get copyWith => __$Produ
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ProductSaleInfoEntity&&(identical(other.id, id) || other.id == id)&&(identical(other.productId, productId) || other.productId == productId)&&(identical(other.variantId, variantId) || other.variantId == variantId)&&(identical(other.name, name) || other.name == name)&&(identical(other.variantAttribute, variantAttribute) || other.variantAttribute == variantAttribute)&&(identical(other.quantity, quantity) || other.quantity == quantity)&&(identical(other.fabricLength, fabricLength) || other.fabricLength == fabricLength)&&(identical(other.price, price) || other.price == price)&&(identical(other.subtotal, subtotal) || other.subtotal == subtotal)&&(identical(other.image, image) || other.image == image)&&(identical(other.thumbnailImage, thumbnailImage) || other.thumbnailImage == thumbnailImage)&&(identical(other.color, color) || other.color == color)&&(identical(other.category, category) || other.category == category)&&(identical(other.model, model) || other.model == model)&&(identical(other.mainServiceType, mainServiceType) || other.mainServiceType == mainServiceType)&&(identical(other.attributes, attributes) || other.attributes == attributes));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _ProductSaleInfoEntity&&(identical(other.id, id) || other.id == id)&&(identical(other.productId, productId) || other.productId == productId)&&(identical(other.variantId, variantId) || other.variantId == variantId)&&(identical(other.name, name) || other.name == name)&&(identical(other.variantAttribute, variantAttribute) || other.variantAttribute == variantAttribute)&&(identical(other.quantity, quantity) || other.quantity == quantity)&&(identical(other.fabricLength, fabricLength) || other.fabricLength == fabricLength)&&(identical(other.price, price) || other.price == price)&&(identical(other.subtotal, subtotal) || other.subtotal == subtotal)&&(identical(other.image, image) || other.image == image)&&(identical(other.thumbnailImage, thumbnailImage) || other.thumbnailImage == thumbnailImage)&&(identical(other.color, color) || other.color == color)&&(identical(other.category, category) || other.category == category)&&(identical(other.model, model) || other.model == model)&&(identical(other.mainServiceType, mainServiceType) || other.mainServiceType == mainServiceType)&&(identical(other.attributes, attributes) || other.attributes == attributes));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,productId,variantId,name,variantAttribute,quantity,fabricLength,price,subtotal,image,thumbnailImage,color,category,model,mainServiceType,attributes);
+int get hashCode {
+    return Object.hash(runtimeType,id,productId,variantId,name,variantAttribute,quantity,fabricLength,price,subtotal,image,thumbnailImage,color,category,model,mainServiceType,attributes);
+}
 
 @override
 String toString() {
-  return 'ProductSaleInfoEntity(id: $id, productId: $productId, variantId: $variantId, name: $name, variantAttribute: $variantAttribute, quantity: $quantity, fabricLength: $fabricLength, price: $price, subtotal: $subtotal, image: $image, thumbnailImage: $thumbnailImage, color: $color, category: $category, model: $model, mainServiceType: $mainServiceType, attributes: $attributes)';
+    return 'ProductSaleInfoEntity(id: $id, productId: $productId, variantId: $variantId, name: $name, variantAttribute: $variantAttribute, quantity: $quantity, fabricLength: $fabricLength, price: $price, subtotal: $subtotal, image: $image, thumbnailImage: $thumbnailImage, color: $color, category: $category, model: $model, mainServiceType: $mainServiceType, attributes: $attributes)';
 }
 
 

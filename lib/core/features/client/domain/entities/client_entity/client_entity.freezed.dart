@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'client_entity.dart';
@@ -9,18 +9,13 @@ part of 'client_entity.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$ClientEntity {
 
- int? get id; String get name;// Always E.164-formatted (e.g. "+919876543210") — mobile only ever
-// stores/uses the phone number in this one form. Web additionally
-// keeps a raw-digits-without-country-code form for its own internal
-// use (phone input widgets, a numeric presence check before display),
-// but that's a web-local/data-layer concern, not a shared one — its
-// model maps straight into this field, no separate field needed here.
- String get phone1; String? get phone2;
+ int? get id; String get name; String get phone1; String? get phone2;
 /// Create a copy of ClientEntity
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -31,16 +26,21 @@ $ClientEntityCopyWith<ClientEntity> get copyWith => _$ClientEntityCopyWithImpl<C
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ClientEntity&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.phone1, phone1) || other.phone1 == phone1)&&(identical(other.phone2, phone2) || other.phone2 == phone2));
+  final _this = this as ClientEntity;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ClientEntity&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.name, _this.name) || other.name == _this.name)&&(identical(other.phone1, _this.phone1) || other.phone1 == _this.phone1)&&(identical(other.phone2, _this.phone2) || other.phone2 == _this.phone2));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,name,phone1,phone2);
+int get hashCode {
+  final _this = this as ClientEntity;
+  return Object.hash(runtimeType,_this.id,_this.name,_this.phone1,_this.phone2);
+}
 
 @override
 String toString() {
-  return 'ClientEntity(id: $id, name: $name, phone1: $phone1, phone2: $phone2)';
+  final _this = this as ClientEntity;
+  return 'ClientEntity(id: ${_this.id}, name: ${_this.name}, phone1: ${_this.phone1}, phone2: ${_this.phone2})';
 }
 
 
@@ -69,7 +69,7 @@ class _$ClientEntityCopyWithImpl<$Res>
 /// Create a copy of ClientEntity
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? id = freezed,Object? name = null,Object? phone1 = null,Object? phone2 = freezed,}) {
-  return _then(_self.copyWith(
+  return _then(ClientEntity(
 id: freezed == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int?,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,phone1: null == phone1 ? _self.phone1 : phone1 // ignore: cast_nullable_to_non_nullable
@@ -220,12 +220,6 @@ class _ClientEntity implements ClientEntity {
 
 @override final  int? id;
 @override final  String name;
-// Always E.164-formatted (e.g. "+919876543210") — mobile only ever
-// stores/uses the phone number in this one form. Web additionally
-// keeps a raw-digits-without-country-code form for its own internal
-// use (phone input widgets, a numeric presence check before display),
-// but that's a web-local/data-layer concern, not a shared one — its
-// model maps straight into this field, no separate field needed here.
 @override final  String phone1;
 @override final  String? phone2;
 
@@ -239,16 +233,18 @@ _$ClientEntityCopyWith<_ClientEntity> get copyWith => __$ClientEntityCopyWithImp
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ClientEntity&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.phone1, phone1) || other.phone1 == phone1)&&(identical(other.phone2, phone2) || other.phone2 == phone2));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _ClientEntity&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.phone1, phone1) || other.phone1 == phone1)&&(identical(other.phone2, phone2) || other.phone2 == phone2));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,name,phone1,phone2);
+int get hashCode {
+    return Object.hash(runtimeType,id,name,phone1,phone2);
+}
 
 @override
 String toString() {
-  return 'ClientEntity(id: $id, name: $name, phone1: $phone1, phone2: $phone2)';
+    return 'ClientEntity(id: $id, name: $name, phone1: $phone1, phone2: $phone2)';
 }
 
 

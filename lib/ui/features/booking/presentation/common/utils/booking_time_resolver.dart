@@ -1,5 +1,5 @@
 import 'package:bookie_buddy_shared/bookie_buddy_shared.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 // Genuinely shared, not printer-specific — was duplicated three ways
 // (mobile's own copy, web's own copy, and a private inline copy baked
 // into this package's booking_receipt_canvas_builder) before being

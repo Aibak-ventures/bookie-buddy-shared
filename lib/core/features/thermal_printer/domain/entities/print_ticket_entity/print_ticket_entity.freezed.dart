@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'print_ticket_entity.dart';
@@ -9,6 +9,7 @@ part of 'print_ticket_entity.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
@@ -25,16 +26,21 @@ $PrintTicketEntityCopyWith<PrintTicketEntity> get copyWith => _$PrintTicketEntit
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is PrintTicketEntity&&const DeepCollectionEquality().equals(other.commands, commands)&&(identical(other.paperSize, paperSize) || other.paperSize == paperSize));
+  final _this = this as PrintTicketEntity;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is PrintTicketEntity&&const DeepCollectionEquality().equals(other.commands, _this.commands)&&(identical(other.paperSize, _this.paperSize) || other.paperSize == _this.paperSize));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(commands),paperSize);
+int get hashCode {
+  final _this = this as PrintTicketEntity;
+  return Object.hash(runtimeType,const DeepCollectionEquality().hash(_this.commands),_this.paperSize);
+}
 
 @override
 String toString() {
-  return 'PrintTicketEntity(commands: $commands, paperSize: $paperSize)';
+  final _this = this as PrintTicketEntity;
+  return 'PrintTicketEntity(commands: ${_this.commands}, paperSize: ${_this.paperSize})';
 }
 
 
@@ -63,7 +69,7 @@ class _$PrintTicketEntityCopyWithImpl<$Res>
 /// Create a copy of PrintTicketEntity
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? commands = null,Object? paperSize = null,}) {
-  return _then(_self.copyWith(
+  return _then(PrintTicketEntity(
 commands: null == commands ? _self.commands : commands // ignore: cast_nullable_to_non_nullable
 as List<PrintTicketCommand>,paperSize: null == paperSize ? _self.paperSize : paperSize // ignore: cast_nullable_to_non_nullable
 as PrinterPaperSize,
@@ -207,7 +213,7 @@ return $default(_that.commands,_that.paperSize);case _:
 
 
 class _PrintTicketEntity implements PrintTicketEntity {
-  const _PrintTicketEntity({required final  List<PrintTicketCommand> commands, this.paperSize = PrinterPaperSize.mm80}): _commands = commands;
+  const _PrintTicketEntity({required  List<PrintTicketCommand> commands, this.paperSize = PrinterPaperSize.mm80}): _commands = commands;
   
 
  final  List<PrintTicketCommand> _commands;
@@ -229,16 +235,18 @@ _$PrintTicketEntityCopyWith<_PrintTicketEntity> get copyWith => __$PrintTicketEn
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _PrintTicketEntity&&const DeepCollectionEquality().equals(other._commands, _commands)&&(identical(other.paperSize, paperSize) || other.paperSize == paperSize));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _PrintTicketEntity&&const DeepCollectionEquality().equals(other.commands, _commands)&&(identical(other.paperSize, paperSize) || other.paperSize == paperSize));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_commands),paperSize);
+int get hashCode {
+    return Object.hash(runtimeType,const DeepCollectionEquality().hash(_commands),paperSize);
+}
 
 @override
 String toString() {
-  return 'PrintTicketEntity(commands: $commands, paperSize: $paperSize)';
+    return 'PrintTicketEntity(commands: $commands, paperSize: $paperSize)';
 }
 
 

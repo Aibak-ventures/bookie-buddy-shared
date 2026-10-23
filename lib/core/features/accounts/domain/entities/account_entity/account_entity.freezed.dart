@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'account_entity.dart';
@@ -9,6 +9,7 @@ part of 'account_entity.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
@@ -25,16 +26,21 @@ $AccountEntityCopyWith<AccountEntity> get copyWith => _$AccountEntityCopyWithImp
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is AccountEntity&&(identical(other.id, id) || other.id == id)&&(identical(other.accountName, accountName) || other.accountName == accountName)&&(identical(other.accountType, accountType) || other.accountType == accountType)&&(identical(other.accountNumber, accountNumber) || other.accountNumber == accountNumber)&&(identical(other.description, description) || other.description == description)&&(identical(other.isActive, isActive) || other.isActive == isActive)&&(identical(other.isDefault, isDefault) || other.isDefault == isDefault)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt));
+  final _this = this as AccountEntity;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is AccountEntity&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.accountName, _this.accountName) || other.accountName == _this.accountName)&&(identical(other.accountType, _this.accountType) || other.accountType == _this.accountType)&&(identical(other.accountNumber, _this.accountNumber) || other.accountNumber == _this.accountNumber)&&(identical(other.description, _this.description) || other.description == _this.description)&&(identical(other.isActive, _this.isActive) || other.isActive == _this.isActive)&&(identical(other.isDefault, _this.isDefault) || other.isDefault == _this.isDefault)&&(identical(other.createdAt, _this.createdAt) || other.createdAt == _this.createdAt));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,accountName,accountType,accountNumber,description,isActive,isDefault,createdAt);
+int get hashCode {
+  final _this = this as AccountEntity;
+  return Object.hash(runtimeType,_this.id,_this.accountName,_this.accountType,_this.accountNumber,_this.description,_this.isActive,_this.isDefault,_this.createdAt);
+}
 
 @override
 String toString() {
-  return 'AccountEntity(id: $id, accountName: $accountName, accountType: $accountType, accountNumber: $accountNumber, description: $description, isActive: $isActive, isDefault: $isDefault, createdAt: $createdAt)';
+  final _this = this as AccountEntity;
+  return 'AccountEntity(id: ${_this.id}, accountName: ${_this.accountName}, accountType: ${_this.accountType}, accountNumber: ${_this.accountNumber}, description: ${_this.description}, isActive: ${_this.isActive}, isDefault: ${_this.isDefault}, createdAt: ${_this.createdAt})';
 }
 
 
@@ -63,7 +69,7 @@ class _$AccountEntityCopyWithImpl<$Res>
 /// Create a copy of AccountEntity
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? accountName = null,Object? accountType = null,Object? accountNumber = freezed,Object? description = freezed,Object? isActive = null,Object? isDefault = null,Object? createdAt = null,}) {
-  return _then(_self.copyWith(
+  return _then(AccountEntity(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int,accountName: null == accountName ? _self.accountName : accountName // ignore: cast_nullable_to_non_nullable
 as String,accountType: null == accountType ? _self.accountType : accountType // ignore: cast_nullable_to_non_nullable
@@ -235,16 +241,18 @@ _$AccountEntityCopyWith<_AccountEntity> get copyWith => __$AccountEntityCopyWith
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AccountEntity&&(identical(other.id, id) || other.id == id)&&(identical(other.accountName, accountName) || other.accountName == accountName)&&(identical(other.accountType, accountType) || other.accountType == accountType)&&(identical(other.accountNumber, accountNumber) || other.accountNumber == accountNumber)&&(identical(other.description, description) || other.description == description)&&(identical(other.isActive, isActive) || other.isActive == isActive)&&(identical(other.isDefault, isDefault) || other.isDefault == isDefault)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _AccountEntity&&(identical(other.id, id) || other.id == id)&&(identical(other.accountName, accountName) || other.accountName == accountName)&&(identical(other.accountType, accountType) || other.accountType == accountType)&&(identical(other.accountNumber, accountNumber) || other.accountNumber == accountNumber)&&(identical(other.description, description) || other.description == description)&&(identical(other.isActive, isActive) || other.isActive == isActive)&&(identical(other.isDefault, isDefault) || other.isDefault == isDefault)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,accountName,accountType,accountNumber,description,isActive,isDefault,createdAt);
+int get hashCode {
+    return Object.hash(runtimeType,id,accountName,accountType,accountNumber,description,isActive,isDefault,createdAt);
+}
 
 @override
 String toString() {
-  return 'AccountEntity(id: $id, accountName: $accountName, accountType: $accountType, accountNumber: $accountNumber, description: $description, isActive: $isActive, isDefault: $isDefault, createdAt: $createdAt)';
+    return 'AccountEntity(id: $id, accountName: $accountName, accountType: $accountType, accountNumber: $accountNumber, description: $description, isActive: $isActive, isDefault: $isDefault, createdAt: $createdAt)';
 }
 
 

@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'tax_configuration_request_entity.dart';
@@ -9,6 +9,7 @@ part of 'tax_configuration_request_entity.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
@@ -25,16 +26,21 @@ $TaxConfigurationRequestEntityCopyWith<TaxConfigurationRequestEntity> get copyWi
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is TaxConfigurationRequestEntity&&(identical(other.taxName, taxName) || other.taxName == taxName)&&(identical(other.taxRate, taxRate) || other.taxRate == taxRate)&&(identical(other.isEnabled, isEnabled) || other.isEnabled == isEnabled)&&const DeepCollectionEquality().equals(other.taxableComponents, taxableComponents)&&(identical(other.taxCalculationType, taxCalculationType) || other.taxCalculationType == taxCalculationType));
+  final _this = this as TaxConfigurationRequestEntity;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is TaxConfigurationRequestEntity&&(identical(other.taxName, _this.taxName) || other.taxName == _this.taxName)&&(identical(other.taxRate, _this.taxRate) || other.taxRate == _this.taxRate)&&(identical(other.isEnabled, _this.isEnabled) || other.isEnabled == _this.isEnabled)&&const DeepCollectionEquality().equals(other.taxableComponents, _this.taxableComponents)&&(identical(other.taxCalculationType, _this.taxCalculationType) || other.taxCalculationType == _this.taxCalculationType));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,taxName,taxRate,isEnabled,const DeepCollectionEquality().hash(taxableComponents),taxCalculationType);
+int get hashCode {
+  final _this = this as TaxConfigurationRequestEntity;
+  return Object.hash(runtimeType,_this.taxName,_this.taxRate,_this.isEnabled,const DeepCollectionEquality().hash(_this.taxableComponents),_this.taxCalculationType);
+}
 
 @override
 String toString() {
-  return 'TaxConfigurationRequestEntity(taxName: $taxName, taxRate: $taxRate, isEnabled: $isEnabled, taxableComponents: $taxableComponents, taxCalculationType: $taxCalculationType)';
+  final _this = this as TaxConfigurationRequestEntity;
+  return 'TaxConfigurationRequestEntity(taxName: ${_this.taxName}, taxRate: ${_this.taxRate}, isEnabled: ${_this.isEnabled}, taxableComponents: ${_this.taxableComponents}, taxCalculationType: ${_this.taxCalculationType})';
 }
 
 
@@ -63,7 +69,7 @@ class _$TaxConfigurationRequestEntityCopyWithImpl<$Res>
 /// Create a copy of TaxConfigurationRequestEntity
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? taxName = freezed,Object? taxRate = freezed,Object? isEnabled = freezed,Object? taxableComponents = freezed,Object? taxCalculationType = freezed,}) {
-  return _then(_self.copyWith(
+  return _then(TaxConfigurationRequestEntity(
 taxName: freezed == taxName ? _self.taxName : taxName // ignore: cast_nullable_to_non_nullable
 as String?,taxRate: freezed == taxRate ? _self.taxRate : taxRate // ignore: cast_nullable_to_non_nullable
 as double?,isEnabled: freezed == isEnabled ? _self.isEnabled : isEnabled // ignore: cast_nullable_to_non_nullable
@@ -210,7 +216,7 @@ return $default(_that.taxName,_that.taxRate,_that.isEnabled,_that.taxableCompone
 
 
 class _TaxConfigurationRequestEntity implements TaxConfigurationRequestEntity {
-  const _TaxConfigurationRequestEntity({this.taxName, this.taxRate, this.isEnabled, final  List<TaxableComponent>? taxableComponents, this.taxCalculationType}): _taxableComponents = taxableComponents;
+  const _TaxConfigurationRequestEntity({this.taxName, this.taxRate, this.isEnabled,  List<TaxableComponent>? taxableComponents, this.taxCalculationType}): _taxableComponents = taxableComponents;
   
 
 @override final  String? taxName;
@@ -237,16 +243,18 @@ _$TaxConfigurationRequestEntityCopyWith<_TaxConfigurationRequestEntity> get copy
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _TaxConfigurationRequestEntity&&(identical(other.taxName, taxName) || other.taxName == taxName)&&(identical(other.taxRate, taxRate) || other.taxRate == taxRate)&&(identical(other.isEnabled, isEnabled) || other.isEnabled == isEnabled)&&const DeepCollectionEquality().equals(other._taxableComponents, _taxableComponents)&&(identical(other.taxCalculationType, taxCalculationType) || other.taxCalculationType == taxCalculationType));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _TaxConfigurationRequestEntity&&(identical(other.taxName, taxName) || other.taxName == taxName)&&(identical(other.taxRate, taxRate) || other.taxRate == taxRate)&&(identical(other.isEnabled, isEnabled) || other.isEnabled == isEnabled)&&const DeepCollectionEquality().equals(other.taxableComponents, _taxableComponents)&&(identical(other.taxCalculationType, taxCalculationType) || other.taxCalculationType == taxCalculationType));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,taxName,taxRate,isEnabled,const DeepCollectionEquality().hash(_taxableComponents),taxCalculationType);
+int get hashCode {
+    return Object.hash(runtimeType,taxName,taxRate,isEnabled,const DeepCollectionEquality().hash(_taxableComponents),taxCalculationType);
+}
 
 @override
 String toString() {
-  return 'TaxConfigurationRequestEntity(taxName: $taxName, taxRate: $taxRate, isEnabled: $isEnabled, taxableComponents: $taxableComponents, taxCalculationType: $taxCalculationType)';
+    return 'TaxConfigurationRequestEntity(taxName: $taxName, taxRate: $taxRate, isEnabled: $isEnabled, taxableComponents: $taxableComponents, taxCalculationType: $taxCalculationType)';
 }
 
 

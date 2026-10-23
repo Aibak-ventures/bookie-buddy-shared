@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'tax_configuration_model.dart';
@@ -9,6 +9,7 @@ part of 'tax_configuration_model.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 
@@ -28,16 +29,21 @@ $TaxConfigurationModelCopyWith<TaxConfigurationModel> get copyWith => _$TaxConfi
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is TaxConfigurationModel&&(identical(other.id, id) || other.id == id)&&(identical(other.taxName, taxName) || other.taxName == taxName)&&(identical(other.taxRate, taxRate) || other.taxRate == taxRate)&&(identical(other.isEnabled, isEnabled) || other.isEnabled == isEnabled)&&const DeepCollectionEquality().equals(other.taxableComponents, taxableComponents)&&(identical(other.taxCalculationType, taxCalculationType) || other.taxCalculationType == taxCalculationType)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
+  final _this = this as TaxConfigurationModel;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is TaxConfigurationModel&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.taxName, _this.taxName) || other.taxName == _this.taxName)&&(identical(other.taxRate, _this.taxRate) || other.taxRate == _this.taxRate)&&(identical(other.isEnabled, _this.isEnabled) || other.isEnabled == _this.isEnabled)&&const DeepCollectionEquality().equals(other.taxableComponents, _this.taxableComponents)&&(identical(other.taxCalculationType, _this.taxCalculationType) || other.taxCalculationType == _this.taxCalculationType)&&(identical(other.createdAt, _this.createdAt) || other.createdAt == _this.createdAt)&&(identical(other.updatedAt, _this.updatedAt) || other.updatedAt == _this.updatedAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,taxName,taxRate,isEnabled,const DeepCollectionEquality().hash(taxableComponents),taxCalculationType,createdAt,updatedAt);
+int get hashCode {
+  final _this = this as TaxConfigurationModel;
+  return Object.hash(runtimeType,_this.id,_this.taxName,_this.taxRate,_this.isEnabled,const DeepCollectionEquality().hash(_this.taxableComponents),_this.taxCalculationType,_this.createdAt,_this.updatedAt);
+}
 
 @override
 String toString() {
-  return 'TaxConfigurationModel(id: $id, taxName: $taxName, taxRate: $taxRate, isEnabled: $isEnabled, taxableComponents: $taxableComponents, taxCalculationType: $taxCalculationType, createdAt: $createdAt, updatedAt: $updatedAt)';
+  final _this = this as TaxConfigurationModel;
+  return 'TaxConfigurationModel(id: ${_this.id}, taxName: ${_this.taxName}, taxRate: ${_this.taxRate}, isEnabled: ${_this.isEnabled}, taxableComponents: ${_this.taxableComponents}, taxCalculationType: ${_this.taxCalculationType}, createdAt: ${_this.createdAt}, updatedAt: ${_this.updatedAt})';
 }
 
 
@@ -66,7 +72,7 @@ class _$TaxConfigurationModelCopyWithImpl<$Res>
 /// Create a copy of TaxConfigurationModel
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? taxName = null,Object? taxRate = null,Object? isEnabled = null,Object? taxableComponents = null,Object? taxCalculationType = null,Object? createdAt = freezed,Object? updatedAt = freezed,}) {
-  return _then(_self.copyWith(
+  return _then(TaxConfigurationModel(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int,taxName: null == taxName ? _self.taxName : taxName // ignore: cast_nullable_to_non_nullable
 as String,taxRate: null == taxRate ? _self.taxRate : taxRate // ignore: cast_nullable_to_non_nullable
@@ -216,7 +222,7 @@ return $default(_that.id,_that.taxName,_that.taxRate,_that.isEnabled,_that.taxab
 @JsonSerializable()
 
 class _TaxConfigurationModel implements TaxConfigurationModel {
-  const _TaxConfigurationModel({required this.id, @JsonKey(name: 'tax_name') required this.taxName, @JsonKey(name: 'tax_rate', fromJson: StringNumberX.toDoubleFromString) required this.taxRate, @JsonKey(name: 'is_enabled') required this.isEnabled, @JsonKey(name: 'taxable_components', fromJson: TaxableComponent.fromJsonList, toJson: TaxableComponent.toJsonList) required final  List<TaxableComponent> taxableComponents, @JsonKey(name: 'tax_calculation_type', fromJson: TaxCalculationType.fromJson, toJson: TaxCalculationType.toJson, defaultValue: TaxCalculationType.exclusive) required this.taxCalculationType, @JsonKey(name: 'created_at') this.createdAt, @JsonKey(name: 'updated_at') this.updatedAt}): _taxableComponents = taxableComponents;
+  const _TaxConfigurationModel({required this.id, @JsonKey(name: 'tax_name') required this.taxName, @JsonKey(name: 'tax_rate', fromJson: StringNumberX.toDoubleFromString) required this.taxRate, @JsonKey(name: 'is_enabled') required this.isEnabled, @JsonKey(name: 'taxable_components', fromJson: TaxableComponent.fromJsonList, toJson: TaxableComponent.toJsonList) required  List<TaxableComponent> taxableComponents, @JsonKey(name: 'tax_calculation_type', fromJson: TaxCalculationType.fromJson, toJson: TaxCalculationType.toJson, defaultValue: TaxCalculationType.exclusive) required this.taxCalculationType, @JsonKey(name: 'created_at') this.createdAt, @JsonKey(name: 'updated_at') this.updatedAt}): _taxableComponents = taxableComponents;
   factory _TaxConfigurationModel.fromJson(Map<String, dynamic> json) => _$TaxConfigurationModelFromJson(json);
 
 @override final  int id;
@@ -247,16 +253,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _TaxConfigurationModel&&(identical(other.id, id) || other.id == id)&&(identical(other.taxName, taxName) || other.taxName == taxName)&&(identical(other.taxRate, taxRate) || other.taxRate == taxRate)&&(identical(other.isEnabled, isEnabled) || other.isEnabled == isEnabled)&&const DeepCollectionEquality().equals(other._taxableComponents, _taxableComponents)&&(identical(other.taxCalculationType, taxCalculationType) || other.taxCalculationType == taxCalculationType)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _TaxConfigurationModel&&(identical(other.id, id) || other.id == id)&&(identical(other.taxName, taxName) || other.taxName == taxName)&&(identical(other.taxRate, taxRate) || other.taxRate == taxRate)&&(identical(other.isEnabled, isEnabled) || other.isEnabled == isEnabled)&&const DeepCollectionEquality().equals(other.taxableComponents, _taxableComponents)&&(identical(other.taxCalculationType, taxCalculationType) || other.taxCalculationType == taxCalculationType)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,taxName,taxRate,isEnabled,const DeepCollectionEquality().hash(_taxableComponents),taxCalculationType,createdAt,updatedAt);
+int get hashCode {
+    return Object.hash(runtimeType,id,taxName,taxRate,isEnabled,const DeepCollectionEquality().hash(_taxableComponents),taxCalculationType,createdAt,updatedAt);
+}
 
 @override
 String toString() {
-  return 'TaxConfigurationModel(id: $id, taxName: $taxName, taxRate: $taxRate, isEnabled: $isEnabled, taxableComponents: $taxableComponents, taxCalculationType: $taxCalculationType, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'TaxConfigurationModel(id: $id, taxName: $taxName, taxRate: $taxRate, isEnabled: $isEnabled, taxableComponents: $taxableComponents, taxCalculationType: $taxCalculationType, createdAt: $createdAt, updatedAt: $updatedAt)';
 }
 
 

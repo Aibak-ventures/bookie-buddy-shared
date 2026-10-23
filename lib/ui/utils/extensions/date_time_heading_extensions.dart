@@ -1,5 +1,5 @@
 import 'package:bookie_buddy_shared/core/core/common/utils/app_date_utils.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// `smartHeading` bakes in a specific UI date pattern (via
 /// [AppDateUtils.formatUiDate]) — split into its own file, separate from

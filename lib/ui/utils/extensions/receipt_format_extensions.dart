@@ -10,7 +10,7 @@ import 'package:intl/intl.dart';
 // Date parsing/formatting (parseToDateTime, tryParseToDateTime,
 // formatToUiTime) used to be narrow-ported here too, but now lives in
 // `string_date_extensions.dart` in full — that file is itself lightweight
-// (dart:developer, flutter/material for TimeOfDay, intl), so there's no
+// (dart:developer, material_ui for TimeOfDay, intl), so there's no
 // more reason for receipt code to keep a second, narrower copy.
 
 const _currencyLocale = 'en_IN';
@@ -33,4 +33,3 @@ extension ReceiptListSum<T> on List<T> {
     return fold(0 as N, (pv, e) => (pv + selector(e)) as N);
   }
 }
-

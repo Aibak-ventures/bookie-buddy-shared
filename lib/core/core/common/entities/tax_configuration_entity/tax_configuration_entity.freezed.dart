@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'tax_configuration_entity.dart';
@@ -9,6 +9,7 @@ part of 'tax_configuration_entity.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
@@ -25,16 +26,21 @@ $TaxConfigurationEntityCopyWith<TaxConfigurationEntity> get copyWith => _$TaxCon
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is TaxConfigurationEntity&&(identical(other.id, id) || other.id == id)&&(identical(other.taxName, taxName) || other.taxName == taxName)&&(identical(other.taxRate, taxRate) || other.taxRate == taxRate)&&(identical(other.isEnabled, isEnabled) || other.isEnabled == isEnabled)&&const DeepCollectionEquality().equals(other.taxableComponents, taxableComponents)&&(identical(other.taxCalculationType, taxCalculationType) || other.taxCalculationType == taxCalculationType)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
+  final _this = this as TaxConfigurationEntity;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is TaxConfigurationEntity&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.taxName, _this.taxName) || other.taxName == _this.taxName)&&(identical(other.taxRate, _this.taxRate) || other.taxRate == _this.taxRate)&&(identical(other.isEnabled, _this.isEnabled) || other.isEnabled == _this.isEnabled)&&const DeepCollectionEquality().equals(other.taxableComponents, _this.taxableComponents)&&(identical(other.taxCalculationType, _this.taxCalculationType) || other.taxCalculationType == _this.taxCalculationType)&&(identical(other.createdAt, _this.createdAt) || other.createdAt == _this.createdAt)&&(identical(other.updatedAt, _this.updatedAt) || other.updatedAt == _this.updatedAt));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,taxName,taxRate,isEnabled,const DeepCollectionEquality().hash(taxableComponents),taxCalculationType,createdAt,updatedAt);
+int get hashCode {
+  final _this = this as TaxConfigurationEntity;
+  return Object.hash(runtimeType,_this.id,_this.taxName,_this.taxRate,_this.isEnabled,const DeepCollectionEquality().hash(_this.taxableComponents),_this.taxCalculationType,_this.createdAt,_this.updatedAt);
+}
 
 @override
 String toString() {
-  return 'TaxConfigurationEntity(id: $id, taxName: $taxName, taxRate: $taxRate, isEnabled: $isEnabled, taxableComponents: $taxableComponents, taxCalculationType: $taxCalculationType, createdAt: $createdAt, updatedAt: $updatedAt)';
+  final _this = this as TaxConfigurationEntity;
+  return 'TaxConfigurationEntity(id: ${_this.id}, taxName: ${_this.taxName}, taxRate: ${_this.taxRate}, isEnabled: ${_this.isEnabled}, taxableComponents: ${_this.taxableComponents}, taxCalculationType: ${_this.taxCalculationType}, createdAt: ${_this.createdAt}, updatedAt: ${_this.updatedAt})';
 }
 
 
@@ -63,7 +69,7 @@ class _$TaxConfigurationEntityCopyWithImpl<$Res>
 /// Create a copy of TaxConfigurationEntity
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? taxName = null,Object? taxRate = null,Object? isEnabled = null,Object? taxableComponents = null,Object? taxCalculationType = null,Object? createdAt = freezed,Object? updatedAt = freezed,}) {
-  return _then(_self.copyWith(
+  return _then(TaxConfigurationEntity(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int,taxName: null == taxName ? _self.taxName : taxName // ignore: cast_nullable_to_non_nullable
 as String,taxRate: null == taxRate ? _self.taxRate : taxRate // ignore: cast_nullable_to_non_nullable
@@ -213,7 +219,7 @@ return $default(_that.id,_that.taxName,_that.taxRate,_that.isEnabled,_that.taxab
 
 
 class _TaxConfigurationEntity implements TaxConfigurationEntity {
-  const _TaxConfigurationEntity({required this.id, required this.taxName, required this.taxRate, required this.isEnabled, required final  List<TaxableComponent> taxableComponents, required this.taxCalculationType, this.createdAt, this.updatedAt}): _taxableComponents = taxableComponents;
+  const _TaxConfigurationEntity({required this.id, required this.taxName, required this.taxRate, required this.isEnabled, required  List<TaxableComponent> taxableComponents, required this.taxCalculationType, this.createdAt, this.updatedAt}): _taxableComponents = taxableComponents;
   
 
 @override final  int id;
@@ -241,16 +247,18 @@ _$TaxConfigurationEntityCopyWith<_TaxConfigurationEntity> get copyWith => __$Tax
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _TaxConfigurationEntity&&(identical(other.id, id) || other.id == id)&&(identical(other.taxName, taxName) || other.taxName == taxName)&&(identical(other.taxRate, taxRate) || other.taxRate == taxRate)&&(identical(other.isEnabled, isEnabled) || other.isEnabled == isEnabled)&&const DeepCollectionEquality().equals(other._taxableComponents, _taxableComponents)&&(identical(other.taxCalculationType, taxCalculationType) || other.taxCalculationType == taxCalculationType)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _TaxConfigurationEntity&&(identical(other.id, id) || other.id == id)&&(identical(other.taxName, taxName) || other.taxName == taxName)&&(identical(other.taxRate, taxRate) || other.taxRate == taxRate)&&(identical(other.isEnabled, isEnabled) || other.isEnabled == isEnabled)&&const DeepCollectionEquality().equals(other.taxableComponents, _taxableComponents)&&(identical(other.taxCalculationType, taxCalculationType) || other.taxCalculationType == taxCalculationType)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,taxName,taxRate,isEnabled,const DeepCollectionEquality().hash(_taxableComponents),taxCalculationType,createdAt,updatedAt);
+int get hashCode {
+    return Object.hash(runtimeType,id,taxName,taxRate,isEnabled,const DeepCollectionEquality().hash(_taxableComponents),taxCalculationType,createdAt,updatedAt);
+}
 
 @override
 String toString() {
-  return 'TaxConfigurationEntity(id: $id, taxName: $taxName, taxRate: $taxRate, isEnabled: $isEnabled, taxableComponents: $taxableComponents, taxCalculationType: $taxCalculationType, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'TaxConfigurationEntity(id: $id, taxName: $taxName, taxRate: $taxRate, isEnabled: $isEnabled, taxableComponents: $taxableComponents, taxCalculationType: $taxCalculationType, createdAt: $createdAt, updatedAt: $updatedAt)';
 }
 
 

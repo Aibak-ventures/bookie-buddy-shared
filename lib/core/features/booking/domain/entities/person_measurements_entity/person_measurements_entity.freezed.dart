@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'person_measurements_entity.dart';
@@ -9,6 +9,7 @@ part of 'person_measurements_entity.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
@@ -25,16 +26,21 @@ $PersonMeasurementsEntityCopyWith<PersonMeasurementsEntity> get copyWith => _$Pe
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is PersonMeasurementsEntity&&(identical(other.name, name) || other.name == name)&&const DeepCollectionEquality().equals(other.measurements, measurements));
+  final _this = this as PersonMeasurementsEntity;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is PersonMeasurementsEntity&&(identical(other.name, _this.name) || other.name == _this.name)&&const DeepCollectionEquality().equals(other.measurements, _this.measurements));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,name,const DeepCollectionEquality().hash(measurements));
+int get hashCode {
+  final _this = this as PersonMeasurementsEntity;
+  return Object.hash(runtimeType,_this.name,const DeepCollectionEquality().hash(_this.measurements));
+}
 
 @override
 String toString() {
-  return 'PersonMeasurementsEntity(name: $name, measurements: $measurements)';
+  final _this = this as PersonMeasurementsEntity;
+  return 'PersonMeasurementsEntity(name: ${_this.name}, measurements: ${_this.measurements})';
 }
 
 
@@ -63,7 +69,7 @@ class _$PersonMeasurementsEntityCopyWithImpl<$Res>
 /// Create a copy of PersonMeasurementsEntity
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? name = null,Object? measurements = null,}) {
-  return _then(_self.copyWith(
+  return _then(PersonMeasurementsEntity(
 name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,measurements: null == measurements ? _self.measurements : measurements // ignore: cast_nullable_to_non_nullable
 as List<MeasurementValueEntity>,
@@ -207,7 +213,7 @@ return $default(_that.name,_that.measurements);case _:
 
 
 class _PersonMeasurementsEntity implements PersonMeasurementsEntity {
-  const _PersonMeasurementsEntity({required this.name, final  List<MeasurementValueEntity> measurements = const []}): _measurements = measurements;
+  const _PersonMeasurementsEntity({required this.name,  List<MeasurementValueEntity> measurements = const []}): _measurements = measurements;
   
 
 @override final  String name;
@@ -229,16 +235,18 @@ _$PersonMeasurementsEntityCopyWith<_PersonMeasurementsEntity> get copyWith => __
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _PersonMeasurementsEntity&&(identical(other.name, name) || other.name == name)&&const DeepCollectionEquality().equals(other._measurements, _measurements));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _PersonMeasurementsEntity&&(identical(other.name, name) || other.name == name)&&const DeepCollectionEquality().equals(other.measurements, _measurements));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,name,const DeepCollectionEquality().hash(_measurements));
+int get hashCode {
+    return Object.hash(runtimeType,name,const DeepCollectionEquality().hash(_measurements));
+}
 
 @override
 String toString() {
-  return 'PersonMeasurementsEntity(name: $name, measurements: $measurements)';
+    return 'PersonMeasurementsEntity(name: $name, measurements: $measurements)';
 }
 
 

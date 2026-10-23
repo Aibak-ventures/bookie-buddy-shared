@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'unavailable_products_entity.dart';
@@ -9,6 +9,7 @@ part of 'unavailable_products_entity.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
@@ -25,16 +26,21 @@ $UnavailableProductsEntityCopyWith<UnavailableProductsEntity> get copyWith => _$
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is UnavailableProductsEntity&&(identical(other.message, message) || other.message == message)&&(identical(other.dateFrom, dateFrom) || other.dateFrom == dateFrom)&&(identical(other.dateTo, dateTo) || other.dateTo == dateTo)&&const DeepCollectionEquality().equals(other.unavailableProducts, unavailableProducts)&&(identical(other.bookingInvoiceId, bookingInvoiceId) || other.bookingInvoiceId == bookingInvoiceId)&&(identical(other.bookingId, bookingId) || other.bookingId == bookingId));
+  final _this = this as UnavailableProductsEntity;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is UnavailableProductsEntity&&(identical(other.message, _this.message) || other.message == _this.message)&&(identical(other.dateFrom, _this.dateFrom) || other.dateFrom == _this.dateFrom)&&(identical(other.dateTo, _this.dateTo) || other.dateTo == _this.dateTo)&&const DeepCollectionEquality().equals(other.unavailableProducts, _this.unavailableProducts)&&(identical(other.bookingInvoiceId, _this.bookingInvoiceId) || other.bookingInvoiceId == _this.bookingInvoiceId)&&(identical(other.bookingId, _this.bookingId) || other.bookingId == _this.bookingId));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,message,dateFrom,dateTo,const DeepCollectionEquality().hash(unavailableProducts),bookingInvoiceId,bookingId);
+int get hashCode {
+  final _this = this as UnavailableProductsEntity;
+  return Object.hash(runtimeType,_this.message,_this.dateFrom,_this.dateTo,const DeepCollectionEquality().hash(_this.unavailableProducts),_this.bookingInvoiceId,_this.bookingId);
+}
 
 @override
 String toString() {
-  return 'UnavailableProductsEntity(message: $message, dateFrom: $dateFrom, dateTo: $dateTo, unavailableProducts: $unavailableProducts, bookingInvoiceId: $bookingInvoiceId, bookingId: $bookingId)';
+  final _this = this as UnavailableProductsEntity;
+  return 'UnavailableProductsEntity(message: ${_this.message}, dateFrom: ${_this.dateFrom}, dateTo: ${_this.dateTo}, unavailableProducts: ${_this.unavailableProducts}, bookingInvoiceId: ${_this.bookingInvoiceId}, bookingId: ${_this.bookingId})';
 }
 
 
@@ -63,7 +69,7 @@ class _$UnavailableProductsEntityCopyWithImpl<$Res>
 /// Create a copy of UnavailableProductsEntity
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? message = freezed,Object? dateFrom = freezed,Object? dateTo = freezed,Object? unavailableProducts = null,Object? bookingInvoiceId = freezed,Object? bookingId = freezed,}) {
-  return _then(_self.copyWith(
+  return _then(UnavailableProductsEntity(
 message: freezed == message ? _self.message : message // ignore: cast_nullable_to_non_nullable
 as String?,dateFrom: freezed == dateFrom ? _self.dateFrom : dateFrom // ignore: cast_nullable_to_non_nullable
 as String?,dateTo: freezed == dateTo ? _self.dateTo : dateTo // ignore: cast_nullable_to_non_nullable
@@ -211,7 +217,7 @@ return $default(_that.message,_that.dateFrom,_that.dateTo,_that.unavailableProdu
 
 
 class _UnavailableProductsEntity implements UnavailableProductsEntity {
-  const _UnavailableProductsEntity({required this.message, required this.dateFrom, required this.dateTo, required final  List<int> unavailableProducts, required this.bookingInvoiceId, required this.bookingId}): _unavailableProducts = unavailableProducts;
+  const _UnavailableProductsEntity({required this.message, required this.dateFrom, required this.dateTo, required  List<int> unavailableProducts, required this.bookingInvoiceId, required this.bookingId}): _unavailableProducts = unavailableProducts;
   
 
 @override final  String? message;
@@ -237,16 +243,18 @@ _$UnavailableProductsEntityCopyWith<_UnavailableProductsEntity> get copyWith => 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UnavailableProductsEntity&&(identical(other.message, message) || other.message == message)&&(identical(other.dateFrom, dateFrom) || other.dateFrom == dateFrom)&&(identical(other.dateTo, dateTo) || other.dateTo == dateTo)&&const DeepCollectionEquality().equals(other._unavailableProducts, _unavailableProducts)&&(identical(other.bookingInvoiceId, bookingInvoiceId) || other.bookingInvoiceId == bookingInvoiceId)&&(identical(other.bookingId, bookingId) || other.bookingId == bookingId));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _UnavailableProductsEntity&&(identical(other.message, message) || other.message == message)&&(identical(other.dateFrom, dateFrom) || other.dateFrom == dateFrom)&&(identical(other.dateTo, dateTo) || other.dateTo == dateTo)&&const DeepCollectionEquality().equals(other.unavailableProducts, _unavailableProducts)&&(identical(other.bookingInvoiceId, bookingInvoiceId) || other.bookingInvoiceId == bookingInvoiceId)&&(identical(other.bookingId, bookingId) || other.bookingId == bookingId));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,message,dateFrom,dateTo,const DeepCollectionEquality().hash(_unavailableProducts),bookingInvoiceId,bookingId);
+int get hashCode {
+    return Object.hash(runtimeType,message,dateFrom,dateTo,const DeepCollectionEquality().hash(_unavailableProducts),bookingInvoiceId,bookingId);
+}
 
 @override
 String toString() {
-  return 'UnavailableProductsEntity(message: $message, dateFrom: $dateFrom, dateTo: $dateTo, unavailableProducts: $unavailableProducts, bookingInvoiceId: $bookingInvoiceId, bookingId: $bookingId)';
+    return 'UnavailableProductsEntity(message: $message, dateFrom: $dateFrom, dateTo: $dateTo, unavailableProducts: $unavailableProducts, bookingInvoiceId: $bookingInvoiceId, bookingId: $bookingId)';
 }
 
 

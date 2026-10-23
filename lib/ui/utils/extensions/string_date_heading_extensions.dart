@@ -1,6 +1,6 @@
 import 'package:bookie_buddy_shared/core/core/common/utils/app_date_utils.dart';
 import 'package:bookie_buddy_shared/core/core/common/utils/string_date_extensions.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// `getDateHeading` bakes in a specific UI date pattern (via
 /// [AppDateUtils.formatUiDate]) — split into its own file, separate from
@@ -17,7 +17,10 @@ extension StringDateHeadingUi on String {
     String? suffix;
     if (DateUtils.isSameDay(given, today)) {
       suffix = 'Today';
-    } else if (DateUtils.isSameDay(given, today.subtract(const Duration(days: 1)))) {
+    } else if (DateUtils.isSameDay(
+      given,
+      today.subtract(const Duration(days: 1)),
+    )) {
       suffix = 'Yesterday';
     }
     date = AppDateUtils.formatUiDate(given); // eg: 21 Apr, 2025
