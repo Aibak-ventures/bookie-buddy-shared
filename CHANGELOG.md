@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.1.0 — hasEnabledTax
+
+- `UserShopEntityTaxX.hasEnabledTax`: whether the shop has at least one enabled
+  tax rule. Apps use it to decide whether to show an "Apply Tax" option.
+
 ## 2.0.0 — Flutter 3.47 and material_ui
 
 Moves the package to Flutter 3.47.7 / Dart 3.13 and to `material_ui`, the
