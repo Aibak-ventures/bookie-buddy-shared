@@ -79,6 +79,8 @@ extension UserShopEntityTaxX on UserShopEntity {
   List<TaxConfigurationEntity> get enabledTaxConfigurations =>
       taxConfigurations.where((tax) => tax.isEnabled).toList();
 
+  bool get hasEnabledTax => enabledTaxConfigurations.isNotEmpty;
+
   /// Tax that must be added on top of [componentAmounts], summed across every
   /// enabled exclusive-type rule.
   double calculateAdditionalTaxAmount(
