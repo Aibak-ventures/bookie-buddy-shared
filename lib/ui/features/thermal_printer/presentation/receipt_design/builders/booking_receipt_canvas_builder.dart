@@ -216,9 +216,8 @@ class BookingReceiptCanvasBuilder {
     ReceiptCanvas canvas,
     BookingDetailsEntity booking,
   ) {
-    final securityDeposit =
-        booking.securityTransactionSummary.totalSecurityAmount;
-    if (booking.securityPayment == null || securityDeposit <= 0) return;
+    final securityDeposit = booking.securityPayment?.amount ?? 0;
+    if (securityDeposit <= 0) return;
     canvas.row([
       ReceiptColumn(
         booking.isSecurityPaid
