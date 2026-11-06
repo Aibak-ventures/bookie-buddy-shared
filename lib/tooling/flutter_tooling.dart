@@ -39,21 +39,25 @@ class FlutterTooling {
   String versionTag() =>
       'v${pubspecVersion().split('+').first.replaceAll('.', '_')}';
 
-  /// Runs `flutter build apk --release --split-per-abi` and copies the
-  /// arm64-v8a APK (what almost every current Android phone needs) to
-  /// `<apkOutputDir>/<fileName>`. Returns the new file's path.
+  /// Runs `flutter build apk --release --split-per-abi` (with `--flavor` when
+  /// [flavor] is set) and copies the arm64-v8a APK (what almost every current
+  /// Android phone needs) to `<apkOutputDir>/<fileName>`. Returns the new
+  /// file's path.
   Future<String> buildArm64Apk({
     required String fileName,
+    String? flavor,
     List<String> extraArgs = const [],
   }) async {
     await flutter([
       'build',
       'apk',
+      if (flavor != null) ...['--flavor', flavor],
       '--release',
       '--split-per-abi',
       ...extraArgs,
     ]);
-    const built = '$apkOutputDir/app-arm64-v8a-release.apk';
+    final suffix = flavor == null ? '' : '-$flavor';
+    final built = '$apkOutputDir/app-arm64-v8a$suffix-release.apk';
     if (!context.exists(built)) {
       context.fail('Expected APK not found at ${context.path(built)}.');
     }

@@ -120,7 +120,7 @@ The same `ScriptCommand` can be used by both a standalone script and a
 | `flutterCommand()` / `flutter(args)` | Runs `fvm flutter ...` if fvm is installed, else `flutter ...` (with a warning). |
 | `pubspecVersion()` | Like the context's, but fails the script if there is no version. |
 | `versionTag()` | File-name-safe version without the build number: `2.18.0+69` → `v2_18_0`. Builds that differ only in build number share a tag. |
-| `buildArm64Apk(fileName:, extraArgs:)` | `flutter build apk --release --split-per-abi`, then copies `app-arm64-v8a-release.apk` to `build/app/outputs/flutter-apk/<fileName>` and returns the new path. |
+| `buildArm64Apk(fileName:, flavor:, extraArgs:)` | `flutter build apk --release --split-per-abi` (plus `--flavor <flavor>` when given), then copies `app-arm64-v8a-release.apk` (or `app-arm64-v8a-<flavor>-release.apk`) to `build/app/outputs/flutter-apk/<fileName>` and returns the new path. |
 
 ### `git_tooling.dart`
 

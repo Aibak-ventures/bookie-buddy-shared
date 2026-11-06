@@ -1,5 +1,12 @@
 # Changelog
 
+## 2.2.0 — flavored APK builds
+
+- `FlutterTooling.buildArm64Apk` takes an optional `flavor`. When set, it
+  builds with `--flavor <flavor>` and picks up
+  `app-arm64-v8a-<flavor>-release.apk`. Additive; calls without `flavor`
+  behave as before.
+
 ## 2.1.0 — hasEnabledTax
 
 - `UserShopEntityTaxX.hasEnabledTax`: whether the shop has at least one enabled
