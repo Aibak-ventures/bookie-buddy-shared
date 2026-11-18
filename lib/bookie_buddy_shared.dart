@@ -27,6 +27,7 @@ export 'core/features/booking/domain/entities/booking_security_payment_entity/bo
 export 'core/features/booking/data/models/measurement_value_model/measurement_value_model.dart';
 export 'core/features/booking/data/models/person_measurements_model/person_measurements_model.dart';
 export 'core/features/booking/domain/entities/measurement_value_entity/measurement_value_entity.dart';
+export 'core/features/booking/domain/entities/measurement_value_entity/measurement_categories.dart';
 export 'core/features/booking/domain/entities/measurement_value_entity/standard_measurement_fields.dart';
 export 'core/features/booking/domain/entities/person_measurements_entity/person_measurement_rules.dart';
 export 'core/features/booking/domain/entities/person_measurements_entity/person_measurements_entity.dart';

@@ -1,6 +1,5 @@
 import 'package:bookie_buddy_shared/core/core/constants/enums/gender_type_enums.dart';
 
-/// A measurement the apps offer by default on the measurement form.
 class MeasurementFieldDefinition {
   const MeasurementFieldDefinition({
     required this.name,
@@ -9,193 +8,227 @@ class MeasurementFieldDefinition {
     required this.gender,
   });
 
-  /// Display name, e.g. "Top Round".
   final String name;
 
-  /// Backend key the value is stored under, e.g. "top_round".
   final String key;
   final String description;
   final GenderType gender;
 }
 
-/// The standard measurement fields and the keys their values are stored
-/// under in the `measurements` blob.
-///
-/// The backend stores the blob as free-form JSON, so mobile and web must use
-/// the same keys; define or change a field here, never in an app.
 class StandardMeasurementFields {
   const StandardMeasurementFields._();
 
-  static const String topRound = 'top_round';
-  static const String topLength = 'top_length';
-  static const String chest = 'chest';
-  static const String shape = 'shape';
-  static const String sleeveLength = 'sleeve_length';
-  static const String sleeveArm = 'sleeve_arm';
-  static const String sleeveWidth = 'sleeve_width';
-  static const String regal = 'regal';
-  static const String frontNeck = 'front_neck';
-  static const String backNeck = 'back_neck';
-  static const String elbow = 'elbow';
-  static const String pad = 'pad';
-  static const String shoulderStrap = 'shoulder_strap';
-  static const String neckCircumference = 'neck_circumference';
-  static const String shirtLength = 'shirt_length';
-  static const String armhole = 'armhole';
-  static const String upperArm = 'upper_arm';
-  static const String wrist = 'wrist';
-  static const String pantLength = 'pant_length';
-  static const String inseam = 'inseam';
-  static const String thigh = 'thigh';
-  static const String waist = 'waist';
-  static const String shoulderWidth = 'shoulder_width';
-  static const String height = 'height';
+  static const topRound = MeasurementFieldDefinition(
+    name: 'Top Round',
+    key: 'top_round',
+    description: 'Round measurement around top',
+    gender: GenderType.female,
+  );
+  static const topLength = MeasurementFieldDefinition(
+    name: 'Top Length',
+    key: 'top_length',
+    description: 'Vertical length of the top',
+    gender: GenderType.female,
+  );
+  static const chest = MeasurementFieldDefinition(
+    name: 'Chest',
+    key: 'chest',
+    description: 'Fullest part of the chest',
+    gender: GenderType.unisex,
+  );
+  static const shape = MeasurementFieldDefinition(
+    name: 'Shape',
+    key: 'shape',
+    description: 'Garment shape (fitted/flared/etc.)',
+    gender: GenderType.female,
+  );
+  static const sleeveLength = MeasurementFieldDefinition(
+    name: 'Sleeve Length',
+    key: 'sleeve_length',
+    description: 'Shoulder to desired sleeve end',
+    gender: GenderType.unisex,
+  );
+  static const sleeveArm = MeasurementFieldDefinition(
+    name: 'Sleeve Arm',
+    key: 'sleeve_arm',
+    description: 'Around the upper arm',
+    gender: GenderType.female,
+  );
+  static const sleeveWidth = MeasurementFieldDefinition(
+    name: 'Sleeve Width',
+    key: 'sleeve_width',
+    description: 'Width at the end of sleeve',
+    gender: GenderType.female,
+  );
+  static const regal = MeasurementFieldDefinition(
+    name: 'Regal',
+    key: 'regal',
+    description: 'Shoulder to bust line or relevant regal line',
+    gender: GenderType.female,
+  );
+  static const frontNeck = MeasurementFieldDefinition(
+    name: 'Front Neck',
+    key: 'front_neck',
+    description: 'Depth of the front neckline',
+    gender: GenderType.female,
+  );
+  static const backNeck = MeasurementFieldDefinition(
+    name: 'Back Neck',
+    key: 'back_neck',
+    description: 'Depth of the back neckline',
+    gender: GenderType.female,
+  );
+  static const elbow = MeasurementFieldDefinition(
+    name: 'Elbow',
+    key: 'elbow',
+    description: 'Circumference around the elbow',
+    gender: GenderType.female,
+  );
+  static const pad = MeasurementFieldDefinition(
+    name: 'Pad',
+    key: 'pad',
+    description: '',
+    gender: GenderType.female,
+  );
+  static const shoulderStrap = MeasurementFieldDefinition(
+    name: 'Shoulder Strap',
+    key: 'shoulder_strap',
+    description: '',
+    gender: GenderType.female,
+  );
+  static const collar = MeasurementFieldDefinition(
+    name: 'Collar',
+    key: 'neck_circumference',
+    description: 'Around the base of the neck',
+    gender: GenderType.male,
+  );
+  static const shirtLength = MeasurementFieldDefinition(
+    name: 'Shirt Length',
+    key: 'shirt_length',
+    description: 'Shoulder to desired bottom length',
+    gender: GenderType.male,
+  );
+  static const armhole = MeasurementFieldDefinition(
+    name: 'Armhole',
+    key: 'armhole',
+    description: 'Around the arm socket',
+    gender: GenderType.male,
+  );
+  static const biceps = MeasurementFieldDefinition(
+    name: 'Biceps',
+    key: 'upper_arm',
+    description: 'Fullest part of the upper arm',
+    gender: GenderType.male,
+  );
+  static const wrist = MeasurementFieldDefinition(
+    name: 'Wrist',
+    key: 'wrist',
+    description: 'Circumference of the wrist',
+    gender: GenderType.male,
+  );
+  static const pantLength = MeasurementFieldDefinition(
+    name: 'Pant Length',
+    key: 'pant_length',
+    description: 'Waist to ankle',
+    gender: GenderType.male,
+  );
+  static const inseam = MeasurementFieldDefinition(
+    name: 'Inseam',
+    key: 'inseam',
+    description: 'Crotch to ankle inside the leg',
+    gender: GenderType.male,
+  );
+  static const thigh = MeasurementFieldDefinition(
+    name: 'Thigh',
+    key: 'thigh',
+    description: 'Fullest part of the upper leg',
+    gender: GenderType.male,
+  );
+  static const waist = MeasurementFieldDefinition(
+    name: 'Waist',
+    key: 'waist',
+    description: 'Natural waistline',
+    gender: GenderType.unisex,
+  );
+  static const shoulder = MeasurementFieldDefinition(
+    name: 'Shoulder',
+    key: 'shoulder_width',
+    description: 'Tip to tip across the back',
+    gender: GenderType.unisex,
+  );
+  static const height = MeasurementFieldDefinition(
+    name: 'Height',
+    key: 'height',
+    description: 'For total garment length',
+    gender: GenderType.unisex,
+  );
+  static const suitLength = MeasurementFieldDefinition(
+    name: 'Suit Length',
+    key: 'suit_length',
+    description: 'Shoulder to desired suit bottom',
+    gender: GenderType.unisex,
+  );
+  static const indoWesternLength = MeasurementFieldDefinition(
+    name: 'Indo-western Length',
+    key: 'indo_western_length',
+    description: 'Shoulder to desired indo-western bottom',
+    gender: GenderType.unisex,
+  );
+  static const stomach = MeasurementFieldDefinition(
+    name: 'Stomach',
+    key: 'stomach',
+    description: 'Around the stomach',
+    gender: GenderType.unisex,
+  );
+  static const seat = MeasurementFieldDefinition(
+    name: 'Seat',
+    key: 'seat',
+    description: 'Fullest part of the hips',
+    gender: GenderType.unisex,
+  );
+  static const kage = MeasurementFieldDefinition(
+    name: 'Kage',
+    key: 'kage',
+    description: 'Around the knee',
+    gender: GenderType.unisex,
+  );
+  static const bottom = MeasurementFieldDefinition(
+    name: 'Bottom',
+    key: 'bottom',
+    description: 'Width at the pant opening',
+    gender: GenderType.unisex,
+  );
+  static const u = MeasurementFieldDefinition(
+    name: 'U',
+    key: 'u',
+    description: 'Front waist through crotch to back waist',
+    gender: GenderType.unisex,
+  );
 
-  /// Every standard field, in the order the form shows them.
   static const List<MeasurementFieldDefinition> all = [
-    MeasurementFieldDefinition(
-      name: 'Top Round',
-      key: topRound,
-      description: 'Round measurement around top',
-      gender: GenderType.female,
-    ),
-    MeasurementFieldDefinition(
-      name: 'Top Length',
-      key: topLength,
-      description: 'Vertical length of the top',
-      gender: GenderType.female,
-    ),
-    MeasurementFieldDefinition(
-      name: 'Chest',
-      key: chest,
-      description: 'Fullest part of the chest',
-      gender: GenderType.unisex,
-    ),
-    MeasurementFieldDefinition(
-      name: 'Shape',
-      key: shape,
-      description: 'Garment shape (fitted/flared/etc.)',
-      gender: GenderType.female,
-    ),
-    MeasurementFieldDefinition(
-      name: 'Sleeve Length',
-      key: sleeveLength,
-      description: 'Shoulder to desired sleeve end',
-      gender: GenderType.unisex,
-    ),
-    MeasurementFieldDefinition(
-      name: 'Sleeve Arm',
-      key: sleeveArm,
-      description: 'Around the upper arm',
-      gender: GenderType.female,
-    ),
-    MeasurementFieldDefinition(
-      name: 'Sleeve Width',
-      key: sleeveWidth,
-      description: 'Width at the end of sleeve',
-      gender: GenderType.female,
-    ),
-    MeasurementFieldDefinition(
-      name: 'Regal',
-      key: regal,
-      description: 'Shoulder to bust line or relevant regal line',
-      gender: GenderType.female,
-    ),
-    MeasurementFieldDefinition(
-      name: 'Front Neck',
-      key: frontNeck,
-      description: 'Depth of the front neckline',
-      gender: GenderType.female,
-    ),
-    MeasurementFieldDefinition(
-      name: 'Back Neck',
-      key: backNeck,
-      description: 'Depth of the back neckline',
-      gender: GenderType.female,
-    ),
-    MeasurementFieldDefinition(
-      name: 'Elbow',
-      key: elbow,
-      description: 'Circumference around the elbow',
-      gender: GenderType.female,
-    ),
-    MeasurementFieldDefinition(
-      name: 'Pad',
-      key: pad,
-      description: '',
-      gender: GenderType.female,
-    ),
-    MeasurementFieldDefinition(
-      name: 'Shoulder Strap',
-      key: shoulderStrap,
-      description: '',
-      gender: GenderType.female,
-    ),
-    MeasurementFieldDefinition(
-      name: 'Neck Circumference',
-      key: neckCircumference,
-      description: 'Around the base of the neck',
-      gender: GenderType.male,
-    ),
-    MeasurementFieldDefinition(
-      name: 'Shirt/Kurta Length',
-      key: shirtLength,
-      description: 'Shoulder to desired bottom length',
-      gender: GenderType.male,
-    ),
-    MeasurementFieldDefinition(
-      name: 'Armhole',
-      key: armhole,
-      description: 'Around the arm socket',
-      gender: GenderType.male,
-    ),
-    MeasurementFieldDefinition(
-      name: 'Upper Arm',
-      key: upperArm,
-      description: 'Fullest part of the upper arm',
-      gender: GenderType.male,
-    ),
-    MeasurementFieldDefinition(
-      name: 'Wrist',
-      key: wrist,
-      description: 'Circumference of the wrist',
-      gender: GenderType.male,
-    ),
-    MeasurementFieldDefinition(
-      name: 'Pant Length',
-      key: pantLength,
-      description: 'Waist to ankle',
-      gender: GenderType.male,
-    ),
-    MeasurementFieldDefinition(
-      name: 'Inseam',
-      key: inseam,
-      description: 'Crotch to ankle inside the leg',
-      gender: GenderType.male,
-    ),
-    MeasurementFieldDefinition(
-      name: 'Thigh',
-      key: thigh,
-      description: 'Fullest part of the upper leg',
-      gender: GenderType.male,
-    ),
-    MeasurementFieldDefinition(
-      name: 'Waist',
-      key: waist,
-      description: 'Natural waistline',
-      gender: GenderType.unisex,
-    ),
-    MeasurementFieldDefinition(
-      name: 'Shoulder Width',
-      key: shoulderWidth,
-      description: 'Tip to tip across the back',
-      gender: GenderType.unisex,
-    ),
-    MeasurementFieldDefinition(
-      name: 'Height',
-      key: height,
-      description: 'For total garment length',
-      gender: GenderType.unisex,
-    ),
+    topRound,
+    topLength,
+    chest,
+    shape,
+    sleeveLength,
+    sleeveArm,
+    sleeveWidth,
+    regal,
+    frontNeck,
+    backNeck,
+    elbow,
+    pad,
+    shoulderStrap,
+    collar,
+    shirtLength,
+    armhole,
+    biceps,
+    wrist,
+    pantLength,
+    inseam,
+    thigh,
+    waist,
+    shoulder,
+    height,
   ];
 }

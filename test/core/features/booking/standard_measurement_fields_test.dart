@@ -9,8 +9,8 @@ void main() {
     for (final k in keys) {
       expect(RegExp(r'^[a-z]+(_[a-z]+)*$').hasMatch(k), isTrue, reason: k);
     }
-    expect(StandardMeasurementFields.chest, 'chest');
-    expect(StandardMeasurementFields.shoulderWidth, 'shoulder_width');
-    expect(keys, contains(StandardMeasurementFields.shirtLength));
+    expect(StandardMeasurementFields.chest.key, 'chest');
+    expect(StandardMeasurementFields.shoulder.key, 'shoulder_width');
+    expect(keys, contains(StandardMeasurementFields.shirtLength.key));
   });
 }
