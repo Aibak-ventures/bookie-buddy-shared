@@ -1,5 +1,21 @@
 # Changelog
 
+## 3.0.0 — measurement categories
+
+**Breaking**: `StandardMeasurementFields` key constants are now
+`MeasurementFieldDefinition`s instead of `String`s; read a key with `.key`
+(e.g. `StandardMeasurementFields.chest.key`).
+
+- `MeasurementCategories` (General, Suit & Indo-Western, Pant, Shirt) groups
+  measurement fields per garment for the form. Categories are UI-only and are
+  not stored. `MeasurementCategories.infer` picks the category for saved
+  values.
+- New fields: Suit Length, Indo-western Length, Stomach, Seat, Kage, Bottom, U.
+  They are not part of `StandardMeasurementFields.all`.
+- Renamed: Shoulder Width → Shoulder, Neck Circumference → Collar,
+  Upper Arm → Biceps, Shirt/Kurta Length → Shirt Length. Stored keys are
+  unchanged.
+
 ## 2.2.0 — flavored APK builds
 
 - `FlutterTooling.buildArm64Apk` takes an optional `flavor`. When set, it
