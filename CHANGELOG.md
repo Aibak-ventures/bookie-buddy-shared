@@ -1,5 +1,19 @@
 # Changelog
 
+## 3.1.0 — washing delivery status
+
+- `DeliveryStatus.washing`, between `delivered` and `returned`. Available only
+  for dress-type services (dress, costume). Exhaustive switches over
+  `DeliveryStatus` need a `washing` case.
+- `DeliveryStatus.isAvailableFor(serviceType)` decides which statuses a service
+  shows; `getServiceSpecificStatus` now uses it and hides `washing` when the
+  service type is null.
+- `DeliveryStatus.getCreationStatus(serviceType)`: statuses selectable when
+  creating a booking (`isSelectableOnCreate`).
+- `DeliveryStatus.getUpdateStatus(serviceType, current:)`: service statuses
+  plus the booking's current one, for status dropdowns.
+- `DeliveryStatusX.isWashing`.
+
 ## 3.0.0 — measurement categories
 
 **Breaking**: `StandardMeasurementFields` key constants are now
