@@ -16,6 +16,7 @@ enum DeliveryStatus implements BackendKeyedEnum {
   booked('booked', 'Booked'),
   readyToDeliver('ready to deliver', 'Ready to deliver'),
   delivered('delivered', 'Delivered'),
+  washing('washing', 'Washing'),
   returned('returned', 'Returned'),
   cancelled('cancelled', 'Cancelled');
 
@@ -47,16 +48,32 @@ enum DeliveryStatus implements BackendKeyedEnum {
     return getServiceSpecificLabel(serviceType);
   }
 
+  bool isAvailableFor(MainServiceType? serviceType) => switch (this) {
+    delivered => !serviceType.isRoom,
+    washing => serviceType.isDressType,
+    booked || readyToDeliver || returned || cancelled => true,
+  };
+
+  bool get isSelectableOnCreate => switch (this) {
+    booked || readyToDeliver || delivered => true,
+    washing || returned || cancelled => false,
+  };
+
   static List<DeliveryStatus> getServiceSpecificStatus(
     MainServiceType? serviceType,
-  ) {
-    if (serviceType == null) return values;
+  ) => values.where((s) => s.isAvailableFor(serviceType)).toList();
 
-    if (serviceType.isRoom) {
-      return values.where((s) => !s.isDelivered).toList();
-    }
-    return values;
-  }
+  static List<DeliveryStatus> getCreationStatus(MainServiceType? serviceType) =>
+      values
+          .where((s) => s.isAvailableFor(serviceType) && s.isSelectableOnCreate)
+          .toList();
+
+  static List<DeliveryStatus> getUpdateStatus(
+    MainServiceType? serviceType, {
+    required DeliveryStatus current,
+  }) => values
+      .where((s) => s == current || s.isAvailableFor(serviceType))
+      .toList();
 
   static DeliveryStatus fromJson(String? value) =>
       EnumJsonCodec.fromJson(value, values, fallback: DeliveryStatus.booked);
@@ -70,6 +87,7 @@ extension DeliveryStatusX on DeliveryStatus? {
   bool get isDelivered => this == DeliveryStatus.delivered;
   bool get isReturned => this == DeliveryStatus.returned;
   bool get isReadyToDeliver => this == DeliveryStatus.readyToDeliver;
+  bool get isWashing => this == DeliveryStatus.washing;
   bool get isBooked => this == DeliveryStatus.booked;
   bool get isCancelled => this == DeliveryStatus.cancelled;
 

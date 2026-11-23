@@ -9,15 +9,12 @@ import 'package:material_ui/material_ui.dart';
 
 extension DeliveryStatusColorX on DeliveryStatus {
   Color get color => switch (this) {
-    DeliveryStatus.booked => const Color(0xFFFF9500), // AppColors.orangeVivid
-    DeliveryStatus.readyToDeliver => const Color(
-      0xFF00C896,
-    ), // AppColors.aquamarineMedium
+    DeliveryStatus.booked => const Color(0xFFFF9500),
+    DeliveryStatus.readyToDeliver => const Color(0xFF00C896),
     DeliveryStatus.delivered => const Color.fromARGB(255, 0, 149, 255),
-    DeliveryStatus.returned => const Color(0xFF5F33E2), // AppColors.purple
-    DeliveryStatus.cancelled => const Color(
-      0xFFFF3B30,
-    ), // AppColors.redTomato
+    DeliveryStatus.washing => const Color(0xFF00ACC1),
+    DeliveryStatus.returned => const Color(0xFF5F33E2),
+    DeliveryStatus.cancelled => const Color(0xFFFF3B30),
   };
 }
 
